@@ -22,6 +22,8 @@ public class Result {
 
     private String token;
 
+    private String message;
+
     public void setToken(String token) {
         this.token = token;
     }
@@ -29,8 +31,6 @@ public class Result {
     public String getToken() {
         return token;
     }
-
-    private String message;
 
     public static Result ok() {
         Result r = new Result();
