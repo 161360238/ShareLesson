@@ -2,9 +2,8 @@ package com.pdsu.mapper;
 
 import com.pdsu.pojo.Class_User;
 import com.pdsu.pojo.Class_UserExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface Class_UserMapper {
     int countByExample(Class_UserExample example);

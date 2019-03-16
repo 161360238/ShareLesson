@@ -2,9 +2,8 @@ package com.pdsu.mapper;
 
 import com.pdsu.pojo.Admin;
 import com.pdsu.pojo.AdminExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface AdminMapper {
     int countByExample(AdminExample example);

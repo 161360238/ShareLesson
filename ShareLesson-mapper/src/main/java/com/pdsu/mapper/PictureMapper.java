@@ -2,9 +2,8 @@ package com.pdsu.mapper;
 
 import com.pdsu.pojo.Picture;
 import com.pdsu.pojo.PictureExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface PictureMapper {
     int countByExample(PictureExample example);

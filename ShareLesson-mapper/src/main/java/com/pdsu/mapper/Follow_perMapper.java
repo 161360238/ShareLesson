@@ -2,9 +2,8 @@ package com.pdsu.mapper;
 
 import com.pdsu.pojo.Follow_per;
 import com.pdsu.pojo.Follow_perExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface Follow_perMapper {
     int countByExample(Follow_perExample example);

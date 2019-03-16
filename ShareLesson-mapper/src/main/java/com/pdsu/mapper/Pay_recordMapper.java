@@ -2,9 +2,8 @@ package com.pdsu.mapper;
 
 import com.pdsu.pojo.Pay_record;
 import com.pdsu.pojo.Pay_recordExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface Pay_recordMapper {
     int countByExample(Pay_recordExample example);

@@ -72,6 +72,7 @@ public class TestController extends BaseController {
             CookieUtils.setCookie(request, response, "TT_TOKEN", key, 60 * 60 * 24 * 7);
             //把token返回
             result.setToken(key);
+            result.setMessage("登录成功");
         } else {
             result.setCode("201");
             result.setMessage("登录失败");
