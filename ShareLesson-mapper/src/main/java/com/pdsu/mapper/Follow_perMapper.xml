@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pdsu.mapper.Follow_perMapper" >
+
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Follow_per" >
+        <id column="follow_id" property="followId" jdbcType="VARCHAR" />
+        <result column="s_id" property="sId" jdbcType="VARCHAR" />
+        <result column="t_id" property="tId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        follow_id, s_id, t_id
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.Follow_perExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from follow_per
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from follow_per
+        where follow_id = #{followId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from follow_per
+        where follow_id = #{followId,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.Follow_perExample" >
+        delete from follow_per
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.pdsu.pojo.Follow_per" >
+        insert into follow_per (follow_id, s_id, t_id
+            )
+        values (#{followId,jdbcType=VARCHAR}, #{sId,jdbcType=VARCHAR}, #{tId,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Follow_per" >
+        insert into follow_per
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="followId != null" >
+                follow_id,
+            </if>
+            <if test="sId != null" >
+                s_id,
+            </if>
+            <if test="tId != null" >
+                t_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="followId != null" >
+                #{followId,jdbcType=VARCHAR},
+            </if>
+            <if test="sId != null" >
+                #{sId,jdbcType=VARCHAR},
+            </if>
+            <if test="tId != null" >
+                #{tId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.pdsu.pojo.Follow_perExample" resultType="java.lang.Integer" >
+        select count(*) from follow_per
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update follow_per
+        <set >
+            <if test="record.followId != null" >
+                follow_id = #{record.followId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sId != null" >
+                s_id = #{record.sId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.tId != null" >
+                t_id = #{record.tId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update follow_per
+        set follow_id = #{record.followId,jdbcType=VARCHAR},
+            s_id = #{record.sId,jdbcType=VARCHAR},
+            t_id = #{record.tId,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Follow_per" >
+        update follow_per
+        <set >
+            <if test="sId != null" >
+                s_id = #{sId,jdbcType=VARCHAR},
+            </if>
+            <if test="tId != null" >
+                t_id = #{tId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where follow_id = #{followId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Follow_per" >
+        update follow_per
+        set s_id = #{sId,jdbcType=VARCHAR},
+            t_id = #{tId,jdbcType=VARCHAR}
+        where follow_id = #{followId,jdbcType=VARCHAR}
+    </update>
+</mapper>

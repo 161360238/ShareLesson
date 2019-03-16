@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pdsu.mapper.order_itemMapper" >
+
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.order_item" >
+        <id column="r_id" property="rId" jdbcType="VARCHAR" />
+        <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <result column="l_id" property="lId" jdbcType="VARCHAR" />
+        <result column="l_name" property="lName" jdbcType="VARCHAR" />
+        <result column="l_value" property="lValue" jdbcType="INTEGER" />
+        <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        r_id, order_id, l_id, l_name, l_value, pic_path
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.order_itemExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from order_item
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from order_item
+        where r_id = #{rId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from order_item
+        where r_id = #{rId,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.order_itemExample" >
+        delete from order_item
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.pdsu.pojo.order_item" >
+        insert into order_item (r_id, order_id, l_id, 
+            l_name, l_value, pic_path
+            )
+        values (#{rId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{lId,jdbcType=VARCHAR}, 
+            #{lName,jdbcType=VARCHAR}, #{lValue,jdbcType=INTEGER}, #{picPath,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.order_item" >
+        insert into order_item
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="rId != null" >
+                r_id,
+            </if>
+            <if test="orderId != null" >
+                order_id,
+            </if>
+            <if test="lId != null" >
+                l_id,
+            </if>
+            <if test="lName != null" >
+                l_name,
+            </if>
+            <if test="lValue != null" >
+                l_value,
+            </if>
+            <if test="picPath != null" >
+                pic_path,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="rId != null" >
+                #{rId,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null" >
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="lId != null" >
+                #{lId,jdbcType=VARCHAR},
+            </if>
+            <if test="lName != null" >
+                #{lName,jdbcType=VARCHAR},
+            </if>
+            <if test="lValue != null" >
+                #{lValue,jdbcType=INTEGER},
+            </if>
+            <if test="picPath != null" >
+                #{picPath,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.pdsu.pojo.order_itemExample" resultType="java.lang.Integer" >
+        select count(*) from order_item
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update order_item
+        <set >
+            <if test="record.rId != null" >
+                r_id = #{record.rId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orderId != null" >
+                order_id = #{record.orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.lId != null" >
+                l_id = #{record.lId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.lName != null" >
+                l_name = #{record.lName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.lValue != null" >
+                l_value = #{record.lValue,jdbcType=INTEGER},
+            </if>
+            <if test="record.picPath != null" >
+                pic_path = #{record.picPath,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update order_item
+        set r_id = #{record.rId,jdbcType=VARCHAR},
+            order_id = #{record.orderId,jdbcType=VARCHAR},
+            l_id = #{record.lId,jdbcType=VARCHAR},
+            l_name = #{record.lName,jdbcType=VARCHAR},
+            l_value = #{record.lValue,jdbcType=INTEGER},
+            pic_path = #{record.picPath,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.order_item" >
+        update order_item
+        <set >
+            <if test="orderId != null" >
+                order_id = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="lId != null" >
+                l_id = #{lId,jdbcType=VARCHAR},
+            </if>
+            <if test="lName != null" >
+                l_name = #{lName,jdbcType=VARCHAR},
+            </if>
+            <if test="lValue != null" >
+                l_value = #{lValue,jdbcType=INTEGER},
+            </if>
+            <if test="picPath != null" >
+                pic_path = #{picPath,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where r_id = #{rId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.order_item" >
+        update order_item
+        set order_id = #{orderId,jdbcType=VARCHAR},
+            l_id = #{lId,jdbcType=VARCHAR},
+            l_name = #{lName,jdbcType=VARCHAR},
+            l_value = #{lValue,jdbcType=INTEGER},
+            pic_path = #{picPath,jdbcType=VARCHAR}
+        where r_id = #{rId,jdbcType=VARCHAR}
+    </update>
+</mapper>
