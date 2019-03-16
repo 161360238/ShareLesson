@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pdsu.mapper.CenterMapper" >
+
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Center" >
+        <id column="center_id" property="centerId" jdbcType="VARCHAR" />
+        <result column="msg1" property="msg1" jdbcType="VARCHAR" />
+        <result column="msg2" property="msg2" jdbcType="VARCHAR" />
+        <result column="msg3" property="msg3" jdbcType="VARCHAR" />
+        <result column="msg4" property="msg4" jdbcType="VARCHAR" />
+        <result column="msg5" property="msg5" jdbcType="VARCHAR" />
+        <result column="big_pic" property="bigPic" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        center_id, msg1, msg2, msg3, msg4, msg5, big_pic
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.CenterExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from center
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from center
+        where center_id = #{centerId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from center
+        where center_id = #{centerId,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.CenterExample" >
+        delete from center
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.pdsu.pojo.Center" >
+        insert into center (center_id, msg1, msg2, 
+            msg3, msg4, msg5, 
+            big_pic)
+        values (#{centerId,jdbcType=VARCHAR}, #{msg1,jdbcType=VARCHAR}, #{msg2,jdbcType=VARCHAR}, 
+            #{msg3,jdbcType=VARCHAR}, #{msg4,jdbcType=VARCHAR}, #{msg5,jdbcType=VARCHAR}, 
+            #{bigPic,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Center" >
+        insert into center
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="centerId != null" >
+                center_id,
+            </if>
+            <if test="msg1 != null" >
+                msg1,
+            </if>
+            <if test="msg2 != null" >
+                msg2,
+            </if>
+            <if test="msg3 != null" >
+                msg3,
+            </if>
+            <if test="msg4 != null" >
+                msg4,
+            </if>
+            <if test="msg5 != null" >
+                msg5,
+            </if>
+            <if test="bigPic != null" >
+                big_pic,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="centerId != null" >
+                #{centerId,jdbcType=VARCHAR},
+            </if>
+            <if test="msg1 != null" >
+                #{msg1,jdbcType=VARCHAR},
+            </if>
+            <if test="msg2 != null" >
+                #{msg2,jdbcType=VARCHAR},
+            </if>
+            <if test="msg3 != null" >
+                #{msg3,jdbcType=VARCHAR},
+            </if>
+            <if test="msg4 != null" >
+                #{msg4,jdbcType=VARCHAR},
+            </if>
+            <if test="msg5 != null" >
+                #{msg5,jdbcType=VARCHAR},
+            </if>
+            <if test="bigPic != null" >
+                #{bigPic,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.pdsu.pojo.CenterExample" resultType="java.lang.Integer" >
+        select count(*) from center
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update center
+        <set >
+            <if test="record.centerId != null" >
+                center_id = #{record.centerId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.msg1 != null" >
+                msg1 = #{record.msg1,jdbcType=VARCHAR},
+            </if>
+            <if test="record.msg2 != null" >
+                msg2 = #{record.msg2,jdbcType=VARCHAR},
+            </if>
+            <if test="record.msg3 != null" >
+                msg3 = #{record.msg3,jdbcType=VARCHAR},
+            </if>
+            <if test="record.msg4 != null" >
+                msg4 = #{record.msg4,jdbcType=VARCHAR},
+            </if>
+            <if test="record.msg5 != null" >
+                msg5 = #{record.msg5,jdbcType=VARCHAR},
+            </if>
+            <if test="record.bigPic != null" >
+                big_pic = #{record.bigPic,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update center
+        set center_id = #{record.centerId,jdbcType=VARCHAR},
+            msg1 = #{record.msg1,jdbcType=VARCHAR},
+            msg2 = #{record.msg2,jdbcType=VARCHAR},
+            msg3 = #{record.msg3,jdbcType=VARCHAR},
+            msg4 = #{record.msg4,jdbcType=VARCHAR},
+            msg5 = #{record.msg5,jdbcType=VARCHAR},
+            big_pic = #{record.bigPic,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Center" >
+        update center
+        <set >
+            <if test="msg1 != null" >
+                msg1 = #{msg1,jdbcType=VARCHAR},
+            </if>
+            <if test="msg2 != null" >
+                msg2 = #{msg2,jdbcType=VARCHAR},
+            </if>
+            <if test="msg3 != null" >
+                msg3 = #{msg3,jdbcType=VARCHAR},
+            </if>
+            <if test="msg4 != null" >
+                msg4 = #{msg4,jdbcType=VARCHAR},
+            </if>
+            <if test="msg5 != null" >
+                msg5 = #{msg5,jdbcType=VARCHAR},
+            </if>
+            <if test="bigPic != null" >
+                big_pic = #{bigPic,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where center_id = #{centerId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Center" >
+        update center
+        set msg1 = #{msg1,jdbcType=VARCHAR},
+            msg2 = #{msg2,jdbcType=VARCHAR},
+            msg3 = #{msg3,jdbcType=VARCHAR},
+            msg4 = #{msg4,jdbcType=VARCHAR},
+            msg5 = #{msg5,jdbcType=VARCHAR},
+            big_pic = #{bigPic,jdbcType=VARCHAR}
+        where center_id = #{centerId,jdbcType=VARCHAR}
+    </update>
+</mapper>
