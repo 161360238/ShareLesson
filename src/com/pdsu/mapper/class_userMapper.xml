@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pdsu.mapper.class_userMapper" >
+<mapper namespace="com.pdsu.mapper.Class_UserMapper" >
 
-    <resultMap id="BaseResultMap" type="com.pdsu.pojo.class_user" >
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Class_User" >
         <id column="r_id" property="rId" jdbcType="VARCHAR" />
         <result column="l_id" property="lId" jdbcType="VARCHAR" />
         <result column="s_id" property="sId" jdbcType="VARCHAR" />
@@ -73,7 +73,7 @@
         r_id, l_id, s_id, status
     </sql>
 
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.class_userExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.Class_UserExample" >
         select
         <if test="distinct" >
             distinct
@@ -100,21 +100,21 @@
         where r_id = #{rId,jdbcType=VARCHAR}
     </delete>
 
-    <delete id="deleteByExample" parameterType="com.pdsu.pojo.class_userExample" >
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.Class_UserExample" >
         delete from class_user
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" parameterType="com.pdsu.pojo.class_user" >
+    <insert id="insert" parameterType="com.pdsu.pojo.Class_User" >
         insert into class_user (r_id, l_id, s_id, 
             status)
         values (#{rId,jdbcType=VARCHAR}, #{lId,jdbcType=VARCHAR}, #{sId,jdbcType=VARCHAR}, 
             #{status,jdbcType=INTEGER})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.pdsu.pojo.class_user" >
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Class_User" >
         insert into class_user
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="rId != null" >
@@ -146,7 +146,7 @@
         </trim>
     </insert>
 
-    <select id="countByExample" parameterType="com.pdsu.pojo.class_userExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pdsu.pojo.Class_UserExample" resultType="java.lang.Integer" >
         select count(*) from class_user
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
@@ -185,7 +185,7 @@
         </if>
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.class_user" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Class_User" >
         update class_user
         <set >
             <if test="lId != null" >
@@ -201,7 +201,7 @@
         where r_id = #{rId,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.class_user" >
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Class_User" >
         update class_user
         set l_id = #{lId,jdbcType=VARCHAR},
             s_id = #{sId,jdbcType=VARCHAR},

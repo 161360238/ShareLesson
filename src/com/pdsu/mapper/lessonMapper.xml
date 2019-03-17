@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pdsu.mapper.lessonMapper" >
+<mapper namespace="com.pdsu.mapper.LessonMapper" >
 
-    <resultMap id="BaseResultMap" type="com.pdsu.pojo.lesson" >
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Lesson" >
         <id column="l_id" property="lId" jdbcType="VARCHAR" />
         <result column="t_id" property="tId" jdbcType="VARCHAR" />
         <result column="price" property="price" jdbcType="INTEGER" />
@@ -84,7 +84,7 @@
         pic, location, classify_id, exam, praise
     </sql>
 
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.lessonExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.LessonExample" >
         select
         <if test="distinct" >
             distinct
@@ -111,14 +111,14 @@
         where l_id = #{lId,jdbcType=VARCHAR}
     </delete>
 
-    <delete id="deleteByExample" parameterType="com.pdsu.pojo.lessonExample" >
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.LessonExample" >
         delete from lesson
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" parameterType="com.pdsu.pojo.lesson" >
+    <insert id="insert" parameterType="com.pdsu.pojo.Lesson" >
         insert into lesson (l_id, t_id, price, 
             introduction, l_time, begin_time, 
             end_time, mini_num, max_num, 
@@ -131,7 +131,7 @@
             #{exam,jdbcType=INTEGER}, #{praise,jdbcType=INTEGER})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.pdsu.pojo.lesson" >
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Lesson" >
         insert into lesson
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="lId != null" >
@@ -223,7 +223,7 @@
         </trim>
     </insert>
 
-    <select id="countByExample" parameterType="com.pdsu.pojo.lessonExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pdsu.pojo.LessonExample" resultType="java.lang.Integer" >
         select count(*) from lesson
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
@@ -302,7 +302,7 @@
         </if>
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.lesson" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Lesson" >
         update lesson
         <set >
             <if test="tId != null" >
@@ -348,7 +348,7 @@
         where l_id = #{lId,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.lesson" >
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Lesson" >
         update lesson
         set t_id = #{tId,jdbcType=VARCHAR},
             price = #{price,jdbcType=INTEGER},

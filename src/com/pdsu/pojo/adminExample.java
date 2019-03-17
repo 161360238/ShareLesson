@@ -3,14 +3,14 @@ package com.pdsu.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class adminExample {
+public class AdminExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public adminExample() {
+    public AdminExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -68,7 +68,7 @@ public class adminExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-15
+     * @date 2019-03-16
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -614,7 +614,7 @@ public class adminExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-15
+     * @date 2019-03-16
      */
     public static class Criterion {
         private String condition;

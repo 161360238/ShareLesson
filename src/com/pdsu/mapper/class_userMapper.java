@@ -1,30 +1,30 @@
 package com.pdsu.mapper;
 
-import com.pdsu.pojo.class_user;
-import com.pdsu.pojo.class_userExample;
+import com.pdsu.pojo.Class_User;
+import com.pdsu.pojo.Class_UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface class_userMapper {
-    int countByExample(class_userExample example);
+public interface Class_UserMapper {
+    int countByExample(Class_UserExample example);
 
-    int deleteByExample(class_userExample example);
+    int deleteByExample(Class_UserExample example);
 
     int deleteByPrimaryKey(String rId);
 
-    int insert(class_user record);
+    int insert(Class_User record);
 
-    int insertSelective(class_user record);
+    int insertSelective(Class_User record);
 
-    List<class_user> selectByExample(class_userExample example);
+    List<Class_User> selectByExample(Class_UserExample example);
 
-    class_user selectByPrimaryKey(String rId);
+    Class_User selectByPrimaryKey(String rId);
 
-    int updateByExampleSelective(@Param("record") class_user record, @Param("example") class_userExample example);
+    int updateByExampleSelective(@Param("record") Class_User record, @Param("example") Class_UserExample example);
 
-    int updateByExample(@Param("record") class_user record, @Param("example") class_userExample example);
+    int updateByExample(@Param("record") Class_User record, @Param("example") Class_UserExample example);
 
-    int updateByPrimaryKeySelective(class_user record);
+    int updateByPrimaryKeySelective(Class_User record);
 
-    int updateByPrimaryKey(class_user record);
+    int updateByPrimaryKey(Class_User record);
 }

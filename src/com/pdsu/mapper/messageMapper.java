@@ -1,30 +1,30 @@
 package com.pdsu.mapper;
 
-import com.pdsu.pojo.message;
-import com.pdsu.pojo.messageExample;
+import com.pdsu.pojo.Message;
+import com.pdsu.pojo.MessageExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface messageMapper {
-    int countByExample(messageExample example);
+public interface MessageMapper {
+    int countByExample(MessageExample example);
 
-    int deleteByExample(messageExample example);
+    int deleteByExample(MessageExample example);
 
     int deleteByPrimaryKey(String mId);
 
-    int insert(message record);
+    int insert(Message record);
 
-    int insertSelective(message record);
+    int insertSelective(Message record);
 
-    List<message> selectByExample(messageExample example);
+    List<Message> selectByExample(MessageExample example);
 
-    message selectByPrimaryKey(String mId);
+    Message selectByPrimaryKey(String mId);
 
-    int updateByExampleSelective(@Param("record") message record, @Param("example") messageExample example);
+    int updateByExampleSelective(@Param("record") Message record, @Param("example") MessageExample example);
 
-    int updateByExample(@Param("record") message record, @Param("example") messageExample example);
+    int updateByExample(@Param("record") Message record, @Param("example") MessageExample example);
 
-    int updateByPrimaryKeySelective(message record);
+    int updateByPrimaryKeySelective(Message record);
 
-    int updateByPrimaryKey(message record);
+    int updateByPrimaryKey(Message record);
 }

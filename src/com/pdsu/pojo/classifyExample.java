@@ -3,14 +3,14 @@ package com.pdsu.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class classifyExample {
+public class ClassifyExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public classifyExample() {
+    public ClassifyExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -68,7 +68,7 @@ public class classifyExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-15
+     * @date 2019-03-16
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -514,7 +514,7 @@ public class classifyExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-15
+     * @date 2019-03-16
      */
     public static class Criterion {
         private String condition;

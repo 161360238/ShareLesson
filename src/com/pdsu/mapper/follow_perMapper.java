@@ -1,30 +1,30 @@
 package com.pdsu.mapper;
 
-import com.pdsu.pojo.follow_per;
-import com.pdsu.pojo.follow_perExample;
+import com.pdsu.pojo.Follow_per;
+import com.pdsu.pojo.Follow_perExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface follow_perMapper {
-    int countByExample(follow_perExample example);
+public interface Follow_perMapper {
+    int countByExample(Follow_perExample example);
 
-    int deleteByExample(follow_perExample example);
+    int deleteByExample(Follow_perExample example);
 
     int deleteByPrimaryKey(String followId);
 
-    int insert(follow_per record);
+    int insert(Follow_per record);
 
-    int insertSelective(follow_per record);
+    int insertSelective(Follow_per record);
 
-    List<follow_per> selectByExample(follow_perExample example);
+    List<Follow_per> selectByExample(Follow_perExample example);
 
-    follow_per selectByPrimaryKey(String followId);
+    Follow_per selectByPrimaryKey(String followId);
 
-    int updateByExampleSelective(@Param("record") follow_per record, @Param("example") follow_perExample example);
+    int updateByExampleSelective(@Param("record") Follow_per record, @Param("example") Follow_perExample example);
 
-    int updateByExample(@Param("record") follow_per record, @Param("example") follow_perExample example);
+    int updateByExample(@Param("record") Follow_per record, @Param("example") Follow_perExample example);
 
-    int updateByPrimaryKeySelective(follow_per record);
+    int updateByPrimaryKeySelective(Follow_per record);
 
-    int updateByPrimaryKey(follow_per record);
+    int updateByPrimaryKey(Follow_per record);
 }

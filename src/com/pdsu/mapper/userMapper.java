@@ -1,30 +1,22 @@
 package com.pdsu.mapper;
 
-import com.pdsu.pojo.user;
-import com.pdsu.pojo.userExample;
+import com.pdsu.pojo.User;
+import com.pdsu.pojo.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface userMapper {
-    int countByExample(userExample example);
+public interface UserMapper {
+    int countByExample(UserExample example);
 
-    int deleteByExample(userExample example);
+    int deleteByExample(UserExample example);
 
-    int deleteByPrimaryKey(String uId);
+    int insert(User record);
 
-    int insert(user record);
+    int insertSelective(User record);
 
-    int insertSelective(user record);
+    List<User> selectByExample(UserExample example);
 
-    List<user> selectByExample(userExample example);
+    int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
 
-    user selectByPrimaryKey(String uId);
-
-    int updateByExampleSelective(@Param("record") user record, @Param("example") userExample example);
-
-    int updateByExample(@Param("record") user record, @Param("example") userExample example);
-
-    int updateByPrimaryKeySelective(user record);
-
-    int updateByPrimaryKey(user record);
+    int updateByExample(@Param("record") User record, @Param("example") UserExample example);
 }

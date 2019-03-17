@@ -1,30 +1,30 @@
 package com.pdsu.mapper;
 
-import com.pdsu.pojo.comment;
-import com.pdsu.pojo.commentExample;
+import com.pdsu.pojo.Comment;
+import com.pdsu.pojo.CommentExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface commentMapper {
-    int countByExample(commentExample example);
+public interface CommentMapper {
+    int countByExample(CommentExample example);
 
-    int deleteByExample(commentExample example);
+    int deleteByExample(CommentExample example);
 
     int deleteByPrimaryKey(String commentId);
 
-    int insert(comment record);
+    int insert(Comment record);
 
-    int insertSelective(comment record);
+    int insertSelective(Comment record);
 
-    List<comment> selectByExample(commentExample example);
+    List<Comment> selectByExample(CommentExample example);
 
-    comment selectByPrimaryKey(String commentId);
+    Comment selectByPrimaryKey(String commentId);
 
-    int updateByExampleSelective(@Param("record") comment record, @Param("example") commentExample example);
+    int updateByExampleSelective(@Param("record") Comment record, @Param("example") CommentExample example);
 
-    int updateByExample(@Param("record") comment record, @Param("example") commentExample example);
+    int updateByExample(@Param("record") Comment record, @Param("example") CommentExample example);
 
-    int updateByPrimaryKeySelective(comment record);
+    int updateByPrimaryKeySelective(Comment record);
 
-    int updateByPrimaryKey(comment record);
+    int updateByPrimaryKey(Comment record);
 }

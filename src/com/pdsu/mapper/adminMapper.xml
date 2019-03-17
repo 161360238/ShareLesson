@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pdsu.mapper.adminMapper" >
+<mapper namespace="com.pdsu.mapper.AdminMapper" >
 
-    <resultMap id="BaseResultMap" type="com.pdsu.pojo.admin" >
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Admin" >
         <id column="a_id" property="aId" jdbcType="VARCHAR" />
         <result column="a_name" property="aName" jdbcType="VARCHAR" />
         <result column="username" property="username" jdbcType="VARCHAR" />
@@ -76,7 +76,7 @@
         a_id, a_name, username, password, salty, email, role
     </sql>
 
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.adminExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.AdminExample" >
         select
         <if test="distinct" >
             distinct
@@ -103,14 +103,14 @@
         where a_id = #{aId,jdbcType=VARCHAR}
     </delete>
 
-    <delete id="deleteByExample" parameterType="com.pdsu.pojo.adminExample" >
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.AdminExample" >
         delete from admin
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" parameterType="com.pdsu.pojo.admin" >
+    <insert id="insert" parameterType="com.pdsu.pojo.Admin" >
         insert into admin (a_id, a_name, username, 
             password, salty, email, 
             role)
@@ -119,7 +119,7 @@
             #{role,jdbcType=VARCHAR})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.pdsu.pojo.admin" >
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Admin" >
         insert into admin
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="aId != null" >
@@ -169,7 +169,7 @@
         </trim>
     </insert>
 
-    <select id="countByExample" parameterType="com.pdsu.pojo.adminExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pdsu.pojo.AdminExample" resultType="java.lang.Integer" >
         select count(*) from admin
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
@@ -220,7 +220,7 @@
         </if>
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.admin" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Admin" >
         update admin
         <set >
             <if test="aName != null" >
@@ -245,7 +245,7 @@
         where a_id = #{aId,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.admin" >
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Admin" >
         update admin
         set a_name = #{aName,jdbcType=VARCHAR},
             username = #{username,jdbcType=VARCHAR},

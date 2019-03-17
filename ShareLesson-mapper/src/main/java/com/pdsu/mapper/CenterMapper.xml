@@ -4,12 +4,10 @@
 
     <resultMap id="BaseResultMap" type="com.pdsu.pojo.Center" >
         <id column="center_id" property="centerId" jdbcType="VARCHAR" />
-        <result column="msg1" property="msg1" jdbcType="VARCHAR" />
-        <result column="msg2" property="msg2" jdbcType="VARCHAR" />
-        <result column="msg3" property="msg3" jdbcType="VARCHAR" />
-        <result column="msg4" property="msg4" jdbcType="VARCHAR" />
-        <result column="msg5" property="msg5" jdbcType="VARCHAR" />
-        <result column="big_pic" property="bigPic" jdbcType="VARCHAR" />
+        <result column="model_name" property="modelName" jdbcType="VARCHAR" />
+        <result column="model_url" property="modelUrl" jdbcType="VARCHAR" />
+        <result column="model_type" property="modelType" jdbcType="INTEGER" />
+        <result column="model_sort" property="modelSort" jdbcType="INTEGER" />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -73,7 +71,7 @@
     </sql>
 
     <sql id="Base_Column_List" >
-        center_id, msg1, msg2, msg3, msg4, msg5, big_pic
+        center_id, model_name, model_url, model_type, model_sort
     </sql>
 
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.CenterExample" >
@@ -111,12 +109,10 @@
     </delete>
 
     <insert id="insert" parameterType="com.pdsu.pojo.Center" >
-        insert into center (center_id, msg1, msg2, 
-            msg3, msg4, msg5, 
-            big_pic)
-        values (#{centerId,jdbcType=VARCHAR}, #{msg1,jdbcType=VARCHAR}, #{msg2,jdbcType=VARCHAR}, 
-            #{msg3,jdbcType=VARCHAR}, #{msg4,jdbcType=VARCHAR}, #{msg5,jdbcType=VARCHAR}, 
-            #{bigPic,jdbcType=VARCHAR})
+        insert into center (center_id, model_name, model_url, 
+            model_type, model_sort)
+        values (#{centerId,jdbcType=VARCHAR}, #{modelName,jdbcType=VARCHAR}, #{modelUrl,jdbcType=VARCHAR}, 
+            #{modelType,jdbcType=INTEGER}, #{modelSort,jdbcType=INTEGER})
     </insert>
 
     <insert id="insertSelective" parameterType="com.pdsu.pojo.Center" >
@@ -125,46 +121,34 @@
             <if test="centerId != null" >
                 center_id,
             </if>
-            <if test="msg1 != null" >
-                msg1,
+            <if test="modelName != null" >
+                model_name,
             </if>
-            <if test="msg2 != null" >
-                msg2,
+            <if test="modelUrl != null" >
+                model_url,
             </if>
-            <if test="msg3 != null" >
-                msg3,
+            <if test="modelType != null" >
+                model_type,
             </if>
-            <if test="msg4 != null" >
-                msg4,
-            </if>
-            <if test="msg5 != null" >
-                msg5,
-            </if>
-            <if test="bigPic != null" >
-                big_pic,
+            <if test="modelSort != null" >
+                model_sort,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="centerId != null" >
                 #{centerId,jdbcType=VARCHAR},
             </if>
-            <if test="msg1 != null" >
-                #{msg1,jdbcType=VARCHAR},
+            <if test="modelName != null" >
+                #{modelName,jdbcType=VARCHAR},
             </if>
-            <if test="msg2 != null" >
-                #{msg2,jdbcType=VARCHAR},
+            <if test="modelUrl != null" >
+                #{modelUrl,jdbcType=VARCHAR},
             </if>
-            <if test="msg3 != null" >
-                #{msg3,jdbcType=VARCHAR},
+            <if test="modelType != null" >
+                #{modelType,jdbcType=INTEGER},
             </if>
-            <if test="msg4 != null" >
-                #{msg4,jdbcType=VARCHAR},
-            </if>
-            <if test="msg5 != null" >
-                #{msg5,jdbcType=VARCHAR},
-            </if>
-            <if test="bigPic != null" >
-                #{bigPic,jdbcType=VARCHAR},
+            <if test="modelSort != null" >
+                #{modelSort,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -182,23 +166,17 @@
             <if test="record.centerId != null" >
                 center_id = #{record.centerId,jdbcType=VARCHAR},
             </if>
-            <if test="record.msg1 != null" >
-                msg1 = #{record.msg1,jdbcType=VARCHAR},
+            <if test="record.modelName != null" >
+                model_name = #{record.modelName,jdbcType=VARCHAR},
             </if>
-            <if test="record.msg2 != null" >
-                msg2 = #{record.msg2,jdbcType=VARCHAR},
+            <if test="record.modelUrl != null" >
+                model_url = #{record.modelUrl,jdbcType=VARCHAR},
             </if>
-            <if test="record.msg3 != null" >
-                msg3 = #{record.msg3,jdbcType=VARCHAR},
+            <if test="record.modelType != null" >
+                model_type = #{record.modelType,jdbcType=INTEGER},
             </if>
-            <if test="record.msg4 != null" >
-                msg4 = #{record.msg4,jdbcType=VARCHAR},
-            </if>
-            <if test="record.msg5 != null" >
-                msg5 = #{record.msg5,jdbcType=VARCHAR},
-            </if>
-            <if test="record.bigPic != null" >
-                big_pic = #{record.bigPic,jdbcType=VARCHAR},
+            <if test="record.modelSort != null" >
+                model_sort = #{record.modelSort,jdbcType=INTEGER},
             </if>
         </set>
         <if test="_parameter != null" >
@@ -209,12 +187,10 @@
     <update id="updateByExample" parameterType="map" >
         update center
         set center_id = #{record.centerId,jdbcType=VARCHAR},
-            msg1 = #{record.msg1,jdbcType=VARCHAR},
-            msg2 = #{record.msg2,jdbcType=VARCHAR},
-            msg3 = #{record.msg3,jdbcType=VARCHAR},
-            msg4 = #{record.msg4,jdbcType=VARCHAR},
-            msg5 = #{record.msg5,jdbcType=VARCHAR},
-            big_pic = #{record.bigPic,jdbcType=VARCHAR}
+            model_name = #{record.modelName,jdbcType=VARCHAR},
+            model_url = #{record.modelUrl,jdbcType=VARCHAR},
+            model_type = #{record.modelType,jdbcType=INTEGER},
+            model_sort = #{record.modelSort,jdbcType=INTEGER}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -223,23 +199,17 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Center" >
         update center
         <set >
-            <if test="msg1 != null" >
-                msg1 = #{msg1,jdbcType=VARCHAR},
+            <if test="modelName != null" >
+                model_name = #{modelName,jdbcType=VARCHAR},
             </if>
-            <if test="msg2 != null" >
-                msg2 = #{msg2,jdbcType=VARCHAR},
+            <if test="modelUrl != null" >
+                model_url = #{modelUrl,jdbcType=VARCHAR},
             </if>
-            <if test="msg3 != null" >
-                msg3 = #{msg3,jdbcType=VARCHAR},
+            <if test="modelType != null" >
+                model_type = #{modelType,jdbcType=INTEGER},
             </if>
-            <if test="msg4 != null" >
-                msg4 = #{msg4,jdbcType=VARCHAR},
-            </if>
-            <if test="msg5 != null" >
-                msg5 = #{msg5,jdbcType=VARCHAR},
-            </if>
-            <if test="bigPic != null" >
-                big_pic = #{bigPic,jdbcType=VARCHAR},
+            <if test="modelSort != null" >
+                model_sort = #{modelSort,jdbcType=INTEGER},
             </if>
         </set>
         where center_id = #{centerId,jdbcType=VARCHAR}
@@ -247,12 +217,10 @@
 
     <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Center" >
         update center
-        set msg1 = #{msg1,jdbcType=VARCHAR},
-            msg2 = #{msg2,jdbcType=VARCHAR},
-            msg3 = #{msg3,jdbcType=VARCHAR},
-            msg4 = #{msg4,jdbcType=VARCHAR},
-            msg5 = #{msg5,jdbcType=VARCHAR},
-            big_pic = #{bigPic,jdbcType=VARCHAR}
+        set model_name = #{modelName,jdbcType=VARCHAR},
+            model_url = #{modelUrl,jdbcType=VARCHAR},
+            model_type = #{modelType,jdbcType=INTEGER},
+            model_sort = #{modelSort,jdbcType=INTEGER}
         where center_id = #{centerId,jdbcType=VARCHAR}
     </update>
 </mapper>

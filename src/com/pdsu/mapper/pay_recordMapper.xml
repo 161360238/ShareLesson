@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pdsu.mapper.pay_recordMapper" >
+<mapper namespace="com.pdsu.mapper.Pay_recordMapper" >
 
-    <resultMap id="BaseResultMap" type="com.pdsu.pojo.pay_record" >
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Pay_record" >
         <id column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
@@ -79,7 +79,7 @@
         order_list, pay_type
     </sql>
 
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.pay_recordExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.Pay_recordExample" >
         select
         <if test="distinct" >
             distinct
@@ -106,14 +106,14 @@
         where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
     </delete>
 
-    <delete id="deleteByExample" parameterType="com.pdsu.pojo.pay_recordExample" >
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.Pay_recordExample" >
         delete from pay_record
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" parameterType="com.pdsu.pojo.pay_record" >
+    <insert id="insert" parameterType="com.pdsu.pojo.Pay_record" >
         insert into pay_record (out_trade_no, create_time, pay_time, 
             total_fee, user_id, transaction_id, 
             trade_state, order_list, pay_type
@@ -124,7 +124,7 @@
             )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.pdsu.pojo.pay_record" >
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Pay_record" >
         insert into pay_record
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="outTradeNo != null" >
@@ -186,7 +186,7 @@
         </trim>
     </insert>
 
-    <select id="countByExample" parameterType="com.pdsu.pojo.pay_recordExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pdsu.pojo.Pay_recordExample" resultType="java.lang.Integer" >
         select count(*) from pay_record
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
@@ -245,7 +245,7 @@
         </if>
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.pay_record" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Pay_record" >
         update pay_record
         <set >
             <if test="createTime != null" >
@@ -276,7 +276,7 @@
         where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.pay_record" >
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Pay_record" >
         update pay_record
         set create_time = #{createTime,jdbcType=TIMESTAMP},
             pay_time = #{payTime,jdbcType=TIMESTAMP},

@@ -1,4 +1,4 @@
-package com.pdsu.pojo;
+package com.pdsu.mypojo;
 
 /**
  * @Auther: http://wangjie

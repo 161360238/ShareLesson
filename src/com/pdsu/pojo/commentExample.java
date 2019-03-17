@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class commentExample {
+public class CommentExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public commentExample() {
+    public CommentExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -69,7 +69,7 @@ public class commentExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-15
+     * @date 2019-03-16
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -595,7 +595,7 @@ public class commentExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-15
+     * @date 2019-03-16
      */
     public static class Criterion {
         private String condition;

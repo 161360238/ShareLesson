@@ -7,9 +7,9 @@ import java.util.Date;
  * 
  * @author wcyong
  * 
- * @date 2019-03-15
+ * @date 2019-03-16
  */
-public class order {
+public class Order {
     /**
      * 订单id
      */

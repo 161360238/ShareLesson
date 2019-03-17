@@ -9,39 +9,29 @@ package com.pdsu.pojo;
  */
 public class Center {
     /**
-     * id
+     * 模块id
      */
     private String centerId;
 
     /**
-     * 导航栏信息1
+     * 模块名称
      */
-    private String msg1;
+    private String modelName;
 
     /**
-     * 导航栏信息2
+     * 点击模块跳转的url
      */
-    private String msg2;
+    private String modelUrl;
 
     /**
-     * 导航栏信息3
+     * 类型
      */
-    private String msg3;
+    private Integer modelType;
 
     /**
-     * 导航栏信息4
+     * 排序信息
      */
-    private String msg4;
-
-    /**
-     * 导航栏信息5
-     */
-    private String msg5;
-
-    /**
-     * 首页大广告
-     */
-    private String bigPic;
+    private Integer modelSort;
 
     public String getCenterId() {
         return centerId;
@@ -51,51 +41,35 @@ public class Center {
         this.centerId = centerId == null ? null : centerId.trim();
     }
 
-    public String getMsg1() {
-        return msg1;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setMsg1(String msg1) {
-        this.msg1 = msg1 == null ? null : msg1.trim();
+    public void setModelName(String modelName) {
+        this.modelName = modelName == null ? null : modelName.trim();
     }
 
-    public String getMsg2() {
-        return msg2;
+    public String getModelUrl() {
+        return modelUrl;
     }
 
-    public void setMsg2(String msg2) {
-        this.msg2 = msg2 == null ? null : msg2.trim();
+    public void setModelUrl(String modelUrl) {
+        this.modelUrl = modelUrl == null ? null : modelUrl.trim();
     }
 
-    public String getMsg3() {
-        return msg3;
+    public Integer getModelType() {
+        return modelType;
     }
 
-    public void setMsg3(String msg3) {
-        this.msg3 = msg3 == null ? null : msg3.trim();
+    public void setModelType(Integer modelType) {
+        this.modelType = modelType;
     }
 
-    public String getMsg4() {
-        return msg4;
+    public Integer getModelSort() {
+        return modelSort;
     }
 
-    public void setMsg4(String msg4) {
-        this.msg4 = msg4 == null ? null : msg4.trim();
-    }
-
-    public String getMsg5() {
-        return msg5;
-    }
-
-    public void setMsg5(String msg5) {
-        this.msg5 = msg5 == null ? null : msg5.trim();
-    }
-
-    public String getBigPic() {
-        return bigPic;
-    }
-
-    public void setBigPic(String bigPic) {
-        this.bigPic = bigPic == null ? null : bigPic.trim();
+    public void setModelSort(Integer modelSort) {
+        this.modelSort = modelSort;
     }
 }

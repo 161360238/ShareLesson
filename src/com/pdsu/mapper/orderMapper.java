@@ -1,30 +1,30 @@
 package com.pdsu.mapper;
 
-import com.pdsu.pojo.order;
-import com.pdsu.pojo.orderExample;
+import com.pdsu.pojo.Order;
+import com.pdsu.pojo.OrderExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface orderMapper {
-    int countByExample(orderExample example);
+public interface OrderMapper {
+    int countByExample(OrderExample example);
 
-    int deleteByExample(orderExample example);
+    int deleteByExample(OrderExample example);
 
     int deleteByPrimaryKey(String orderId);
 
-    int insert(order record);
+    int insert(Order record);
 
-    int insertSelective(order record);
+    int insertSelective(Order record);
 
-    List<order> selectByExample(orderExample example);
+    List<Order> selectByExample(OrderExample example);
 
-    order selectByPrimaryKey(String orderId);
+    Order selectByPrimaryKey(String orderId);
 
-    int updateByExampleSelective(@Param("record") order record, @Param("example") orderExample example);
+    int updateByExampleSelective(@Param("record") Order record, @Param("example") OrderExample example);
 
-    int updateByExample(@Param("record") order record, @Param("example") orderExample example);
+    int updateByExample(@Param("record") Order record, @Param("example") OrderExample example);
 
-    int updateByPrimaryKeySelective(order record);
+    int updateByPrimaryKeySelective(Order record);
 
-    int updateByPrimaryKey(order record);
+    int updateByPrimaryKey(Order record);
 }

@@ -1,30 +1,30 @@
 package com.pdsu.mapper;
 
-import com.pdsu.pojo.lesson;
-import com.pdsu.pojo.lessonExample;
+import com.pdsu.pojo.Lesson;
+import com.pdsu.pojo.LessonExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface lessonMapper {
-    int countByExample(lessonExample example);
+public interface LessonMapper {
+    int countByExample(LessonExample example);
 
-    int deleteByExample(lessonExample example);
+    int deleteByExample(LessonExample example);
 
     int deleteByPrimaryKey(String lId);
 
-    int insert(lesson record);
+    int insert(Lesson record);
 
-    int insertSelective(lesson record);
+    int insertSelective(Lesson record);
 
-    List<lesson> selectByExample(lessonExample example);
+    List<Lesson> selectByExample(LessonExample example);
 
-    lesson selectByPrimaryKey(String lId);
+    Lesson selectByPrimaryKey(String lId);
 
-    int updateByExampleSelective(@Param("record") lesson record, @Param("example") lessonExample example);
+    int updateByExampleSelective(@Param("record") Lesson record, @Param("example") LessonExample example);
 
-    int updateByExample(@Param("record") lesson record, @Param("example") lessonExample example);
+    int updateByExample(@Param("record") Lesson record, @Param("example") LessonExample example);
 
-    int updateByPrimaryKeySelective(lesson record);
+    int updateByPrimaryKeySelective(Lesson record);
 
-    int updateByPrimaryKey(lesson record);
+    int updateByPrimaryKey(Lesson record);
 }

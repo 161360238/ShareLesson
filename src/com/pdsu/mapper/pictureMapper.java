@@ -1,30 +1,30 @@
 package com.pdsu.mapper;
 
-import com.pdsu.pojo.picture;
-import com.pdsu.pojo.pictureExample;
+import com.pdsu.pojo.Picture;
+import com.pdsu.pojo.PictureExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface pictureMapper {
-    int countByExample(pictureExample example);
+public interface PictureMapper {
+    int countByExample(PictureExample example);
 
-    int deleteByExample(pictureExample example);
+    int deleteByExample(PictureExample example);
 
     int deleteByPrimaryKey(String picId);
 
-    int insert(picture record);
+    int insert(Picture record);
 
-    int insertSelective(picture record);
+    int insertSelective(Picture record);
 
-    List<picture> selectByExample(pictureExample example);
+    List<Picture> selectByExample(PictureExample example);
 
-    picture selectByPrimaryKey(String picId);
+    Picture selectByPrimaryKey(String picId);
 
-    int updateByExampleSelective(@Param("record") picture record, @Param("example") pictureExample example);
+    int updateByExampleSelective(@Param("record") Picture record, @Param("example") PictureExample example);
 
-    int updateByExample(@Param("record") picture record, @Param("example") pictureExample example);
+    int updateByExample(@Param("record") Picture record, @Param("example") PictureExample example);
 
-    int updateByPrimaryKeySelective(picture record);
+    int updateByPrimaryKeySelective(Picture record);
 
-    int updateByPrimaryKey(picture record);
+    int updateByPrimaryKey(Picture record);
 }

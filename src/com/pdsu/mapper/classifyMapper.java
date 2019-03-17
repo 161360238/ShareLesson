@@ -1,30 +1,30 @@
 package com.pdsu.mapper;
 
-import com.pdsu.pojo.classify;
-import com.pdsu.pojo.classifyExample;
+import com.pdsu.pojo.Classify;
+import com.pdsu.pojo.ClassifyExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface classifyMapper {
-    int countByExample(classifyExample example);
+public interface ClassifyMapper {
+    int countByExample(ClassifyExample example);
 
-    int deleteByExample(classifyExample example);
+    int deleteByExample(ClassifyExample example);
 
     int deleteByPrimaryKey(String classifyId);
 
-    int insert(classify record);
+    int insert(Classify record);
 
-    int insertSelective(classify record);
+    int insertSelective(Classify record);
 
-    List<classify> selectByExample(classifyExample example);
+    List<Classify> selectByExample(ClassifyExample example);
 
-    classify selectByPrimaryKey(String classifyId);
+    Classify selectByPrimaryKey(String classifyId);
 
-    int updateByExampleSelective(@Param("record") classify record, @Param("example") classifyExample example);
+    int updateByExampleSelective(@Param("record") Classify record, @Param("example") ClassifyExample example);
 
-    int updateByExample(@Param("record") classify record, @Param("example") classifyExample example);
+    int updateByExample(@Param("record") Classify record, @Param("example") ClassifyExample example);
 
-    int updateByPrimaryKeySelective(classify record);
+    int updateByPrimaryKeySelective(Classify record);
 
-    int updateByPrimaryKey(classify record);
+    int updateByPrimaryKey(Classify record);
 }

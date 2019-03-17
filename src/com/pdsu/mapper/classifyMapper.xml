@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pdsu.mapper.classifyMapper" >
+<mapper namespace="com.pdsu.mapper.ClassifyMapper" >
 
-    <resultMap id="BaseResultMap" type="com.pdsu.pojo.classify" >
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Classify" >
         <id column="classify_id" property="classifyId" jdbcType="VARCHAR" />
         <result column="pid" property="pid" jdbcType="VARCHAR" />
         <result column="classify_name" property="classifyName" jdbcType="VARCHAR" />
@@ -75,7 +75,7 @@
         classify_id, pid, classify_name, classify_sort, classify_status, is_parent
     </sql>
 
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.classifyExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.ClassifyExample" >
         select
         <if test="distinct" >
             distinct
@@ -102,14 +102,14 @@
         where classify_id = #{classifyId,jdbcType=VARCHAR}
     </delete>
 
-    <delete id="deleteByExample" parameterType="com.pdsu.pojo.classifyExample" >
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.ClassifyExample" >
         delete from classify
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" parameterType="com.pdsu.pojo.classify" >
+    <insert id="insert" parameterType="com.pdsu.pojo.Classify" >
         insert into classify (classify_id, pid, classify_name, 
             classify_sort, classify_status, is_parent
             )
@@ -118,7 +118,7 @@
             )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.pdsu.pojo.classify" >
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Classify" >
         insert into classify
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="classifyId != null" >
@@ -162,7 +162,7 @@
         </trim>
     </insert>
 
-    <select id="countByExample" parameterType="com.pdsu.pojo.classifyExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pdsu.pojo.ClassifyExample" resultType="java.lang.Integer" >
         select count(*) from classify
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
@@ -209,7 +209,7 @@
         </if>
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.classify" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Classify" >
         update classify
         <set >
             <if test="pid != null" >
@@ -231,7 +231,7 @@
         where classify_id = #{classifyId,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.classify" >
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Classify" >
         update classify
         set pid = #{pid,jdbcType=VARCHAR},
             classify_name = #{classifyName,jdbcType=VARCHAR},

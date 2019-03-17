@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pdsu.mapper.follow_perMapper" >
+<mapper namespace="com.pdsu.mapper.Follow_perMapper" >
 
-    <resultMap id="BaseResultMap" type="com.pdsu.pojo.follow_per" >
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Follow_per" >
         <id column="follow_id" property="followId" jdbcType="VARCHAR" />
         <result column="s_id" property="sId" jdbcType="VARCHAR" />
         <result column="t_id" property="tId" jdbcType="VARCHAR" />
@@ -72,7 +72,7 @@
         follow_id, s_id, t_id
     </sql>
 
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.follow_perExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.Follow_perExample" >
         select
         <if test="distinct" >
             distinct
@@ -99,21 +99,21 @@
         where follow_id = #{followId,jdbcType=VARCHAR}
     </delete>
 
-    <delete id="deleteByExample" parameterType="com.pdsu.pojo.follow_perExample" >
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.Follow_perExample" >
         delete from follow_per
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" parameterType="com.pdsu.pojo.follow_per" >
+    <insert id="insert" parameterType="com.pdsu.pojo.Follow_per" >
         insert into follow_per (follow_id, s_id, t_id
             )
         values (#{followId,jdbcType=VARCHAR}, #{sId,jdbcType=VARCHAR}, #{tId,jdbcType=VARCHAR}
             )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.pdsu.pojo.follow_per" >
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Follow_per" >
         insert into follow_per
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="followId != null" >
@@ -139,7 +139,7 @@
         </trim>
     </insert>
 
-    <select id="countByExample" parameterType="com.pdsu.pojo.follow_perExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pdsu.pojo.Follow_perExample" resultType="java.lang.Integer" >
         select count(*) from follow_per
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
@@ -174,7 +174,7 @@
         </if>
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.follow_per" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Follow_per" >
         update follow_per
         <set >
             <if test="sId != null" >
@@ -187,7 +187,7 @@
         where follow_id = #{followId,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.follow_per" >
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Follow_per" >
         update follow_per
         set s_id = #{sId,jdbcType=VARCHAR},
             t_id = #{tId,jdbcType=VARCHAR}

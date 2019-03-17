@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pdsu.mapper.messageMapper" >
+<mapper namespace="com.pdsu.mapper.MessageMapper" >
 
-    <resultMap id="BaseResultMap" type="com.pdsu.pojo.message" >
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Message" >
         <id column="m_id" property="mId" jdbcType="VARCHAR" />
         <result column="created" property="created" jdbcType="TIMESTAMP" />
         <result column="from_id" property="fromId" jdbcType="VARCHAR" />
@@ -75,7 +75,7 @@
         m_id, created, from_id, own_id, l_id, status
     </sql>
 
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.messageExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.MessageExample" >
         select
         <if test="distinct" >
             distinct
@@ -102,14 +102,14 @@
         where m_id = #{mId,jdbcType=VARCHAR}
     </delete>
 
-    <delete id="deleteByExample" parameterType="com.pdsu.pojo.messageExample" >
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.MessageExample" >
         delete from message
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" parameterType="com.pdsu.pojo.message" >
+    <insert id="insert" parameterType="com.pdsu.pojo.Message" >
         insert into message (m_id, created, from_id, 
             own_id, l_id, status
             )
@@ -118,7 +118,7 @@
             )
     </insert>
 
-    <insert id="insertSelective" parameterType="com.pdsu.pojo.message" >
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Message" >
         insert into message
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="mId != null" >
@@ -162,7 +162,7 @@
         </trim>
     </insert>
 
-    <select id="countByExample" parameterType="com.pdsu.pojo.messageExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pdsu.pojo.MessageExample" resultType="java.lang.Integer" >
         select count(*) from message
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
@@ -209,7 +209,7 @@
         </if>
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.message" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Message" >
         update message
         <set >
             <if test="created != null" >
@@ -231,7 +231,7 @@
         where m_id = #{mId,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.message" >
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Message" >
         update message
         set created = #{created,jdbcType=TIMESTAMP},
             from_id = #{fromId,jdbcType=VARCHAR},

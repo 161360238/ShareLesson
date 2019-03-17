@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pdsu.mapper.pictureMapper" >
+<mapper namespace="com.pdsu.mapper.PictureMapper" >
 
-    <resultMap id="BaseResultMap" type="com.pdsu.pojo.picture" >
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Picture" >
         <id column="pic_id" property="picId" jdbcType="VARCHAR" />
         <result column="path" property="path" jdbcType="VARCHAR" />
         <result column="pic_name" property="picName" jdbcType="VARCHAR" />
@@ -73,7 +73,7 @@
         pic_id, path, pic_name, status
     </sql>
 
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.pictureExample" >
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.PictureExample" >
         select
         <if test="distinct" >
             distinct
@@ -100,21 +100,21 @@
         where pic_id = #{picId,jdbcType=VARCHAR}
     </delete>
 
-    <delete id="deleteByExample" parameterType="com.pdsu.pojo.pictureExample" >
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.PictureExample" >
         delete from picture
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
         </if>
     </delete>
 
-    <insert id="insert" parameterType="com.pdsu.pojo.picture" >
+    <insert id="insert" parameterType="com.pdsu.pojo.Picture" >
         insert into picture (pic_id, path, pic_name, 
             status)
         values (#{picId,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{picName,jdbcType=VARCHAR}, 
             #{status,jdbcType=INTEGER})
     </insert>
 
-    <insert id="insertSelective" parameterType="com.pdsu.pojo.picture" >
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Picture" >
         insert into picture
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="picId != null" >
@@ -146,7 +146,7 @@
         </trim>
     </insert>
 
-    <select id="countByExample" parameterType="com.pdsu.pojo.pictureExample" resultType="java.lang.Integer" >
+    <select id="countByExample" parameterType="com.pdsu.pojo.PictureExample" resultType="java.lang.Integer" >
         select count(*) from picture
         <if test="_parameter != null" >
             <include refid="Example_Where_Clause" />
@@ -185,7 +185,7 @@
         </if>
     </update>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.picture" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Picture" >
         update picture
         <set >
             <if test="path != null" >
@@ -201,7 +201,7 @@
         where pic_id = #{picId,jdbcType=VARCHAR}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.picture" >
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Picture" >
         update picture
         set path = #{path,jdbcType=VARCHAR},
             pic_name = #{picName,jdbcType=VARCHAR},

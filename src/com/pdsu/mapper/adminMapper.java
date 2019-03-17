@@ -1,30 +1,30 @@
 package com.pdsu.mapper;
 
-import com.pdsu.pojo.admin;
-import com.pdsu.pojo.adminExample;
+import com.pdsu.pojo.Admin;
+import com.pdsu.pojo.AdminExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface adminMapper {
-    int countByExample(adminExample example);
+public interface AdminMapper {
+    int countByExample(AdminExample example);
 
-    int deleteByExample(adminExample example);
+    int deleteByExample(AdminExample example);
 
     int deleteByPrimaryKey(String aId);
 
-    int insert(admin record);
+    int insert(Admin record);
 
-    int insertSelective(admin record);
+    int insertSelective(Admin record);
 
-    List<admin> selectByExample(adminExample example);
+    List<Admin> selectByExample(AdminExample example);
 
-    admin selectByPrimaryKey(String aId);
+    Admin selectByPrimaryKey(String aId);
 
-    int updateByExampleSelective(@Param("record") admin record, @Param("example") adminExample example);
+    int updateByExampleSelective(@Param("record") Admin record, @Param("example") AdminExample example);
 
-    int updateByExample(@Param("record") admin record, @Param("example") adminExample example);
+    int updateByExample(@Param("record") Admin record, @Param("example") AdminExample example);
 
-    int updateByPrimaryKeySelective(admin record);
+    int updateByPrimaryKeySelective(Admin record);
 
-    int updateByPrimaryKey(admin record);
+    int updateByPrimaryKey(Admin record);
 }
