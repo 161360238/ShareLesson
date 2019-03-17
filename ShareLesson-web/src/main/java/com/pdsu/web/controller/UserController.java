@@ -34,7 +34,6 @@ public class UserController {
 
     /**
      * 用户登录
-     *
      * @param user
      * @param request
      * @param response
@@ -101,5 +100,14 @@ public class UserController {
     public Result getUserInfo(String token) {
         return userServiceImpl.getUserByToken(token);
     }
+
+
+    @ResponseBody
+    @RequestMapping("/test")
+    public String test(){
+
+        return "hello";
+    }
+
 
 }
