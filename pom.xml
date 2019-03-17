@@ -17,6 +17,7 @@
 
     <!--对依赖的坐标的版本做集中管理-->
     <properties>
+        <fileupload-version>1.3.1</fileupload-version>
         <junit.version>4.12</junit.version>
         <spring.version>4.1.3.RELEASE</spring.version>
         <mybatis.version>3.2.8</mybatis.version>
@@ -44,6 +45,12 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${fileupload-version}</version>
             </dependency>
 
             <!--mybatis-->

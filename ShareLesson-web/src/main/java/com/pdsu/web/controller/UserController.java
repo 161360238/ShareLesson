@@ -1,9 +1,10 @@
 package com.pdsu.web.controller;
 
-import com.pdsu.pojo.Result;
+import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.User;
 import com.pdsu.service.RedisService;
 import com.pdsu.service.UserService;
+import com.pdsu.utils.CodecUtil;
 import com.pdsu.utils.CookieUtils;
 import com.pdsu.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class UserController {
 
     /**
      * 用户登录
+     *
      * @param user
      * @param request
      * @param response
@@ -42,7 +44,6 @@ public class UserController {
     @RequestMapping("login.do")
     public Result login(User user, HttpServletRequest request,
                         HttpServletResponse response) {
-
         Result result = new Result();
         User user1 = userServiceImpl.login(user);
         if (user1 != null) {
@@ -62,4 +63,43 @@ public class UserController {
         }
         return result;
     }
+
+    /**
+     * 用户注册
+     *
+     * @param user
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/regist.do")
+    public Result register(User user) {
+        Result result = new Result();
+        String uid = CodecUtil.createUUID();
+        user.setuId(uid);
+        int status = userServiceImpl.regist(user);
+        if (status == 1) {
+            result.setCode("200");
+            result.setMessage("注册成功");
+        } else if (status == 2) {
+            result.setCode("202");
+            result.setMessage("用户名已经存在");
+        } else {
+            result.setCode("201");
+            result.setMessage("用户注册失败");
+        }
+        return result;
+    }
+
+    /**
+     * 利用token从redis中获取用户数据，检查是否已经登录
+     *
+     * @param token
+     * @return
+     */
+    @RequestMapping("/getUser.do")
+    @ResponseBody
+    public Result getUserInfo(String token) {
+        return userServiceImpl.getUserByToken(token);
+    }
+
 }

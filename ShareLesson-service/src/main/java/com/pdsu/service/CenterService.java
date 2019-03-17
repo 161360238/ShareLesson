@@ -1,8 +1,11 @@
 package com.pdsu.service;
 
 import com.pdsu.pojo.Center;
+import com.pdsu.pojo.Classify;
+import com.pdsu.pojo.Lesson;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: http://wangjie
@@ -13,6 +16,17 @@ import java.util.List;
  */
 public interface CenterService {
 
+    /**
+     * 显示导航栏信息
+     * @return
+     */
     List<Center> selectCtener();
 
+    /**
+     * 查询分类
+     * @return
+     */
+    List<Classify> selectClassify();
+
+    Map<Classify, List<Lesson>> selectLessonByClassify(List<Classify> classifies);
 }

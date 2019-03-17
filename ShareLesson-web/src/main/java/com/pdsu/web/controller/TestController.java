@@ -1,6 +1,6 @@
 package com.pdsu.web.controller;
 
-import com.pdsu.pojo.Result;
+import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.User;
 import com.pdsu.service.RedisService;
 import com.pdsu.service.TestService;

@@ -1,5 +1,6 @@
 package com.pdsu.service;
 
+import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.User;
 
 /**
@@ -10,6 +11,26 @@ import com.pdsu.pojo.User;
  */
 public interface UserService {
 
+    /**
+     * 处理用户登录
+     * @param user
+     * @return
+     */
     User login(User user);
+
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
+    int regist(User user);
+
+    /**
+     * 根据token获取用户信息
+     * @param token
+     * @return
+     */
+    Result getUserByToken(String token);
+
 
 }
