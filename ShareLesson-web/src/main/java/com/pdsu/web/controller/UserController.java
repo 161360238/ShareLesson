@@ -102,12 +102,5 @@ public class UserController {
     }
 
 
-    @ResponseBody
-    @RequestMapping("/test")
-    public String test(){
-
-        return "hello";
-    }
-
 
 }
