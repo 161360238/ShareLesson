@@ -5,6 +5,7 @@ import com.pdsu.mapper.ClassifyMapper;
 import com.pdsu.mapper.LessonMapper;
 import com.pdsu.pojo.*;
 import com.pdsu.service.CenterService;
+import com.pdsu.service.ClassifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,9 @@ public class CenterServiceImpl implements CenterService {
 
     @Autowired
     private LessonMapper lessonMapper;
+
+    @Autowired
+    private ClassifyService classifyServiceImpl;
 
     /**
      * 查询首页信息
@@ -121,6 +125,26 @@ public class CenterServiceImpl implements CenterService {
                 .andExamEqualTo(1);          //对状态进行限制，只查询审核通过和未过时课程
         lessonExample.setOrderByClause("begin_time ASC");
         lessons = lessonMapper.selectByExample(lessonExample);
+        return lessons;
+    }
+
+    /**
+     * 根据父id查询课程
+     *
+     * @param pid
+     * @return
+     */
+    @Override
+    public List<Lesson> selectLessonByParentClassifyId(String pid) {
+        //先根据父分类查询改分类下的子分类
+        List<Classify> classifies = classifyServiceImpl.selectClassifyByPid(pid);
+        List<Lesson> lessons = new ArrayList<>();   //存储全部的课程
+        if (classifies != null && classifies.size() > 0) {
+            for (int i = 0; i < classifies.size(); i++) {
+                lessons.addAll(
+                        this.selectLessonByClassifyId(classifies.get(i).getClassifyId()));
+            }
+        }
         return lessons;
     }
 

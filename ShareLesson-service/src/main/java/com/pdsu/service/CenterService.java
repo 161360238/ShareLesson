@@ -48,4 +48,11 @@ public interface CenterService {
      * @return
      */
     public List<Lesson> selectLessonByClassifyId(String id);
+
+    /**
+     * 根据父id查询课程
+     * @param pid
+     * @return
+     */
+    List<Lesson> selectLessonByParentClassifyId(String pid);
 }

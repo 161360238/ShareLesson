@@ -36,15 +36,17 @@ public class LessonController {
 
     @Autowired
     private CenterService centerServiceImpl;
+
     /**
      * 添加课程时上传图片
+     *
      * @param imgFile
      * @return
      */
     @RequestMapping("/picUpload.do")
     @ResponseBody
-    public Map<String,Object> picUpload(MultipartFile imgFile){
-        Result result=new Result();
+    public Map<String, Object> picUpload(MultipartFile imgFile) {
+        Result result = new Result();
         try {
             return imageService.upload(imgFile);
         } catch (IOException e) {
@@ -56,21 +58,37 @@ public class LessonController {
     /**
      * 根据分类id查询课程
      * 分页查询
+     *
      * @param id
      * @return
      */
     @ResponseBody
     @RequestMapping("/selectLessonByClassify.do")
     public Result selectLessonByClassify(String id
-            , @RequestParam(value = "pn", defaultValue = "1") Integer pn){
+            , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         //在查询之前需要调用，传入页码，以及每页大小
-        PageHelper.startPage(pn,2);
+        PageHelper.startPage(pn, 5);
         //后面紧跟的这个查询就是分页查询
-        List<Lesson> lessonList=centerServiceImpl.selectLessonByClassifyId(id);
+        List<Lesson> lessonList = centerServiceImpl.selectLessonByClassifyId(id);
         // 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
         PageInfo page = new PageInfo(lessonList, 5);
-        Result result=new Result();
+        Result result = new Result();
         result.setData(page);
         return result;
+    }
+
+    /**
+     * 根据父id查询课程信息
+     *
+     * @param pid
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("selectLessonByParentClassify.do")
+    public Result selectLessonByParentClassify(String pid
+            , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+        PageHelper.startPage(pn, 5); //每页显示5条数据
+        List<Lesson> lessonList = centerServiceImpl.selectLessonByParentClassifyId(pid);
+        return null;
     }
 }

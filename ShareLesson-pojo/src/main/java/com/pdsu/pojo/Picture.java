@@ -5,7 +5,7 @@ package com.pdsu.pojo;
  * 
  * @author wcyong
  * 
- * @date 2019-03-16
+ * @date 2019-03-18
  */
 public class Picture {
     /**
