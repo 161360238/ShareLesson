@@ -28,5 +28,24 @@ public interface CenterService {
      */
     List<Classify> selectClassify();
 
-    Map<Classify, List<Lesson>> selectLessonByClassify(List<Classify> classifies);
+    /**
+     * 根据分类查询该分类下的课程，用于首页显示
+     * @param classifies
+     * @return
+     */
+    Map<Classify, List<Lesson>> selectLessonByClassifys(List<Classify> classifies);
+
+    /**
+     * 根据分类id查询该分类指定个数课程
+     * @param id
+     * @return
+     */
+    List<Lesson> selectLessonByClassifyId(String id,int n);
+
+    /**
+     * 根据分类id查询
+     * @param id
+     * @return
+     */
+    public List<Lesson> selectLessonByClassifyId(String id);
 }
