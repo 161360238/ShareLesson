@@ -41,5 +41,10 @@
         <constructor-arg name="host" value="${redis.host}"/>
         <constructor-arg name="port" value="${redis.port}"/>
     </bean>
+    <!-- 启用MVC注解 -->
+    <mvc:annotation-driven />
+    <!-- 将 springSwaggerConfig加载到spring容器 -->
+   <!-- <bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" />  -->
+
 
 </beans>

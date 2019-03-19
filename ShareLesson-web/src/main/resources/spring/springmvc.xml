@@ -31,4 +31,16 @@
     <!-- 配置静态资源映射 -->
     <mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
     <mvc:resources location="/WEB-INF/js/" mapping="/js/**"/>
+
+    <!-- 对静态资源文件的访问， 将无法mapping到Controller的path交给default servlet handler处理 -->
+    <!-- 将静态资源交由默认的servlet处理 -->
+    <mvc:default-servlet-handler/>
+    <!-- 向容器自动注入配置 -->
+    <context:annotation-config/>
+    <!-- 将SwaggerConfig配置类注入 -->
+    <!-- 将自定义的swagger配置类加载到spring容器 -->
+    <bean class="com.pdsu.swagger.SpringFoxConfig" />
+
+
+
 </beans>

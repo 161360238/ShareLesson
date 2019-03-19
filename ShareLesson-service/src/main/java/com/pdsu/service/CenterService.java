@@ -43,16 +43,18 @@ public interface CenterService {
     List<Lesson> selectLessonByClassifyId(String id,int n);
 
     /**
-     * 根据分类id查询
+     * 根据分类id查询(isCharge-->1:收费，0:免费,2:不做限制)
+     * 分页查询
      * @param id
      * @return
      */
-    public List<Lesson> selectLessonByClassifyId(String id);
+    public List<Lesson> selectLessonByClassifyId2(String id,int isCharge);
 
     /**
-     * 根据父id查询课程
+     * 根据父id查询课程(isCharge-->1:收费，0:免费)
+     * 分页查询
      * @param pid
      * @return
      */
-    List<Lesson> selectLessonByParentClassifyId(String pid);
+    List<Lesson> selectLessonByParentClassifyId(String pid,int isCharge);
 }

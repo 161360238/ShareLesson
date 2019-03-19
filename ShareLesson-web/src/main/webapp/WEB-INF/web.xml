@@ -24,7 +24,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>
-        <url-pattern>*.do</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
 
@@ -41,16 +41,36 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- 通过CORS技术实现AJAX跨域访问 -->
+
+    <!-- cors配置 -->
     <filter>
-        <filter-name>cros</filter-name>
-        <filter-class>com.pdsu.web.filter.CorsFilter</filter-class>
+        <filter-name>CORS</filter-name>
+        <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+        <init-param>
+            <param-name>cors.allowOrigin</param-name>
+            <param-value>*</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.supportedMethods</param-name>
+            <param-value>GET, POST, HEAD, PUT, DELETE</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.supportedHeaders</param-name>
+            <param-value>Accept, Origin, X-Requested-With, Content-Type, Last-Modified</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.exposedHeaders</param-name>
+            <param-value>Set-Cookie</param-value>
+        </init-param>
+        <init-param>
+            <param-name>cors.supportsCredentials</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
-        <filter-name>cros</filter-name>
+        <filter-name>CORS</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

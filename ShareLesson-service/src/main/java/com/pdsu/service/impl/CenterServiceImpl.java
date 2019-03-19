@@ -117,14 +117,34 @@ public class CenterServiceImpl implements CenterService {
      * @return
      */
     @Override
-    public List<Lesson> selectLessonByClassifyId(String id) {
+    public List<Lesson> selectLessonByClassifyId2(String id, int isCharge) {
         List<Lesson> lessons = new ArrayList<>();
-        LessonExample lessonExample = new LessonExample();
-        lessonExample.createCriteria().andClassifyIdEqualTo(id) //分类限制条件
-                .andBeginTimeGreaterThan(new Date())   //开始时间在当前时间后
-                .andExamEqualTo(1);          //对状态进行限制，只查询审核通过和未过时课程
-        lessonExample.setOrderByClause("begin_time ASC");
-        lessons = lessonMapper.selectByExample(lessonExample);
+        if (isCharge == 1) {
+            LessonExample lessonExample = new LessonExample();
+            lessonExample.createCriteria().andClassifyIdEqualTo(id) //分类限制条件
+                    .andBeginTimeGreaterThan(new Date())   //开始时间在当前时间后
+                    .andIschargeEqualTo(1)        //只查询收费课程
+                    .andExamEqualTo(1);          //对状态进行限制，只查询审核通过和未过时课程
+            lessonExample.setOrderByClause("begin_time ASC");
+            lessons = lessonMapper.selectByExample(lessonExample);
+        } else if (isCharge == 0) {
+            LessonExample lessonExample = new LessonExample();
+            lessonExample.createCriteria().andClassifyIdEqualTo(id) //分类限制条件
+                    .andBeginTimeGreaterThan(new Date())   //开始时间在当前时间后
+                    .andIschargeEqualTo(0)        //只查询免费课程
+                    .andExamEqualTo(1);          //对状态进行限制，只查询审核通过和未过时课程
+            lessonExample.setOrderByClause("begin_time ASC");
+            lessons = lessonMapper.selectByExample(lessonExample);
+        } else {
+            //收费，免费全查
+            LessonExample lessonExample = new LessonExample();
+            lessonExample.createCriteria().andClassifyIdEqualTo(id) //分类限制条件
+                    .andBeginTimeGreaterThan(new Date())   //开始时间在当前时间后
+                    .andExamEqualTo(1);          //对状态进行限制，只查询审核通过和未过时课程
+            lessonExample.setOrderByClause("begin_time ASC");
+            lessons = lessonMapper.selectByExample(lessonExample);
+        }
+
         return lessons;
     }
 
@@ -135,14 +155,14 @@ public class CenterServiceImpl implements CenterService {
      * @return
      */
     @Override
-    public List<Lesson> selectLessonByParentClassifyId(String pid) {
+    public List<Lesson> selectLessonByParentClassifyId(String pid, int isCharge) {
         //先根据父分类查询改分类下的子分类
         List<Classify> classifies = classifyServiceImpl.selectClassifyByPid(pid);
         List<Lesson> lessons = new ArrayList<>();   //存储全部的课程
         if (classifies != null && classifies.size() > 0) {
             for (int i = 0; i < classifies.size(); i++) {
                 lessons.addAll(
-                        this.selectLessonByClassifyId(classifies.get(i).getClassifyId()));
+                        this.selectLessonByClassifyId2(classifies.get(i).getClassifyId(), isCharge));
             }
         }
         return lessons;

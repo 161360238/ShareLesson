@@ -64,12 +64,12 @@ public class LessonController {
      */
     @ResponseBody
     @RequestMapping("/selectLessonByClassify.do")
-    public Result selectLessonByClassify(String id
+    public Result selectLessonByClassify(String id, int isCharge
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         //在查询之前需要调用，传入页码，以及每页大小
         PageHelper.startPage(pn, 5);
         //后面紧跟的这个查询就是分页查询
-        List<Lesson> lessonList = centerServiceImpl.selectLessonByClassifyId(id);
+        List<Lesson> lessonList = centerServiceImpl.selectLessonByClassifyId(id, isCharge);
         // 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
         PageInfo page = new PageInfo(lessonList, 5);
         Result result = new Result();
@@ -85,10 +85,13 @@ public class LessonController {
      */
     @ResponseBody
     @RequestMapping("selectLessonByParentClassify.do")
-    public Result selectLessonByParentClassify(String pid
+    public Result selectLessonByParentClassify(String pid, int isCharge
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5); //每页显示5条数据
-        List<Lesson> lessonList = centerServiceImpl.selectLessonByParentClassifyId(pid);
-        return null;
+        List<Lesson> lessonList = centerServiceImpl.selectLessonByParentClassifyId(pid, isCharge);
+        PageInfo page = new PageInfo(lessonList, 5);
+        Result result = new Result();
+        result.setData(page);
+        return result;
     }
 }
