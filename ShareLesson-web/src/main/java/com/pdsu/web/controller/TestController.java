@@ -7,6 +7,7 @@ import com.pdsu.service.TestService;
 import com.pdsu.utils.CookieUtils;
 import com.pdsu.utils.JsonUtils;
 import com.pdsu.web.base.BaseController;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import java.util.UUID;
  * @version: 1.0
  */
 @Controller
+@Api(tags = { "测试模块 可忽略" })
 public class TestController extends BaseController {
 
     @Autowired

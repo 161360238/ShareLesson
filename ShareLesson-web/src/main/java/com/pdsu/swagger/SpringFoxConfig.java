@@ -35,8 +35,8 @@ public class SpringFoxConfig extends WebMvcConfigurationSupport {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("xxx项目接口文档")
-                .description("xxx项目接口测试")
+                .title("共享课堂项目在线接口文档")
+                .description("共享课堂项目接口测试")
                 .version("1.0.0")
                 .termsOfServiceUrl("")
                 .license("")

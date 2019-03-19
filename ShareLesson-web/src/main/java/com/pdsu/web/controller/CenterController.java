@@ -6,9 +6,14 @@ import com.pdsu.pojo.Classify;
 import com.pdsu.pojo.Lesson;
 import com.pdsu.service.CenterService;
 import com.pdsu.utils.JsonUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -24,6 +29,7 @@ import java.util.Map;
  */
 
 @Controller
+@Api(tags = { "主页信息 相关接口" })
 @RequestMapping("/center")
 public class CenterController {
 
@@ -35,8 +41,9 @@ public class CenterController {
      *
      * @return
      */
+    @ApiOperation(value = "hello", notes = "获取首页导航栏信息")
     @ResponseBody
-    @RequestMapping("/selectCenter.do")
+    @RequestMapping(value = "/selectCenter.do",method = RequestMethod.GET)
     public Result selectCebter() {
         Result result = new Result();
         List<Center> list = centerServiceImpl.selectCtener();
@@ -56,8 +63,9 @@ public class CenterController {
      *
      * @return
      */
+    @RequestMapping(value = "/getLesson.do",method = RequestMethod.GET)
     @ResponseBody
-    @RequestMapping("/getLesson.do")
+    @ApiOperation(value = "首页获取推送课程信息")
     public Result getLesson() {
         Result result = new Result();
         Map<Classify, List<Lesson>> message = new HashMap<>();

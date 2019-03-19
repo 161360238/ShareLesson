@@ -3,9 +3,14 @@ package com.pdsu.web.controller;
 import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.Classify;
 import com.pdsu.service.ClassifyService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -18,14 +23,19 @@ import java.util.List;
  * @version: 1.0
  */
 @Controller
+@Api(tags = { "分类信息 相关接口" })
 @RequestMapping("/classify")
 public class ClassifyController {
 
     @Autowired
     private ClassifyService classifyServiceImpl;
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pid",required = true,paramType = "query",value = "父id")
+    })
+    @ApiOperation(value  = "根据父分类查询该分类下的课程信息")
     @ResponseBody
-    @RequestMapping("/selectClassifyByPid.do")
+    @RequestMapping(value = "/selectClassifyByPid.do",method = RequestMethod.GET)
     public Result selectClassifyByPid(String pid) {
 
         Result result = new Result();

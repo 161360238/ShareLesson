@@ -7,9 +7,14 @@ import com.pdsu.pojo.Lesson;
 import com.pdsu.service.CenterService;
 import com.pdsu.service.ImageService;
 import com.pdsu.service.LessonService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +30,7 @@ import java.util.Map;
  * @version: 1.0
  */
 @Controller
+@Api(tags = { "课程信息 相关接口" })
 @RequestMapping("/lesson")
 public class LessonController {
 
@@ -43,7 +49,8 @@ public class LessonController {
      * @param imgFile
      * @return
      */
-    @RequestMapping("/picUpload.do")
+    @ApiOperation(value = "上传图片接口")
+    @RequestMapping(value = "/picUpload.do",method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> picUpload(MultipartFile imgFile) {
         Result result = new Result();
@@ -62,8 +69,14 @@ public class LessonController {
      * @param id
      * @return
      */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id",required = true,dataType = "String",paramType = "query",value = "分类id"),
+            @ApiImplicitParam(name = "pn",required = true,dataType = "int",paramType = "query",value = "页码"),
+            @ApiImplicitParam(name = "isCharge",required = true,dataType = "int",paramType = "query",value = "是否收费")
+    })
+    @ApiOperation(value = "根据分类id查询课程")
     @ResponseBody
-    @RequestMapping("/selectLessonByClassify.do")
+    @RequestMapping(value = "/selectLessonByClassify.do",method = RequestMethod.GET)
     public Result selectLessonByClassify(String id, int isCharge
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         //在查询之前需要调用，传入页码，以及每页大小
@@ -83,8 +96,14 @@ public class LessonController {
      * @param pid
      * @return
      */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pid",required = true,dataType = "String",paramType = "query",value="父id"),
+            @ApiImplicitParam(name = "pn",required = true,dataType = "int",paramType = "query",value="页码"),
+            @ApiImplicitParam(name = "isCharge",required = true,dataType = "int",paramType = "query",value="是否收费(1:收费 0:免费 2:全部)")
+    })
+    @ApiOperation(value = "根据父id查询课程信息")
     @ResponseBody
-    @RequestMapping("selectLessonByParentClassify.do")
+    @RequestMapping(value = "selectLessonByParentClassify.do",method = RequestMethod.GET)
     public Result selectLessonByParentClassify(String pid, int isCharge
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5); //每页显示5条数据
