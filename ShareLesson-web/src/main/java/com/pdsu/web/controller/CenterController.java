@@ -88,4 +88,28 @@ public class CenterController {
         }
         return result;
     }
+
+    /**
+     * 设置首页推送课程的分类
+     * @return
+     */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id1", required = true, dataType = "String", paramType = "query", value = "推送课程分类id1"),
+            @ApiImplicitParam(name = "id2", required = true, dataType = "String", paramType = "query", value = "推送课程分类id2")
+    })
+    @ApiOperation(value = "设置首页推送的课程分类（后台用）")
+    @ResponseBody
+    @RequestMapping(value = "/setPushLesson.do",method = RequestMethod.POST)
+    public Result setPushLesson(String id1,String id2){
+            Result result=new Result();
+        int num=centerServiceImpl.setPushLesson(id1,id2);
+        if(num==1){
+            result.setCode("200");
+            result.setMessage("设置成功！");
+        }else{
+            result.setCode("201");
+            result.setMessage("操作失败！");
+        }
+        return result;
+    }
 }

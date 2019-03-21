@@ -57,4 +57,12 @@ public interface CenterService {
      * @return
      */
     List<Lesson> selectLessonByParentClassifyId(String pid,int isCharge);
+
+    /**
+     * 设置首页推送课程分类
+     * @param c1
+     * @param c2
+     * @return
+     */
+    int setPushLesson(String c1, String c2);
 }

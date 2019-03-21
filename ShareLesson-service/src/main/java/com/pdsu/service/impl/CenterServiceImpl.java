@@ -6,6 +6,8 @@ import com.pdsu.mapper.LessonMapper;
 import com.pdsu.pojo.*;
 import com.pdsu.service.CenterService;
 import com.pdsu.service.ClassifyService;
+import com.pdsu.service.RedisService;
+import com.pdsu.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,9 @@ public class CenterServiceImpl implements CenterService {
 
     @Autowired
     private LessonMapper lessonMapper;
+
+    @Autowired
+    private RedisService redisServiceImpl;
 
     @Autowired
     private ClassifyService classifyServiceImpl;
@@ -166,6 +171,20 @@ public class CenterServiceImpl implements CenterService {
             }
         }
         return lessons;
+    }
+
+    @Override
+    public int setPushLesson(String c1, String c2) {
+        String cartKey="center:push";
+        List<String> strs=new ArrayList<>();
+        strs.add(c1);
+        strs.add(c2);
+        String json= JsonUtils.objectToJson(strs);
+        String ok=redisServiceImpl.set(cartKey,json);
+        if(ok.equals("OK")){
+            return 1;
+        }
+        return 0;
     }
 
 }
