@@ -69,7 +69,7 @@ public class LessonExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-16
+     * @date 2019-03-18
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -1011,6 +1011,66 @@ public class LessonExample {
             addCriterion("praise not between", value1, value2, "praise");
             return (Criteria) this;
         }
+
+        public Criteria andIschargeIsNull() {
+            addCriterion("ischarge is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeIsNotNull() {
+            addCriterion("ischarge is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeEqualTo(Integer value) {
+            addCriterion("ischarge =", value, "ischarge");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeNotEqualTo(Integer value) {
+            addCriterion("ischarge <>", value, "ischarge");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeGreaterThan(Integer value) {
+            addCriterion("ischarge >", value, "ischarge");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("ischarge >=", value, "ischarge");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeLessThan(Integer value) {
+            addCriterion("ischarge <", value, "ischarge");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeLessThanOrEqualTo(Integer value) {
+            addCriterion("ischarge <=", value, "ischarge");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeIn(List<Integer> values) {
+            addCriterion("ischarge in", values, "ischarge");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeNotIn(List<Integer> values) {
+            addCriterion("ischarge not in", values, "ischarge");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeBetween(Integer value1, Integer value2) {
+            addCriterion("ischarge between", value1, value2, "ischarge");
+            return (Criteria) this;
+        }
+
+        public Criteria andIschargeNotBetween(Integer value1, Integer value2) {
+            addCriterion("ischarge not between", value1, value2, "ischarge");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -1025,7 +1085,7 @@ public class LessonExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-16
+     * @date 2019-03-18
      */
     public static class Criterion {
         private String condition;

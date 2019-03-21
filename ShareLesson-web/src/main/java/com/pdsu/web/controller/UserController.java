@@ -7,9 +7,14 @@ import com.pdsu.service.UserService;
 import com.pdsu.utils.CodecUtil;
 import com.pdsu.utils.CookieUtils;
 import com.pdsu.utils.JsonUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +28,7 @@ import java.util.UUID;
  * @version: 1.0
  */
 @Controller
+@Api(tags = { "用户信息 相关接口" })
 @RequestMapping("/user")
 public class UserController {
 
@@ -39,8 +45,9 @@ public class UserController {
      * @param response
      * @return
      */
+    @ApiOperation(value ="用户登录接口")
     @ResponseBody
-    @RequestMapping("login.do")
+    @RequestMapping(value = "login.do",method = RequestMethod.POST)
     public Result login(User user, HttpServletRequest request,
                         HttpServletResponse response) {
         Result result = new Result();
@@ -69,8 +76,9 @@ public class UserController {
      * @param user
      * @return
      */
+    @ApiOperation(value = "用户注册接口")
     @ResponseBody
-    @RequestMapping("/regist.do")
+    @RequestMapping(value = "/regist.do",method =RequestMethod.POST )
     public Result register(User user) {
         Result result = new Result();
         String uid = CodecUtil.createUUID();
@@ -95,7 +103,8 @@ public class UserController {
      * @param token
      * @return
      */
-    @RequestMapping("/getUser.do")
+    @ApiOperation(value = "利用token从redis中获取用户数据")
+    @RequestMapping(value = "/getUser.do",method = RequestMethod.POST)
     @ResponseBody
     public Result getUserInfo(String token) {
         return userServiceImpl.getUserByToken(token);

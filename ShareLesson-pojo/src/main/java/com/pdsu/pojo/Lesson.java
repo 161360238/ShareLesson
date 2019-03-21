@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * @author wcyong
  * 
- * @date 2019-03-16
+ * @date 2019-03-18
  */
 public class Lesson {
     /**
@@ -79,6 +79,11 @@ public class Lesson {
      * 点赞次数
      */
     private Integer praise;
+
+    /**
+     * 是否收费
+     */
+    private Integer ischarge;
 
     public String getlId() {
         return lId;
@@ -190,5 +195,13 @@ public class Lesson {
 
     public void setPraise(Integer praise) {
         this.praise = praise;
+    }
+
+    public Integer getIscharge() {
+        return ischarge;
+    }
+
+    public void setIscharge(Integer ischarge) {
+        this.ischarge = ischarge;
     }
 }
