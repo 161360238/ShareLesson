@@ -20,4 +20,11 @@ public interface LessonService {
      * @return
      */
     List<Lesson> selectByClassify(Classify classify,int num);
+
+    /**
+     * 根据老师id 查询他发布的课程
+     * @param tid
+     * @return
+     */
+    List<Lesson> getLessonByTeacherId(String tid);
 }

@@ -5,6 +5,7 @@ import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.User;
 import com.pdsu.pojo.UserExample;
 import com.pdsu.service.RedisService;
+import com.pdsu.service.StudentService;
 import com.pdsu.service.UserService;
 import com.pdsu.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RedisService redisServiceImpl;
 
+
+
+    /**
+     * 用户登录
+     * @param user
+     * @return
+     */
     @Override
     public User login(User user) {
         UserExample userExample = new UserExample();
@@ -39,6 +47,11 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
     @Override
     public int regist(User user) {
         //先判断用户是否已经存在
@@ -56,6 +69,11 @@ public class UserServiceImpl implements UserService {
         return 0;
     }
 
+    /**
+     * 通过token获取用户
+     * @param token
+     * @return
+     */
     @Override
     public Result getUserByToken(String token) {
         Result result = new Result();

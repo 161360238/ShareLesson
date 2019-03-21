@@ -30,7 +30,7 @@ import java.util.Map;
  * @version: 1.0
  */
 @Controller
-@Api(tags = { "课程信息 相关接口" })
+@Api(tags = {"3,课程信息 相关接口"})
 @RequestMapping("/lesson")
 public class LessonController {
 
@@ -50,7 +50,7 @@ public class LessonController {
      * @return
      */
     @ApiOperation(value = "上传图片接口")
-    @RequestMapping(value = "/picUpload.do",method = RequestMethod.POST)
+    @RequestMapping(value = "/picUpload.do", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> picUpload(MultipartFile imgFile) {
         Result result = new Result();
@@ -70,13 +70,13 @@ public class LessonController {
      * @return
      */
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id",required = true,dataType = "String",paramType = "query",value = "分类id"),
-            @ApiImplicitParam(name = "pn",required = true,dataType = "int",paramType = "query",value = "页码"),
-            @ApiImplicitParam(name = "isCharge",required = true,dataType = "int",paramType = "query",value = "是否收费")
+            @ApiImplicitParam(name = "id", required = true, dataType = "String", paramType = "query", value = "分类id"),
+            @ApiImplicitParam(name = "pn", required = true, dataType = "int", paramType = "query", value = "页码"),
+            @ApiImplicitParam(name = "isCharge", required = true, dataType = "int", paramType = "query", value = "是否收费")
     })
     @ApiOperation(value = "根据分类id查询课程")
     @ResponseBody
-    @RequestMapping(value = "/selectLessonByClassify.do",method = RequestMethod.GET)
+    @RequestMapping(value = "/selectLessonByClassify.do", method = RequestMethod.GET)
     public Result selectLessonByClassify(String id, int isCharge
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         //在查询之前需要调用，传入页码，以及每页大小
@@ -97,13 +97,13 @@ public class LessonController {
      * @return
      */
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pid",required = true,dataType = "String",paramType = "query",value="父id"),
-            @ApiImplicitParam(name = "pn",required = true,dataType = "int",paramType = "query",value="页码"),
-            @ApiImplicitParam(name = "isCharge",required = true,dataType = "int",paramType = "query",value="是否收费(1:收费 0:免费 2:全部)")
+            @ApiImplicitParam(name = "pid", required = true, dataType = "String", paramType = "query", value = "父id"),
+            @ApiImplicitParam(name = "pn", required = true, dataType = "int", paramType = "query", value = "页码"),
+            @ApiImplicitParam(name = "isCharge", required = true, dataType = "int", paramType = "query", value = "是否收费(1:收费 0:免费 2:全部)")
     })
     @ApiOperation(value = "根据父id查询课程信息")
     @ResponseBody
-    @RequestMapping(value = "selectLessonByParentClassify.do",method = RequestMethod.GET)
+    @RequestMapping(value = "selectLessonByParentClassify.do", method = RequestMethod.GET)
     public Result selectLessonByParentClassify(String pid, int isCharge
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         PageHelper.startPage(pn, 5); //每页显示5条数据
@@ -111,6 +111,30 @@ public class LessonController {
         PageInfo page = new PageInfo(lessonList, 5);
         Result result = new Result();
         result.setData(page);
+        return result;
+    }
+
+    /**
+     * 根据老师id获取老师已经发布的课程
+     *
+     * @param tid
+     * @return
+     */
+    @ApiImplicitParam(name = "tid", required = true, dataType = "String", paramType = "query", value = "老师id")
+    @ApiOperation(value = "根据老师id获取老师已经发布的课程")
+    @ResponseBody
+    @RequestMapping(value = "/getLessonByTeacherId.do", method = RequestMethod.GET)
+    public Result getLessonByTeacherId(String tid) {
+        Result result = new Result();
+        List<Lesson> lessons = lessonServiceImpl.getLessonByTeacherId(tid);
+        if (lessons != null) {
+            result.setCode("200");
+            result.setMessage("查询成功");
+            result.setData(lessons);
+        } else {
+            result.setCode("201");
+            result.setMessage("该老师还没有发布课程");
+        }
         return result;
     }
 }

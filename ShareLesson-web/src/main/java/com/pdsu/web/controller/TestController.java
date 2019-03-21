@@ -26,7 +26,7 @@ import java.util.UUID;
  * @version: 1.0
  */
 @Controller
-@Api(tags = { "测试模块 可忽略" })
+@Api(tags = { "0,测试模块 可忽略" })
 public class TestController extends BaseController {
 
     @Autowired

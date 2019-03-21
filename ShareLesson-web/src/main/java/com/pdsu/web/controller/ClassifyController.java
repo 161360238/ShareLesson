@@ -23,7 +23,7 @@ import java.util.List;
  * @version: 1.0
  */
 @Controller
-@Api(tags = { "分类信息 相关接口" })
+@Api(tags = { "2,分类信息 相关接口" })
 @RequestMapping("/classify")
 public class ClassifyController {
 

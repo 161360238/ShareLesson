@@ -38,7 +38,7 @@ public class SpringFoxConfig extends WebMvcConfigurationSupport {
                 .title("共享课堂项目在线接口文档")
                 .description("共享课堂项目接口测试")
                 .version("1.0.0")
-                .termsOfServiceUrl("")
+                .termsOfServiceUrl("http://192.168.31.134:9090")
                 .license("")
                 .licenseUrl("")
                 .build();

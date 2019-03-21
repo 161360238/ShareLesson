@@ -28,7 +28,7 @@ import java.util.UUID;
  * @version: 1.0
  */
 @Controller
-@Api(tags = { "用户信息 相关接口" })
+@Api(tags = { "5,用户信息 相关接口" })
 @RequestMapping("/user")
 public class UserController {
 

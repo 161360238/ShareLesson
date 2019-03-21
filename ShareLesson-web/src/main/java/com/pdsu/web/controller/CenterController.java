@@ -29,7 +29,7 @@ import java.util.Map;
  */
 
 @Controller
-@Api(tags = { "主页信息 相关接口" })
+@Api(tags = { "1,主页信息 相关接口" })
 @RequestMapping("/center")
 public class CenterController {
 
