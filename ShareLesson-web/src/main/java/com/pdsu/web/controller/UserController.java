@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,14 +50,15 @@ public class UserController {
     @ApiOperation(value ="用户登录接口")
     @ResponseBody
     @RequestMapping(value = "login.do",method = RequestMethod.POST)
-    public Result login(User user, HttpServletRequest request,
+    public Result login(@RequestBody User user, HttpServletRequest request,
                         HttpServletResponse response) {
         Result result = new Result();
         User user1 = userServiceImpl.login(user);
         if (user1 != null) {
             result.setCode("200");
             String key = UUID.randomUUID().toString();
-            redisServiceImpl.set(key, JsonUtils.objectToJson(user));
+            key="token:"+key;
+            redisServiceImpl.set(key, JsonUtils.objectToJson(user1));
             redisServiceImpl.expire(key, 60 * 60 * 24 * 7);
             //产生 Cookie
             CookieUtils.setCookie(request, response, "TT_TOKEN", key, 60 * 60 * 24 * 7);

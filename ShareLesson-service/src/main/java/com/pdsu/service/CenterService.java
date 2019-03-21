@@ -51,7 +51,7 @@ public interface CenterService {
     public List<Lesson> selectLessonByClassifyId2(String id,int isCharge);
 
     /**
-     * 根据父id查询课程(isCharge-->1:收费，0:免费)
+     * 根据父分类id查询课程(isCharge-->1:收费，0:免费)
      * 分页查询
      * @param pid
      * @return

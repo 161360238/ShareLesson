@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/teacher")
-@Api(tags = "老师业务相关接口")
+@Api(tags = "6,老师业务相关接口")
 public class TeacherController {
 
     @Autowired

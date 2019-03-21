@@ -5,6 +5,7 @@ import com.pdsu.pojo.Classify;
 import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.LessonExample;
 import com.pdsu.service.LessonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,12 +19,9 @@ import java.util.List;
  */
 @Service
 public class LessonServiceImpl implements LessonService {
-    private LessonMapper lessonMapper;
 
-    @Override
-    public List<Lesson> selectByClassify(Classify classify, int num) {
-        return null;
-    }
+    @Autowired
+    private LessonMapper lessonMapper;
 
     @Override
     public List<Lesson> getLessonByTeacherId(String tid) {
@@ -35,5 +33,11 @@ public class LessonServiceImpl implements LessonService {
             return lessons;
         }
         return null;
+    }
+
+    @Override
+    public Lesson selectByLid(String lid) {
+        Lesson lesson=lessonMapper.selectByPrimaryKey(lid);
+        return lesson;
     }
 }
