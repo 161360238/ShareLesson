@@ -1,6 +1,7 @@
 package com.pdsu.mypojo;
 
 import com.pdsu.pojo.Lesson;
+import com.pdsu.pojo.Order_item;
 
 import java.util.List;
 
@@ -14,7 +15,21 @@ public class MyOrderParam {
 
     private String payment;  //付款金额
 
-    private List<Lesson> orderItems;  //订单条目（商品）
+    private List<Order_item> order_item;  //订单条目（商品）
 
+    public String getPayment() {
+        return payment;
+    }
 
+    public List<Order_item> getOrder_item() {
+        return order_item;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
+    public void setOrder_item(List<Order_item> order_item) {
+        this.order_item = order_item;
+    }
 }

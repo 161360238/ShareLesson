@@ -1,25 +1,25 @@
 package com.pdsu.web.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.pdsu.mypojo.Result;
+import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.User;
 import com.pdsu.service.RedisService;
 import com.pdsu.service.UserService;
 import com.pdsu.utils.CodecUtil;
 import com.pdsu.utils.CookieUtils;
 import com.pdsu.utils.JsonUtils;
+import com.pdsu.web.base.BaseController;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -31,13 +31,15 @@ import java.util.UUID;
 @Controller
 @Api(tags = { "5,用户信息 相关接口" })
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController {
 
     @Autowired
     private UserService userServiceImpl;
 
     @Autowired
     private RedisService redisServiceImpl;
+
+
 
     /**
      * 用户登录
@@ -112,5 +114,20 @@ public class UserController {
     public Result getUserInfo(String token) {
         return userServiceImpl.getUserByToken(token);
     }
+
+    //根据用户，查询用户已经购买的课程，查询条件:已经开始、未开始
+
+    public Result selectBoughtLesson(String token,int isBegin
+            , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+            User user=getUser(token);
+            PageHelper.startPage(pn, 5); //每页显示5条数据
+            //执行查询
+          //  PageInfo page = new PageInfo( 5);
+           // Result result = new Result();
+            //result.setData(page);
+        return null;
+    }
+
+
 
 }
