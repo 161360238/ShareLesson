@@ -69,7 +69,7 @@ public class LessonExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-18
+     * @date 2019-03-22
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -1071,6 +1071,136 @@ public class LessonExample {
             addCriterion("ischarge not between", value1, value2, "ischarge");
             return (Criteria) this;
         }
+
+        public Criteria andLNameIsNull() {
+            addCriterion("l_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameIsNotNull() {
+            addCriterion("l_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameEqualTo(String value) {
+            addCriterion("l_name =", value, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameNotEqualTo(String value) {
+            addCriterion("l_name <>", value, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameGreaterThan(String value) {
+            addCriterion("l_name >", value, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameGreaterThanOrEqualTo(String value) {
+            addCriterion("l_name >=", value, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameLessThan(String value) {
+            addCriterion("l_name <", value, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameLessThanOrEqualTo(String value) {
+            addCriterion("l_name <=", value, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameLike(String value) {
+            addCriterion("l_name like", value, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameNotLike(String value) {
+            addCriterion("l_name not like", value, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameIn(List<String> values) {
+            addCriterion("l_name in", values, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameNotIn(List<String> values) {
+            addCriterion("l_name not in", values, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameBetween(String value1, String value2) {
+            addCriterion("l_name between", value1, value2, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLNameNotBetween(String value1, String value2) {
+            addCriterion("l_name not between", value1, value2, "lName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumIsNull() {
+            addCriterion("current_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumIsNotNull() {
+            addCriterion("current_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumEqualTo(Integer value) {
+            addCriterion("current_num =", value, "currentNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumNotEqualTo(Integer value) {
+            addCriterion("current_num <>", value, "currentNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumGreaterThan(Integer value) {
+            addCriterion("current_num >", value, "currentNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("current_num >=", value, "currentNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumLessThan(Integer value) {
+            addCriterion("current_num <", value, "currentNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumLessThanOrEqualTo(Integer value) {
+            addCriterion("current_num <=", value, "currentNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumIn(List<Integer> values) {
+            addCriterion("current_num in", values, "currentNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumNotIn(List<Integer> values) {
+            addCriterion("current_num not in", values, "currentNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumBetween(Integer value1, Integer value2) {
+            addCriterion("current_num between", value1, value2, "currentNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCurrentNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("current_num not between", value1, value2, "currentNum");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -1085,7 +1215,7 @@ public class LessonExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-18
+     * @date 2019-03-22
      */
     public static class Criterion {
         private String condition;

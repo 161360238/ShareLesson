@@ -72,8 +72,10 @@ public class CenterController {
         Map<String, List<Lesson>> message2 = new HashMap<>();
         //查询所有子分类
         List<Classify> classifies = centerServiceImpl.selectClassify();
+
         //根据子分类查询每个分类下的最新课程信息
         message = centerServiceImpl.selectLessonByClassifys(classifies);
+
         for (Classify key:message.keySet()) {
             System.out.println(JsonUtils.objectToJson(key));
             message2.put(JsonUtils.objectToJson(key),message.get(key));
@@ -89,8 +91,9 @@ public class CenterController {
         return result;
     }
 
+
     /**
-     * 设置首页推送课程的分类
+     * 设置首页推送课程的分类(后台设置)
      * @return
      */
     @ApiImplicitParams({

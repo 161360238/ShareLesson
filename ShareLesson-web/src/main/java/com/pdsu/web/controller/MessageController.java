@@ -79,6 +79,4 @@ public class MessageController {
         }
         return result;
     }
-
-
 }
