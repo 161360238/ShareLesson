@@ -14,10 +14,16 @@ import java.util.List;
 public interface LessonService {
 
     /**
-     * 根据分类查询课程
-     * @param classify
-     * @param num
+     * 根据老师id 查询他发布的课程
+     * @param tid
      * @return
      */
-    List<Lesson> selectByClassify(Classify classify,int num);
+    List<Lesson> getLessonByTeacherId(String tid);
+
+    /**
+     * 根据课程id 查询课程
+     * @param lid
+     * @return
+     */
+    Lesson selectByLid(String lid);
 }

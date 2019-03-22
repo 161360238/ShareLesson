@@ -51,10 +51,18 @@ public interface CenterService {
     public List<Lesson> selectLessonByClassifyId2(String id,int isCharge);
 
     /**
-     * 根据父id查询课程(isCharge-->1:收费，0:免费)
+     * 根据父分类id查询课程(isCharge-->1:收费，0:免费)
      * 分页查询
      * @param pid
      * @return
      */
     List<Lesson> selectLessonByParentClassifyId(String pid,int isCharge);
+
+    /**
+     * 设置首页推送课程分类
+     * @param c1
+     * @param c2
+     * @return
+     */
+    int setPushLesson(String c1, String c2);
 }

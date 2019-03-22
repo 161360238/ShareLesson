@@ -29,7 +29,7 @@ import java.util.Map;
  */
 
 @Controller
-@Api(tags = { "主页信息 相关接口" })
+@Api(tags = { "1,主页信息 相关接口" })
 @RequestMapping("/center")
 public class CenterController {
 
@@ -85,6 +85,30 @@ public class CenterController {
         } else {
             result.setCode("201");
             result.setMessage("没有查询考课程信息");
+        }
+        return result;
+    }
+
+    /**
+     * 设置首页推送课程的分类
+     * @return
+     */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id1", required = true, dataType = "String", paramType = "query", value = "推送课程分类id1"),
+            @ApiImplicitParam(name = "id2", required = true, dataType = "String", paramType = "query", value = "推送课程分类id2")
+    })
+    @ApiOperation(value = "设置首页推送的课程分类（后台用）")
+    @ResponseBody
+    @RequestMapping(value = "/setPushLesson.do",method = RequestMethod.POST)
+    public Result setPushLesson(String id1,String id2){
+            Result result=new Result();
+        int num=centerServiceImpl.setPushLesson(id1,id2);
+        if(num==1){
+            result.setCode("200");
+            result.setMessage("设置成功！");
+        }else{
+            result.setCode("201");
+            result.setMessage("操作失败！");
         }
         return result;
     }
