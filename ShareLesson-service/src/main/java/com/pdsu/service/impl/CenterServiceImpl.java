@@ -55,9 +55,12 @@ public class CenterServiceImpl implements CenterService {
      */
     @Override
     public List<Classify> selectClassify() {
-        ClassifyExample classifyExample = new ClassifyExample();
-        classifyExample.createCriteria().andIsParentEqualTo(0);
-        List<Classify> classifies = classifyMapper.selectByExample(classifyExample);
+        List<Classify> classifies = new ArrayList<>();
+        String ids = redisServiceImpl.get("center:push");
+        List<String> ids2 = JsonUtils.jsonToList(ids, String.class);
+        for (int i = 0; i < ids2.size(); i++) {
+            classifies.add(classifyMapper.selectByPrimaryKey(ids2.get(i)));
+        }
         return classifies;
     }
 
@@ -175,13 +178,13 @@ public class CenterServiceImpl implements CenterService {
 
     @Override
     public int setPushLesson(String c1, String c2) {
-        String cartKey="center:push";
-        List<String> strs=new ArrayList<>();
+        String cartKey = "center:push";
+        List<String> strs = new ArrayList<>();
         strs.add(c1);
         strs.add(c2);
-        String json= JsonUtils.objectToJson(strs);
-        String ok=redisServiceImpl.set(cartKey,json);
-        if(ok.equals("OK")){
+        String json = JsonUtils.objectToJson(strs);
+        String ok = redisServiceImpl.set(cartKey, json);
+        if (ok.equals("OK")) {
             return 1;
         }
         return 0;

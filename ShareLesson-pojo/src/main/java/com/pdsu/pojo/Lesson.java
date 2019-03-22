@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * @author wcyong
  * 
- * @date 2019-03-18
+ * @date 2019-03-22
  */
 public class Lesson {
     /**
@@ -84,6 +84,16 @@ public class Lesson {
      * 是否收费
      */
     private Integer ischarge;
+
+    /**
+     * 课程名称
+     */
+    private String lName;
+
+    /**
+     * 已经报名人数
+     */
+    private Integer currentNum;
 
     public String getlId() {
         return lId;
@@ -203,5 +213,21 @@ public class Lesson {
 
     public void setIscharge(Integer ischarge) {
         this.ischarge = ischarge;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName == null ? null : lName.trim();
+    }
+
+    public Integer getCurrentNum() {
+        return currentNum;
+    }
+
+    public void setCurrentNum(Integer currentNum) {
+        this.currentNum = currentNum;
     }
 }
