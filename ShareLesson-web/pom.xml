@@ -65,6 +65,11 @@
             <version>5.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+
         <!-- CORS配置，为了让别的机器访问本机的swagger接口文档服务 -->
         <dependency>
             <groupId>com.thetransactioncompany</groupId>

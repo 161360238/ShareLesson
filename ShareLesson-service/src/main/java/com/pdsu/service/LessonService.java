@@ -1,7 +1,7 @@
 package com.pdsu.service;
 
-import com.pdsu.pojo.Classify;
 import com.pdsu.pojo.Lesson;
+import com.pdsu.pojo.User;
 
 import java.util.List;
 
@@ -26,4 +26,13 @@ public interface LessonService {
      * @return
      */
     Lesson selectByLid(String lid);
+
+    /**
+     * 发布课程
+     * @param lesson
+     * @return
+     */
+    public int publishLesson(Lesson lesson, User user);
+
+
 }
