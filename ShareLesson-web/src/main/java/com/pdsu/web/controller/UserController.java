@@ -127,6 +127,9 @@ public class UserController extends BaseController {
         return null;
     }
 
+    public void test(){
+
+    }
 
 
 }
