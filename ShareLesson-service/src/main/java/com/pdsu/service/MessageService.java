@@ -1,5 +1,7 @@
 package com.pdsu.service;
 
+import com.pdsu.pojo.Lesson;
+
 import java.util.Map;
 
 /**
@@ -24,4 +26,11 @@ public interface MessageService {
      * @return
      */
     boolean verification(String phone, String code);
+
+    /**
+     * 编辑信息，通知开课是否成功
+     * @param lesson
+     * @param i
+     */
+    int insertNotice(Lesson lesson, int i) throws Exception;
 }

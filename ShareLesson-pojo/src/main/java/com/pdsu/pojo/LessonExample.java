@@ -69,7 +69,7 @@ public class LessonExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-22
+     * @date 2019-03-23
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -1201,6 +1201,66 @@ public class LessonExample {
             addCriterion("current_num not between", value1, value2, "currentNum");
             return (Criteria) this;
         }
+
+        public Criteria andRemindIsNull() {
+            addCriterion("remind is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindIsNotNull() {
+            addCriterion("remind is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindEqualTo(Integer value) {
+            addCriterion("remind =", value, "remind");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindNotEqualTo(Integer value) {
+            addCriterion("remind <>", value, "remind");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindGreaterThan(Integer value) {
+            addCriterion("remind >", value, "remind");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindGreaterThanOrEqualTo(Integer value) {
+            addCriterion("remind >=", value, "remind");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindLessThan(Integer value) {
+            addCriterion("remind <", value, "remind");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindLessThanOrEqualTo(Integer value) {
+            addCriterion("remind <=", value, "remind");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindIn(List<Integer> values) {
+            addCriterion("remind in", values, "remind");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindNotIn(List<Integer> values) {
+            addCriterion("remind not in", values, "remind");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindBetween(Integer value1, Integer value2) {
+            addCriterion("remind between", value1, value2, "remind");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemindNotBetween(Integer value1, Integer value2) {
+            addCriterion("remind not between", value1, value2, "remind");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -1215,7 +1275,7 @@ public class LessonExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-22
+     * @date 2019-03-23
      */
     public static class Criterion {
         private String condition;

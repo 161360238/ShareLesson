@@ -92,7 +92,7 @@ public class LessonController {
 
     /**
      * 根据父id查询课程信息
-     *
+     * 分页
      * @param pid
      * @return
      */
@@ -115,8 +115,7 @@ public class LessonController {
     }
 
     /**
-     * 根据老师id获取老师已经发布的课程
-     *
+     * 根据老师id获取老师已经发布的课程（分页）
      * @param tid
      * @return
      */
@@ -124,13 +123,17 @@ public class LessonController {
     @ApiOperation(value = "根据老师id获取老师已经发布的课程")
     @ResponseBody
     @RequestMapping(value = "/getLessonByTeacherId.do", method = RequestMethod.GET)
-    public Result getLessonByTeacherId(String tid) {
+    public Result getLessonByTeacherId(String tid
+            , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         Result result = new Result();
+        PageHelper.startPage(pn, 5); //每页显示5条数据
         List<Lesson> lessons = lessonServiceImpl.getLessonByTeacherId(tid);
+        PageInfo page = new PageInfo(lessons, 5);
+
         if (lessons != null) {
             result.setCode("200");
             result.setMessage("查询成功");
-            result.setData(lessons);
+            result.setData(page);
         } else {
             result.setCode("201");
             result.setMessage("该老师还没有发布课程");

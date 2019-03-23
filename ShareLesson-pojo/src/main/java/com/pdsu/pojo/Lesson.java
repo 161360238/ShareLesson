@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * @author wcyong
  * 
- * @date 2019-03-22
+ * @date 2019-03-23
  */
 public class Lesson {
     /**
@@ -71,7 +71,7 @@ public class Lesson {
     private String classifyId;
 
     /**
-     * 审核状态
+     * 审核状态（0为正在审核，1为通过，2为未通过）
      */
     private Integer exam;
 
@@ -94,6 +94,11 @@ public class Lesson {
      * 已经报名人数
      */
     private Integer currentNum;
+
+    /**
+     * 是否已经通知开课结果（0为未通知，1为已经通知）
+     */
+    private Integer remind;
 
     public String getlId() {
         return lId;
@@ -229,5 +234,13 @@ public class Lesson {
 
     public void setCurrentNum(Integer currentNum) {
         this.currentNum = currentNum;
+    }
+
+    public Integer getRemind() {
+        return remind;
+    }
+
+    public void setRemind(Integer remind) {
+        this.remind = remind;
     }
 }

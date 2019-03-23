@@ -1,7 +1,12 @@
 package com.pdsu.service.impl;
 
+import com.pdsu.mapper.MessageMapper;
+import com.pdsu.pojo.Lesson;
+import com.pdsu.pojo.Message;
+import com.pdsu.service.LessonService;
 import com.pdsu.service.MessageService;
 import com.pdsu.service.RedisService;
+import com.pdsu.utils.CodecUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +15,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,6 +32,12 @@ public class MessageServiceImpl implements MessageService {
 
     @Autowired
     private RedisService redisServiceImpl;
+
+    @Autowired
+    private MessageMapper messageMapper;
+
+    @Autowired
+    private LessonService lessonServiceImpl;
 
     /**
      * 发送短信
@@ -61,7 +74,7 @@ public class MessageServiceImpl implements MessageService {
             map.put("code", code);
             String key = "messge_code:" + phone;
             redisServiceImpl.set(key, code); //短息存入redis
-            redisServiceImpl.expire(key, 60*60*24*30);  //设置短信有效时间
+            redisServiceImpl.expire(key, 60 * 60 * 24 * 30);  //设置短信有效时间
             return map;
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,6 +97,63 @@ public class MessageServiceImpl implements MessageService {
         }
         return false;
     }
+
+    @Override
+    public int insertNotice(Lesson lesson, int isOk) throws Exception {
+        Message message = new Message();
+        message.setCreated(new Date());
+        message.setFromId("0");   //0表示系统通知
+        message.setlId(lesson.getlId());
+
+        if (isOk == 0) {   //通知开课失败
+            message.setmId(CodecUtil.createUUID());
+            String content1 = "尊敬的老师您好，非常抱歉 您创建的课程："
+                    + lesson.getlName() + ",由于到报名截止日期 报名人数不足开课最低人数：" + lesson.getMiniNum()
+                    + "人，所以开课失败。";//通知老师
+            message.setOwnId(lesson.gettId());  //设置老师id（目标）
+            message.setContent(content1);
+            int index = messageMapper.insert(message);  //插入消息
+            List<String> uids = lessonServiceImpl.selectUserByLesson(lesson.getlId());
+            for (String uid : uids) {
+                message.setmId(CodecUtil.createUUID());
+                String content2 = "亲爱的的同学你好，非常抱歉 你参加的课程："
+                        + lesson.getlName() + ",由于到报名截止日期 报名人数不足开课最低人数：" + lesson.getMiniNum()
+                        + "人，所以开课失败。";//通知学生
+                message.setOwnId(uid);  //设置学生id（目标）
+                message.setContent(content2);
+                index += messageMapper.insert(message);
+            }
+            if (index == 1 + uids.size()) {
+                return 1;  //表示通知成功
+            } else {
+                throw new Exception("通知失败");
+            }
+        }else{    //通知开课成功
+            message.setmId(CodecUtil.createUUID());
+            String content1 = "尊敬的老师您好，恭喜你 您创建的课程："
+                    + lesson.getlName() + ",到报名截止日期 报名人数高于开课最低人数：" + lesson.getMiniNum()
+                    + "人，所以开课成功。";//通知老师
+            message.setOwnId(lesson.gettId());  //设置老师id（目标）
+            message.setContent(content1);
+            int index = messageMapper.insert(message);  //插入消息
+            List<String> uids = lessonServiceImpl.selectUserByLesson(lesson.getlId());
+            for (String uid : uids) {
+                message.setmId(CodecUtil.createUUID());
+                String content2 = "亲爱的的同学你好，恭喜你 你参加的课程："
+                        + lesson.getlName() + ",由于到报名截止日期 报名人数高于开课最低人数：" + lesson.getMiniNum()
+                        + "人，所以开课成功，请按时去听课哦。";//通知学生
+                message.setOwnId(uid);  //设置学生id（目标）
+                message.setContent(content2);
+                index += messageMapper.insert(message);
+            }
+            if (index == 1 + uids.size()) {
+                return 1;  //表示通知成功
+            } else {
+                throw new Exception("通知失败");
+            }
+        }
+    }
+
 
     /**
      * @Description:生成六位随机数

@@ -9,6 +9,7 @@
         <result column="own_id" property="ownId" jdbcType="VARCHAR" />
         <result column="l_id" property="lId" jdbcType="VARCHAR" />
         <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -72,7 +73,7 @@
     </sql>
 
     <sql id="Base_Column_List" >
-        m_id, created, from_id, own_id, l_id, status
+        m_id, created, from_id, own_id, l_id, status, content
     </sql>
 
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.MessageExample" >
@@ -111,11 +112,11 @@
 
     <insert id="insert" parameterType="com.pdsu.pojo.Message" >
         insert into message (m_id, created, from_id, 
-            own_id, l_id, status
-            )
+            own_id, l_id, status, 
+            content)
         values (#{mId,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{fromId,jdbcType=VARCHAR}, 
-            #{ownId,jdbcType=VARCHAR}, #{lId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
-            )
+            #{ownId,jdbcType=VARCHAR}, #{lId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+            #{content,jdbcType=VARCHAR})
     </insert>
 
     <insert id="insertSelective" parameterType="com.pdsu.pojo.Message" >
@@ -139,6 +140,9 @@
             <if test="status != null" >
                 status,
             </if>
+            <if test="content != null" >
+                content,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="mId != null" >
@@ -158,6 +162,9 @@
             </if>
             <if test="status != null" >
                 #{status,jdbcType=INTEGER},
+            </if>
+            <if test="content != null" >
+                #{content,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -190,6 +197,9 @@
             <if test="record.status != null" >
                 status = #{record.status,jdbcType=INTEGER},
             </if>
+            <if test="record.content != null" >
+                content = #{record.content,jdbcType=VARCHAR},
+            </if>
         </set>
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
@@ -203,7 +213,8 @@
             from_id = #{record.fromId,jdbcType=VARCHAR},
             own_id = #{record.ownId,jdbcType=VARCHAR},
             l_id = #{record.lId,jdbcType=VARCHAR},
-            status = #{record.status,jdbcType=INTEGER}
+            status = #{record.status,jdbcType=INTEGER},
+            content = #{record.content,jdbcType=VARCHAR}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -227,6 +238,9 @@
             <if test="status != null" >
                 status = #{status,jdbcType=INTEGER},
             </if>
+            <if test="content != null" >
+                content = #{content,jdbcType=VARCHAR},
+            </if>
         </set>
         where m_id = #{mId,jdbcType=VARCHAR}
     </update>
@@ -237,7 +251,8 @@
             from_id = #{fromId,jdbcType=VARCHAR},
             own_id = #{ownId,jdbcType=VARCHAR},
             l_id = #{lId,jdbcType=VARCHAR},
-            status = #{status,jdbcType=INTEGER}
+            status = #{status,jdbcType=INTEGER},
+            content = #{content,jdbcType=VARCHAR}
         where m_id = #{mId,jdbcType=VARCHAR}
     </update>
 </mapper>

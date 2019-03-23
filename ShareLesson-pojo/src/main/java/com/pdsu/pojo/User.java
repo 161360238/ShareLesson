@@ -5,7 +5,7 @@ package com.pdsu.pojo;
  * 
  * @author wcyong
  * 
- * @date 2019-03-22
+ * @date 2019-03-23
  */
 public class User {
     /**

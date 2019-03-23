@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * @author wcyong
  * 
- * @date 2019-03-22
+ * @date 2019-03-23
  */
 public class Message {
     /**
@@ -35,7 +35,15 @@ public class Message {
      */
     private String lId;
 
+    /**
+     * 状态（0为未读，1，为已读）
+     */
     private Integer status;
+
+    /**
+     * 消息内容
+     */
+    private String content;
 
     public String getmId() {
         return mId;
@@ -83,5 +91,13 @@ public class Message {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 }

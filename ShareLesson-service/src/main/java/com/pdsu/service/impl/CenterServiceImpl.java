@@ -6,6 +6,7 @@ import com.pdsu.mapper.LessonMapper;
 import com.pdsu.pojo.*;
 import com.pdsu.service.CenterService;
 import com.pdsu.service.ClassifyService;
+import com.pdsu.service.LessonService;
 import com.pdsu.service.RedisService;
 import com.pdsu.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class CenterServiceImpl implements CenterService {
 
     @Autowired
     private ClassifyService classifyServiceImpl;
+
+    @Autowired
+    private LessonService lessonServiceImpl;
 
     /**
      * 查询首页信息
@@ -77,6 +81,7 @@ public class CenterServiceImpl implements CenterService {
             Classify classify = new Classify();
             classify = classifies.get(i);
             List<Lesson> list = this.selectLessonByClassifyId(classify.getClassifyId(), 6);
+
             if (list != null) {
                 message.put(classify, list);
             }
@@ -102,12 +107,12 @@ public class CenterServiceImpl implements CenterService {
             //倒序删除，避免下标问题
             for (int i = lessons.size() - 1; i >= 0; i--) {
                 Lesson lesson = lessons.get(i);
+                lesson.setCurrentNum(lessonServiceImpl.selectSignNum(lesson));
                 if (lesson.getBeginTime().getTime() < System.currentTimeMillis()) {
                     lesson.setExam(2);  //状态设置为已经过时
                     lessonMapper.updateByPrimaryKeySelective(lesson);
                     lessons.remove(i);
                 }
-
             }
             if (lessons.size() >= n) {
                 return lessons.subList(0, n);
@@ -152,7 +157,6 @@ public class CenterServiceImpl implements CenterService {
             lessonExample.setOrderByClause("begin_time ASC");
             lessons = lessonMapper.selectByExample(lessonExample);
         }
-
         return lessons;
     }
 

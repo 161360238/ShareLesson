@@ -1,10 +1,8 @@
 package com.pdsu.service;
 
 import com.pdsu.mypojo.MyOrderParam;
+import com.pdsu.pojo.*;
 import com.pdsu.pojo.Orders;
-import com.pdsu.pojo.Order_item;
-import com.pdsu.pojo.Orders;
-import com.pdsu.pojo.User;
 
 import java.util.List;
 
@@ -32,4 +30,36 @@ public interface OrderService {
      * @return
      */
     int writeToDatabase(Orders order, List<Order_item> order_items) throws Exception;
+
+    /**
+     * 下单之前判断用户是否已经购买过该课程
+     * @param lid
+     * @param uid
+     * @return
+     */
+    boolean isBought(String lid,String uid);
+
+    /**
+     * 删除订单
+     * @param getuId
+     * @param oid
+     * @return
+     */
+    int deleteOrder(String getuId, String oid) throws Exception;
+
+    /**
+     * 用户查看订单（已付款、未付款）
+     * @param getuId
+     * @param isPay
+     * @return
+     */
+    List<Orders> selectOrder(String getuId, int isPay);
+
+    /**
+     * 根据条件查询已经购买的课程
+     * @param uid
+     * @param condition
+     * @return
+     */
+    List<Lesson> selectBoughtLesson(String uid, int condition);
 }
