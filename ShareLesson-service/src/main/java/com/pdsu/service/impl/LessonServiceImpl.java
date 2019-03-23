@@ -3,6 +3,9 @@ package com.pdsu.service.impl;
 import com.pdsu.mapper.LessonMapper;
 import com.pdsu.mapper.User_lessonMapper;
 import com.pdsu.pojo.*;
+import com.pdsu.pojo.Lesson;
+import com.pdsu.pojo.LessonExample;
+import com.pdsu.pojo.User;
 import com.pdsu.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Auther: http://wangjie
@@ -77,4 +81,17 @@ public class LessonServiceImpl implements LessonService {
         int signNum = user_lessonMapper.countByExample(user_lessonExample);  //统计已经报名人数
         return signNum;
     }
+
+
+    @Override
+    public int publishLesson(Lesson lesson, User user) {
+        lesson.setlId(UUID.randomUUID().toString());//设置课程id
+        lesson.settId(user.getuId());//老师Id
+        lesson.setExam(0);//未审核
+        int insert = lessonMapper.insert(lesson);
+        return insert;
+    }
+
+
+
 }

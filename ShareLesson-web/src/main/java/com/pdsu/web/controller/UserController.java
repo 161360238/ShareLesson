@@ -1,9 +1,7 @@
 package com.pdsu.web.controller;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.pdsu.mypojo.Result;
-import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.User;
 import com.pdsu.service.RedisService;
 import com.pdsu.service.UserService;
@@ -12,6 +10,8 @@ import com.pdsu.utils.CookieUtils;
 import com.pdsu.utils.JsonUtils;
 import com.pdsu.web.base.BaseController;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -38,8 +37,6 @@ public class UserController extends BaseController {
 
     @Autowired
     private RedisService redisServiceImpl;
-
-
 
     /**
      * 用户登录
@@ -114,6 +111,8 @@ public class UserController extends BaseController {
     public Result getUserInfo(String token) {
         return userServiceImpl.getUserByToken(token);
     }
+
+
 
     //根据用户，查询用户已经购买的课程，查询条件:已经开始、未开始
 

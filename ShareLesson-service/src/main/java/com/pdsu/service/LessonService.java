@@ -1,6 +1,5 @@
 package com.pdsu.service;
 
-import com.pdsu.pojo.Classify;
 import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.User;
 
@@ -47,5 +46,14 @@ public interface LessonService {
      * @return
      */
     int selectSignNum(Lesson lesson);
+
+
+    /**
+     * 发布课程
+     * @param lesson
+     * @return
+     */
+    public int publishLesson(Lesson lesson, User user);
+
 
 }
