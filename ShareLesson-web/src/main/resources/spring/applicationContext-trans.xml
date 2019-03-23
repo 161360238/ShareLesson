@@ -16,12 +16,14 @@
    <!-- 配置事物传播行为 ：其实就是那些方法应该受什么样的事物控制-->
     <tx:advice id="advice" transaction-manager="transactionMananger">
    	<tx:attributes>
-   		<tx:method name="add*" propagation="REQUIRED"/>
-   		<tx:method name="modify*" propagation="REQUIRED"/>
-   		<tx:method name="update*" propagation="REQUIRED"/>
-   		<tx:method name="dorp*" propagation="REQUIRED"/>
-   		<tx:method name="del*" propagation="REQUIRED"/>
-   		<tx:method name="find*" read-only="true"/>
+   		<tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+   		<tx:method name="modify*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+   		<tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+   		<tx:method name="dorp*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+   		<tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+   		<tx:method name="find*"  rollback-for="java.lang.Exception"/>
+		<tx:method name="write*"  rollback-for="java.lang.Exception"/>
+		<tx:method name="create*"  rollback-for="java.lang.Exception"/>
    	</tx:attributes>
    </tx:advice>
 

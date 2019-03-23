@@ -41,6 +41,7 @@ public class UserController {
 
     /**
      * 用户登录
+     *
      * @param user
      * @param request
      * @param response
@@ -110,6 +111,21 @@ public class UserController {
     @ResponseBody
     public Result getUserInfo(String token) {
         return userServiceImpl.getUserByToken(token);
+    }
+
+
+
+    //根据用户，查询用户已经购买的课程，查询条件:已经开始、未开始
+
+    public Result selectBoughtLesson(String token,int isBegin
+            , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+            User user=getUser(token);
+            PageHelper.startPage(pn, 5); //每页显示5条数据
+            //执行查询
+          //  PageInfo page = new PageInfo( 5);
+           // Result result = new Result();
+            //result.setData(page);
+        return null;
     }
 
 
