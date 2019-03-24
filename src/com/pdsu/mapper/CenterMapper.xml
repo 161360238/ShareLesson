@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pdsu.mapper.CenterMapper" >
+
+    <resultMap id="BaseResultMap" type="com.pdsu.pojo.Center" >
+        <id column="center_id" property="centerId" jdbcType="VARCHAR" />
+        <result column="model_name" property="modelName" jdbcType="VARCHAR" />
+        <result column="model_url" property="modelUrl" jdbcType="VARCHAR" />
+        <result column="model_type" property="modelType" jdbcType="INTEGER" />
+        <result column="model_sort" property="modelSort" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        center_id, model_name, model_url, model_type, model_sort
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.CenterExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from center
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from center
+        where center_id = #{centerId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from center
+        where center_id = #{centerId,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.pdsu.pojo.CenterExample" >
+        delete from center
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+    <insert id="insert" parameterType="com.pdsu.pojo.Center" >
+        insert into center (center_id, model_name, model_url, 
+            model_type, model_sort)
+        values (#{centerId,jdbcType=VARCHAR}, #{modelName,jdbcType=VARCHAR}, #{modelUrl,jdbcType=VARCHAR}, 
+            #{modelType,jdbcType=INTEGER}, #{modelSort,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.pdsu.pojo.Center" >
+        insert into center
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="centerId != null" >
+                center_id,
+            </if>
+            <if test="modelName != null" >
+                model_name,
+            </if>
+            <if test="modelUrl != null" >
+                model_url,
+            </if>
+            <if test="modelType != null" >
+                model_type,
+            </if>
+            <if test="modelSort != null" >
+                model_sort,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="centerId != null" >
+                #{centerId,jdbcType=VARCHAR},
+            </if>
+            <if test="modelName != null" >
+                #{modelName,jdbcType=VARCHAR},
+            </if>
+            <if test="modelUrl != null" >
+                #{modelUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="modelType != null" >
+                #{modelType,jdbcType=INTEGER},
+            </if>
+            <if test="modelSort != null" >
+                #{modelSort,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="countByExample" parameterType="com.pdsu.pojo.CenterExample" resultType="java.lang.Integer" >
+        select count(*) from center
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update center
+        <set >
+            <if test="record.centerId != null" >
+                center_id = #{record.centerId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.modelName != null" >
+                model_name = #{record.modelName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.modelUrl != null" >
+                model_url = #{record.modelUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="record.modelType != null" >
+                model_type = #{record.modelType,jdbcType=INTEGER},
+            </if>
+            <if test="record.modelSort != null" >
+                model_sort = #{record.modelSort,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update center
+        set center_id = #{record.centerId,jdbcType=VARCHAR},
+            model_name = #{record.modelName,jdbcType=VARCHAR},
+            model_url = #{record.modelUrl,jdbcType=VARCHAR},
+            model_type = #{record.modelType,jdbcType=INTEGER},
+            model_sort = #{record.modelSort,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.pdsu.pojo.Center" >
+        update center
+        <set >
+            <if test="modelName != null" >
+                model_name = #{modelName,jdbcType=VARCHAR},
+            </if>
+            <if test="modelUrl != null" >
+                model_url = #{modelUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="modelType != null" >
+                model_type = #{modelType,jdbcType=INTEGER},
+            </if>
+            <if test="modelSort != null" >
+                model_sort = #{modelSort,jdbcType=INTEGER},
+            </if>
+        </set>
+        where center_id = #{centerId,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.pdsu.pojo.Center" >
+        update center
+        set model_name = #{modelName,jdbcType=VARCHAR},
+            model_url = #{modelUrl,jdbcType=VARCHAR},
+            model_type = #{modelType,jdbcType=INTEGER},
+            model_sort = #{modelSort,jdbcType=INTEGER}
+        where center_id = #{centerId,jdbcType=VARCHAR}
+    </update>
+</mapper>
