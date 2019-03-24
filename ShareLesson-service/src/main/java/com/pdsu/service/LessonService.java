@@ -18,7 +18,7 @@ public interface LessonService {
      * @param tid
      * @return
      */
-    List<Lesson> getLessonByTeacherId(String tid);
+    List<Lesson> getLessonByTeacherId(String tid,int condition);
 
     /**
      * 根据课程id 查询课程

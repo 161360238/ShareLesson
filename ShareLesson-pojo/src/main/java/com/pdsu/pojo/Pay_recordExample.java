@@ -69,7 +69,7 @@ public class Pay_recordExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-23
+     * @date 2019-03-24
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -705,7 +705,7 @@ public class Pay_recordExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-23
+     * @date 2019-03-24
      */
     public static class Criterion {
         private String condition;

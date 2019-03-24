@@ -68,7 +68,7 @@ public class UserExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-23
+     * @date 2019-03-24
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -1070,6 +1070,66 @@ public class UserExample {
             addCriterion("role not between", value1, value2, "role");
             return (Criteria) this;
         }
+
+        public Criteria andFansIsNull() {
+            addCriterion("fans is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansIsNotNull() {
+            addCriterion("fans is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansEqualTo(Integer value) {
+            addCriterion("fans =", value, "fans");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNotEqualTo(Integer value) {
+            addCriterion("fans <>", value, "fans");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansGreaterThan(Integer value) {
+            addCriterion("fans >", value, "fans");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansGreaterThanOrEqualTo(Integer value) {
+            addCriterion("fans >=", value, "fans");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansLessThan(Integer value) {
+            addCriterion("fans <", value, "fans");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansLessThanOrEqualTo(Integer value) {
+            addCriterion("fans <=", value, "fans");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansIn(List<Integer> values) {
+            addCriterion("fans in", values, "fans");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNotIn(List<Integer> values) {
+            addCriterion("fans not in", values, "fans");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansBetween(Integer value1, Integer value2) {
+            addCriterion("fans between", value1, value2, "fans");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNotBetween(Integer value1, Integer value2) {
+            addCriterion("fans not between", value1, value2, "fans");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -1084,7 +1144,7 @@ public class UserExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-23
+     * @date 2019-03-24
      */
     public static class Criterion {
         private String condition;

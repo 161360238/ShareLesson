@@ -3,11 +3,9 @@ package com.pdsu.service.impl;
 import com.pdsu.mapper.CenterMapper;
 import com.pdsu.mapper.ClassifyMapper;
 import com.pdsu.mapper.LessonMapper;
+import com.pdsu.mapper.UserMapper;
 import com.pdsu.pojo.*;
-import com.pdsu.service.CenterService;
-import com.pdsu.service.ClassifyService;
-import com.pdsu.service.LessonService;
-import com.pdsu.service.RedisService;
+import com.pdsu.service.*;
 import com.pdsu.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +38,9 @@ public class CenterServiceImpl implements CenterService {
 
     @Autowired
     private LessonService lessonServiceImpl;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 查询首页信息
@@ -80,9 +81,15 @@ public class CenterServiceImpl implements CenterService {
         for (int i = 0; i < classifies.size(); i++) {
             Classify classify = new Classify();
             classify = classifies.get(i);
+
             List<Lesson> list = this.selectLessonByClassifyId(classify.getClassifyId(), 6);
 
             if (list != null) {
+                if (list.size() >= 6) {
+                    list = list.subList(0, 6);
+                } else if (list.size() >= 3 && list.size() < 6) {
+                    list = list.subList(0, 3);
+                }
                 message.put(classify, list);
             }
         }
@@ -192,6 +199,19 @@ public class CenterServiceImpl implements CenterService {
             return 1;
         }
         return 0;
+    }
+
+    /**
+     * 首页推送老师信息
+     *
+     * @return
+     */
+    @Override
+    public List<User> pushTeacher() {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andIdentityEqualTo(1);  //身份为老师
+        userExample.setOrderByClause("fans DESC");   //按照粉丝降序
+        return userMapper.selectByExample(userExample);
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * @author wcyong
  * 
- * @date 2019-03-23
+ * @date 2019-03-24
  */
 public class Message {
     /**
@@ -44,6 +44,11 @@ public class Message {
      * 消息内容
      */
     private String content;
+
+    /**
+     * 消息标题
+     */
+    private String title;
 
     public String getmId() {
         return mId;
@@ -99,5 +104,13 @@ public class Message {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 }

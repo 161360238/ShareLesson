@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * @author wcyong
  * 
- * @date 2019-03-23
+ * @date 2019-03-24
  */
 public class Lesson {
     /**
@@ -71,7 +71,7 @@ public class Lesson {
     private String classifyId;
 
     /**
-     * 审核状态（0为正在审核，1为通过，2为未通过）
+     * 状态（0为正在审核，1为通过，正在进行，2为未通过，3为已结束,4,为未开课成功，5，为开课成功）
      */
     private Integer exam;
 

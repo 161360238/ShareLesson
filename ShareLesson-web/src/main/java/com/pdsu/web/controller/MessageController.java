@@ -1,6 +1,9 @@
 package com.pdsu.web.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.pdsu.mypojo.Result;
+import com.pdsu.pojo.Message;
 import com.pdsu.service.MessageService;
 import com.pdsu.service.RedisService;
 import io.swagger.annotations.Api;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -81,4 +85,59 @@ public class MessageController {
     }
 
 
+    /**
+     * 学生或老师查看消息接口（分页查询）
+     *
+     * @param uid
+     * @param condition
+     * @param pn
+     * @return
+     */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uid", required = true, dataType = "String", paramType = "query", value = "用户id"),
+            @ApiImplicitParam(name = "pn", required = true, dataType = "String", paramType = "query", value = "页码"),
+            @ApiImplicitParam(name = "condition", required = true, dataType = "int", paramType = "query", value = "查询条件（1：已读 0：未读 2：全部查询）")
+    })
+    @ApiOperation(value = "学生或老师查看消息接口（分页查询）")
+    @ResponseBody
+    @RequestMapping(value = "/selectMessage", method = RequestMethod.GET)
+    public Result selectMessage(String uid, int condition
+            , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+        Result result = new Result();
+        PageHelper.startPage(pn, 10); //每页显示5条数据
+        List<Message> messageList = messageServiceImpl.selectMessage(uid, condition);
+        PageInfo page = new PageInfo(messageList, 5);
+
+        if (messageList != null && messageList.size() > 0) {
+            result.setCode("200");
+            result.setMessage("查询成功");
+            result.setData(page);
+        } else {
+            result.setCode("201");
+            result.setMessage("暂时没有消息");
+        }
+        return result;
+    }
+
+    /**
+     * 标记消息为已读
+     * @param mid
+     * @return
+     */
+    @ApiImplicitParam(name = "mid", required = true, dataType = "String", paramType = "query", value = "消息id")
+    @ApiOperation(value = "标记消息为已读")
+    @ResponseBody
+    @RequestMapping(value = "/setMessageRead", method = RequestMethod.POST)
+    public Result setMessageRead(String mid) {
+        Result result = new Result();
+        int index = messageServiceImpl.setMessageRead(mid);
+        if (index > 0) {
+            result.setCode("200");
+            result.setMessage("标记成功");
+        } else {
+            result.setCode("201");
+            result.setMessage("标记失败");
+        }
+        return result;
+    }
 }

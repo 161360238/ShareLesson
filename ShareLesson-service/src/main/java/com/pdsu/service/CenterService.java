@@ -3,6 +3,7 @@ package com.pdsu.service;
 import com.pdsu.pojo.Center;
 import com.pdsu.pojo.Classify;
 import com.pdsu.pojo.Lesson;
+import com.pdsu.pojo.User;
 
 import java.util.List;
 import java.util.Map;
@@ -65,4 +66,10 @@ public interface CenterService {
      * @return
      */
     int setPushLesson(String c1, String c2);
+
+    /**
+     * 获取首页推送老师的信息
+     * @return
+     */
+    List<User> pushTeacher();
 }

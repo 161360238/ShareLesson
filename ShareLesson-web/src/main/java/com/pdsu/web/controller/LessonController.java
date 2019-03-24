@@ -89,6 +89,7 @@ public class LessonController extends BaseController {
         PageInfo page = new PageInfo(lessonList, 5);
         Result result = new Result();
         result.setData(page);
+        result.setCode("200");
         return result;
     }
 
@@ -112,24 +113,31 @@ public class LessonController extends BaseController {
         List<Lesson> lessonList = centerServiceImpl.selectLessonByParentClassifyId(pid, isCharge);
         PageInfo page = new PageInfo(lessonList, 5);
         Result result = new Result();
+        result.setCode("200");
         result.setData(page);
         return result;
     }
 
     /**
      * 根据老师id获取老师已经发布的课程（分页）
+     * 条件：0：未审核，1：未通过，2：未开始，3：正在进行，4：已经结束，5：未发布成功
      * @param tid
      * @return
      */
-    @ApiImplicitParam(name = "tid", required = true, dataType = "String", paramType = "query", value = "老师id")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tid", required = true, dataType = "String", paramType = "query", value = "老师的id"),
+            @ApiImplicitParam(name = "pn", required = true, dataType = "int", paramType = "query", value = "页码"),
+            @ApiImplicitParam(name = "condition", required = true, dataType = "int", paramType = "query", value = "查询条件")
+    })
     @ApiOperation(value = "根据老师id获取老师已经发布的课程")
     @ResponseBody
     @RequestMapping(value = "/getLessonByTeacherId.do", method = RequestMethod.GET)
     public Result getLessonByTeacherId(String tid
-            , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+            , @RequestParam(value = "pn", defaultValue = "1") Integer pn,int condition) {
+
         Result result = new Result();
         PageHelper.startPage(pn, 5); //每页显示5条数据
-        List<Lesson> lessons = lessonServiceImpl.getLessonByTeacherId(tid);
+        List<Lesson> lessons = lessonServiceImpl.getLessonByTeacherId(tid,condition);
         PageInfo page = new PageInfo(lessons, 5);
 
         if (lessons != null) {

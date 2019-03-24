@@ -30,12 +30,38 @@ public class LessonServiceImpl implements LessonService {
     @Autowired
     private User_lessonMapper user_lessonMapper;
 
+    //条件：0：正在审核，1：（通过，成功开课）未开始，2：未审核通过，3：正在进行，4：已经结束，5：未开课成功,6:查询全部
     @Override
-    public List<Lesson> getLessonByTeacherId(String tid) {
+    public List<Lesson> getLessonByTeacherId(String tid,int condition) {
         List<Lesson> lessons = new ArrayList<>();
         LessonExample lessonExample = new LessonExample();
-        lessonExample.createCriteria().andTIdEqualTo(tid);
+
+        if(condition==0){
+            lessonExample.createCriteria().andTIdEqualTo(tid)
+                    .andExamEqualTo(0);  //正在审核
+        }else if(condition==1){
+            lessonExample.createCriteria().andTIdEqualTo(tid)
+                    .andExamEqualTo(5)                    //审核通过且开课成功
+                    .andBeginTimeGreaterThan(new Date());  //未开始
+        }else if(condition==2){
+            lessonExample.createCriteria().andTIdEqualTo(tid)
+                    .andExamEqualTo(2);  //未审核通过
+        }else if(condition==3){
+            lessonExample.createCriteria().andTIdEqualTo(tid)
+                    .andExamEqualTo(1)                   //审核通过
+                    .andBeginTimeLessThan(new Date());   //已经过了上课时间，正在进行
+        }else if(condition==4){
+            lessonExample.createCriteria().andTIdEqualTo(tid)
+                    .andExamEqualTo(3);  //已经结束
+        }else if(condition==5){
+            lessonExample.createCriteria().andTIdEqualTo(tid)
+                    .andExamEqualTo(4);  //未开课成功
+        }else if(condition==6){
+            lessonExample.createCriteria().andTIdEqualTo(tid);  //查询这个老师的全部课程
+        }
+
         lessons = lessonMapper.selectByExample(lessonExample);
+
         if (lessons != null && lessons.size() > 0) {
             return lessons;
         }

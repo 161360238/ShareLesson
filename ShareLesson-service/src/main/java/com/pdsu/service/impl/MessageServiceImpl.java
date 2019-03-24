@@ -3,6 +3,7 @@ package com.pdsu.service.impl;
 import com.pdsu.mapper.MessageMapper;
 import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.Message;
+import com.pdsu.pojo.MessageExample;
 import com.pdsu.service.LessonService;
 import com.pdsu.service.MessageService;
 import com.pdsu.service.RedisService;
@@ -15,10 +16,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Auther: http://wangjie
@@ -128,7 +126,7 @@ public class MessageServiceImpl implements MessageService {
             } else {
                 throw new Exception("通知失败");
             }
-        }else{    //通知开课成功
+        } else {    //通知开课成功
             message.setmId(CodecUtil.createUUID());
             String content1 = "尊敬的老师您好，恭喜你 您创建的课程："
                     + lesson.getlName() + ",到报名截止日期 报名人数高于开课最低人数：" + lesson.getMiniNum()
@@ -152,6 +150,46 @@ public class MessageServiceImpl implements MessageService {
                 throw new Exception("通知失败");
             }
         }
+    }
+
+    /**
+     * 查看消息
+     *
+     * @param uid
+     * @param condition
+     * @return
+     */
+    @Override
+    public List<Message> selectMessage(String uid, int condition) {
+        MessageExample messageExample = new MessageExample();
+        List<Message> messages = new ArrayList<>();
+        if (condition == 0) {   //表示已读
+            messageExample.createCriteria().andStatusEqualTo(0)
+                    .andOwnIdEqualTo(uid);
+        } else if (condition == 2) {    //表示未读
+            messageExample.createCriteria().andStatusEqualTo(1)
+                    .andOwnIdEqualTo(uid);
+        } else {   //已读和未读全查
+            messageExample.createCriteria().andOwnIdEqualTo(uid);
+        }
+        messageExample.setOrderByClause("created DESC");
+        messages = messageMapper.selectByExample(messageExample);
+        if (messages != null && messages.size() > 0) {
+            return messages;
+        }
+        return null;
+    }
+
+    @Override
+    public int setMessageRead(String mid) {
+        int index=0;
+        Message message;
+        message=messageMapper.selectByPrimaryKey(mid);
+        if(message!=null){
+            message.setStatus(1);  //1表示已读
+            index=messageMapper.updateByPrimaryKey(message);
+        }
+        return index;
     }
 
 

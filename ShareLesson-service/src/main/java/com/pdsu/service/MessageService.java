@@ -1,7 +1,9 @@
 package com.pdsu.service;
 
 import com.pdsu.pojo.Lesson;
+import com.pdsu.pojo.Message;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,4 +35,19 @@ public interface MessageService {
      * @param i
      */
     int insertNotice(Lesson lesson, int i) throws Exception;
+
+    /**
+     * 老师或者学生查看消息
+     * @param uid
+     * @param condition
+     * @return
+     */
+    List<Message> selectMessage(String uid, int condition);
+
+    /**
+     * 标记消息为已读
+     * @param mid
+     * @return
+     */
+    int setMessageRead(String mid);
 }

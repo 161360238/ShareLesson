@@ -5,7 +5,7 @@ package com.pdsu.pojo;
  * 
  * @author wcyong
  * 
- * @date 2019-03-23
+ * @date 2019-03-24
  */
 public class User {
     /**
@@ -44,7 +44,7 @@ public class User {
     private String department;
 
     /**
-     * 身份
+     * 身份（0表示学生，1表示老师）
      */
     private Integer identity;
 
@@ -77,6 +77,11 @@ public class User {
      * 角色
      */
     private String role;
+
+    /**
+     * 粉丝个数
+     */
+    private Integer fans;
 
     public String getuId() {
         return uId;
@@ -188,5 +193,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role == null ? null : role.trim();
+    }
+
+    public Integer getFans() {
+        return fans;
+    }
+
+    public void setFans(Integer fans) {
+        this.fans = fans;
     }
 }
