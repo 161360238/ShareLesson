@@ -27,7 +27,6 @@
     </mvc:annotation-driven>
 
 
-
     <!-- 创建multipart解析器，这个id名字固定 是由DispatcherServlet直接调用 -->
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -50,7 +51,7 @@ public class StudentController {
             result.setCode("200");
             result.setMessage("关注成功！");
         } else if (ans == 2) {
-            result.setCode("200");
+            result.setCode("202");
             result.setMessage("已经关注，不要重复关注！");
         } else {
             result.setCode("201");
@@ -145,9 +146,9 @@ public class StudentController {
     @ApiOperation(value = "学生提交成为老师申请")
     @ResponseBody
     @RequestMapping(value = "/submitExam", method = RequestMethod.POST)
-    public Result submitExam(String sid, String text) {
+    public Result submitExam(String sid, String text) throws UnsupportedEncodingException {
         Result result = new Result();
-        System.out.println(text);
+        text = new String(text.getBytes("ISO-8859-1"), "utf-8");  //防止中文乱码
         int index = studentServiceImpl.submitExam(sid, text);
         if (index > 0) {
             result.setCode("200");

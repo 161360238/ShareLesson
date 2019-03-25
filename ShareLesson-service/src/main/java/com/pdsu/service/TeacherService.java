@@ -18,4 +18,11 @@ public interface TeacherService {
      * @return
      */
     List<User> selectFansByTid(String tid);
+
+    /**
+     * 根据老师ID，查询老师个人信息
+     * @param tid
+     * @return
+     */
+    User selectTeacherByTid(String tid);
 }

@@ -53,5 +53,22 @@ public class TeacherController {
         return result;
     }
 
+    @ApiImplicitParam(name = "tid", required = true, dataType = "String", paramType = "query", value = "老师的id")
+    @ApiOperation(value = "根据老师ID，查询老师个人信息")
+    @ResponseBody
+    @RequestMapping(value = "/selectTeacherByTid",method = RequestMethod.GET)
+    public Result selectTeacherByTid(String tid){
+        Result result=new Result();
+        User user=teacherServiceImpl.selectTeacherByTid(tid);
+        if(user!=null){
+            result.setCode("200");
+            result.setMessage("查询成功");
+            result.setData(user);
+        }else{
+            result.setCode("201");
+            result.setMessage("没要查询到相关信息");
+        }
+        return result;
+    }
 
 }

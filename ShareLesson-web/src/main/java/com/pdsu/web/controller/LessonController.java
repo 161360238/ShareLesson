@@ -66,16 +66,12 @@ public class LessonController extends BaseController {
     /**
      * 根据分类id查询课程
      * 分页查询
-     *
-     * @param id
-     * @return
      */
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", required = true, dataType = "String", paramType = "query", value = "分类id"),
             @ApiImplicitParam(name = "pn", required = true, dataType = "int", paramType = "query", value = "页码"),
             @ApiImplicitParam(name = "isCharge", required = true, dataType = "int", paramType = "query", value = "是否收费")
     })
-
     @ApiOperation(value = "根据分类id查询课程")
     @ResponseBody
     @RequestMapping(value = "/selectLessonByClassify.do", method = RequestMethod.GET)
@@ -88,16 +84,20 @@ public class LessonController extends BaseController {
         // 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
         PageInfo page = new PageInfo(lessonList, 5);
         Result result = new Result();
-        result.setData(page);
-        result.setCode("200");
+        if (lessonList != null && lessonList.size() > 0) {
+            result.setData(page);
+            result.setCode("200");
+            result.setMessage("查询成功");
+        } else {
+            result.setCode("201");
+            result.setMessage("没要查询到课程");
+        }
         return result;
     }
 
     /**
      * 根据父id查询课程信息
      * 分页
-     * @param pid
-     * @return
      */
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pid", required = true, dataType = "String", paramType = "query", value = "父id"),
@@ -113,16 +113,20 @@ public class LessonController extends BaseController {
         List<Lesson> lessonList = centerServiceImpl.selectLessonByParentClassifyId(pid, isCharge);
         PageInfo page = new PageInfo(lessonList, 5);
         Result result = new Result();
-        result.setCode("200");
-        result.setData(page);
+        if (lessonList != null && lessonList.size() > 0) {
+            result.setCode("200");
+            result.setData(page);
+            result.setMessage("查询成功");
+        } else {
+            result.setCode("201");
+            result.setMessage("没要查询到相关信息");
+        }
         return result;
     }
 
     /**
      * 根据老师id获取老师已经发布的课程（分页）
      * 条件：0：未审核，1：未通过，2：未开始，3：正在进行，4：已经结束，5：未发布成功
-     * @param tid
-     * @return
      */
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tid", required = true, dataType = "String", paramType = "query", value = "老师的id"),
@@ -133,11 +137,11 @@ public class LessonController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/getLessonByTeacherId.do", method = RequestMethod.GET)
     public Result getLessonByTeacherId(String tid
-            , @RequestParam(value = "pn", defaultValue = "1") Integer pn,int condition) {
+            , @RequestParam(value = "pn", defaultValue = "1") Integer pn, int condition) {
 
         Result result = new Result();
         PageHelper.startPage(pn, 5); //每页显示5条数据
-        List<Lesson> lessons = lessonServiceImpl.getLessonByTeacherId(tid,condition);
+        List<Lesson> lessons = lessonServiceImpl.getLessonByTeacherId(tid, condition);
         PageInfo page = new PageInfo(lessons, 5);
 
         if (lessons != null) {
@@ -153,14 +157,11 @@ public class LessonController extends BaseController {
 
     /**
      * 发布的课程
-     *
-     * @param
-     * @return
      */
     @ApiOperation(value = "用户发布的课程")
     @ResponseBody
     @RequestMapping(value = "/publishLesson/{token}", method = RequestMethod.POST)
-    public Result publishLesson(@RequestBody Lesson lesson,@PathVariable("token")String token){
+    public Result publishLesson(@RequestBody Lesson lesson, @PathVariable("token") String token) {
         Result result = new Result();
         User user = getUser(token); //判断用户是否登录
         if (user == null) {
@@ -169,10 +170,10 @@ public class LessonController extends BaseController {
             return result;
         }
         try {
-            lessonServiceImpl.publishLesson(lesson,user);
+            lessonServiceImpl.publishLesson(lesson, user);
             result.setCode("200");
             result.setMessage("发布成功，请等待后台审核！");
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             result.setCode("201");
             result.setMessage("发布失败！");
@@ -181,5 +182,27 @@ public class LessonController extends BaseController {
     }
 
 
-
+    /**
+     * 根据课程id，查询课程详细信息
+     *
+     * @param lid
+     * @return
+     */
+    @ApiImplicitParam(name = "lid", required = true, dataType = "String", paramType = "query", value = "课程的id")
+    @ApiOperation(value = "根据课程id，查询课程详细信息")
+    @ResponseBody
+    @RequestMapping(value = "/selectLessonByLid", method = RequestMethod.GET)
+    public Result selectLessonByLid(String lid) {
+        Result result = new Result();
+        Lesson lesson = lessonServiceImpl.selectByLid(lid);
+        if (lesson != null) {
+            result.setCode("200");
+            result.setMessage("查询成功");
+            result.setData(lesson);
+        } else {
+            result.setCode("201");
+            result.setMessage("查询失败");
+        }
+        return result;
+    }
 }

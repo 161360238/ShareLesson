@@ -34,6 +34,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     /**
      * 通过老师id查询 老师粉丝
+     *
      * @param tid
      * @return
      */
@@ -57,5 +58,15 @@ public class TeacherServiceImpl implements TeacherService {
             return fans;
         }
         return null;
+    }
+
+    /**
+     * 根据用户ID，查询用户
+     * @param tid
+     * @return
+     */
+    @Override
+    public User selectTeacherByTid(String tid) {
+        return userMapper.selectByPrimaryKey(tid);
     }
 }
