@@ -29,9 +29,9 @@ public class UserServiceImpl implements UserService {
     private RedisService redisServiceImpl;
 
 
-
     /**
      * 用户登录
+     *
      * @param user
      * @return
      */
@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 用户注册
+     *
      * @param user
      * @return
      */
@@ -71,6 +72,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 通过token获取用户
+     *
      * @param token
      * @return
      */
@@ -91,5 +93,18 @@ public class UserServiceImpl implements UserService {
             result.setMessage("获取失败");
         }
         return result;
+    }
+
+    @Override
+    public int updateuser(User user, String token) {
+        int index = userMapper.updateByPrimaryKeySelective(user);
+        if (index > 0) {   //修改成功
+            user=userMapper.selectByPrimaryKey(user.getuId());
+            String json = JsonUtils.objectToJson(user);
+            //更新redis中的数据
+            redisServiceImpl.set(token, json);
+            return 1;
+        }
+        return 0;
     }
 }

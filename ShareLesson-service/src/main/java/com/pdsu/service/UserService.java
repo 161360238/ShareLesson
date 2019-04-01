@@ -33,4 +33,10 @@ public interface UserService {
     Result getUserByToken(String token);
 
 
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    int updateuser(User user,String token);
 }
