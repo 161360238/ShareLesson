@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: http://wangjie
@@ -81,7 +82,8 @@ public class CartController extends BaseController {
         User user = getUser(token);  //从redis获取用户信息
 
         String uid = user.getuId();
-        List<Lesson> lessons = cartServiceImpl.showCart(uid, cartKey);
+        Map<String, List<Lesson>> lessons = cartServiceImpl.showCart(uid, cartKey);
+
         if (lessons != null && lessons.size() > 0) {
             result.setCode("200");
             result.setData(lessons);

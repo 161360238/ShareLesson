@@ -3,6 +3,7 @@ package com.pdsu.service;
 import com.pdsu.pojo.Lesson;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: http://wangjie
@@ -26,7 +27,7 @@ public interface CartService {
      * @param uid
      * @return
      */
-    List<Lesson> showCart(String uid, String cartKey);
+    Map<String, List<Lesson>> showCart(String uid, String cartKey);
 
     /**
      * 删除购物车中的商品

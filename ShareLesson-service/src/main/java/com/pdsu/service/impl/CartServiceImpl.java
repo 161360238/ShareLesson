@@ -1,7 +1,10 @@
 package com.pdsu.service.impl;
 
+import com.pdsu.mapper.ClassifyMapper;
+import com.pdsu.pojo.Classify;
 import com.pdsu.pojo.Lesson;
 import com.pdsu.service.CartService;
+import com.pdsu.service.ClassifyService;
 import com.pdsu.service.LessonService;
 import com.pdsu.service.RedisService;
 import com.pdsu.utils.JsonUtils;
@@ -9,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Auther: http://wangjie
@@ -25,6 +30,9 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private LessonService lessonServiceImpl;
+
+    @Autowired
+    private ClassifyMapper classifyMapper;
 
     @Override
     public int addCart(String lid, String uid, String cartKey) {
@@ -59,10 +67,28 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<Lesson> showCart(String uid, String cartKey) {
+    public Map<String, List<Lesson>> showCart(String uid, String cartKey) {
         String key = cartKey + uid;
         String json = redisServiceImpl.get(key);
-        return JsonUtils.jsonToList(json, Lesson.class);
+        List<Lesson> lessons = JsonUtils.jsonToList(json, Lesson.class);
+        Map<String, List<Lesson>> map = new HashMap<>();  //分类和该分类下的课程
+        for (Lesson lesson : lessons) {
+            List<Lesson> list;
+            list = map.get(classifyMapper.selectByPrimaryKey(lesson.getClassifyId())
+                    .getClassifyName());
+            if (list != null && list.size() > 0) {
+                list.add(lesson);
+                map.put(classifyMapper.selectByPrimaryKey(lesson.getClassifyId())
+                        .getClassifyName(), list);
+            } else {
+                list = new ArrayList<>();
+                list.add(lesson);
+                map.put(classifyMapper.selectByPrimaryKey(lesson.getClassifyId())
+                        .getClassifyName(), list);
+            }
+        }
+        //System.out.println(map);
+        return map;
     }
 
     @Override
