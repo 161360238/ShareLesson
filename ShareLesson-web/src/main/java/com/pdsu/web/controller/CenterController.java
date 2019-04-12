@@ -2,6 +2,7 @@ package com.pdsu.web.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pdsu.mypojo.PageResult;
 import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.Center;
 import com.pdsu.pojo.Classify;
@@ -15,10 +16,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -140,4 +138,21 @@ public class CenterController {
         }
         return result;
     }
+
+    /**
+     * 获取用户列表
+     *
+     * @param center
+     * @param page
+     * @return
+     */
+    @ApiImplicitParam(name = "page", required = true, dataType = "Integer", paramType = "query", value = "当前页")
+    @ApiOperation(value = "首页导航栏信息维护")
+    @ResponseBody
+    @RequestMapping(value = "search", method = RequestMethod.POST)
+    public PageResult search(@RequestBody Center center, int page, int rows){
+        return centerServiceImpl.findPage(center, page, rows);
+
+    }
+
 }

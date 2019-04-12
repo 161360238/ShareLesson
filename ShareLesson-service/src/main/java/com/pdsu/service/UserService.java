@@ -1,5 +1,6 @@
 package com.pdsu.service;
 
+import com.pdsu.mypojo.PageResult;
 import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.User;
 
@@ -39,4 +40,7 @@ public interface UserService {
      * @return
      */
     int updateuser(User user,String token);
+
+    //获取用户列表
+    PageResult findPage(User user, int page, int rows);
 }

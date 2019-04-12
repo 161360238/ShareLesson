@@ -1,5 +1,6 @@
 package com.pdsu.web.controller;
 
+import com.pdsu.mypojo.PageResult;
 import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.User;
 import com.pdsu.service.TeacherService;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -70,5 +72,6 @@ public class TeacherController {
         }
         return result;
     }
+
 
 }

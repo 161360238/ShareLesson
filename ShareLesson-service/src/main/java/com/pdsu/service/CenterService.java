@@ -1,5 +1,6 @@
 package com.pdsu.service;
 
+import com.pdsu.mypojo.PageResult;
 import com.pdsu.pojo.Center;
 import com.pdsu.pojo.Classify;
 import com.pdsu.pojo.Lesson;
@@ -72,4 +73,7 @@ public interface CenterService {
      * @return
      */
     List<User> pushTeacher();
+
+    //导航分页
+    PageResult findPage(Center center, int page, int rows);
 }

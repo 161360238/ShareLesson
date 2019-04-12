@@ -1,6 +1,7 @@
 package com.pdsu.service.impl;
 
 import com.pdsu.mapper.UserMapper;
+import com.pdsu.mypojo.PageResult;
 import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.User;
 import com.pdsu.pojo.UserExample;
@@ -106,5 +107,15 @@ public class UserServiceImpl implements UserService {
             return 1;
         }
         return 0;
+    }
+
+    @Override
+    public PageResult findPage(User user, int page, int rows) {
+        PageResult pageResult = new PageResult();
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        List<User> list = userMapper.selectByExample(example);
+        pageResult.setRows(list);
+        return pageResult;
     }
 }

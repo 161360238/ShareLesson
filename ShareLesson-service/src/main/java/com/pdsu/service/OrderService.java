@@ -2,7 +2,6 @@ package com.pdsu.service;
 
 import com.pdsu.mypojo.MyOrderParam;
 import com.pdsu.pojo.*;
-import com.pdsu.pojo.Orders;
 
 import java.util.List;
 

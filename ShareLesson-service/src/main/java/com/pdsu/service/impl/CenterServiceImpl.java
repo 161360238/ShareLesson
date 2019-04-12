@@ -4,6 +4,7 @@ import com.pdsu.mapper.CenterMapper;
 import com.pdsu.mapper.ClassifyMapper;
 import com.pdsu.mapper.LessonMapper;
 import com.pdsu.mapper.UserMapper;
+import com.pdsu.mypojo.PageResult;
 import com.pdsu.pojo.*;
 import com.pdsu.service.*;
 import com.pdsu.utils.JsonUtils;
@@ -212,6 +213,21 @@ public class CenterServiceImpl implements CenterService {
         userExample.createCriteria().andIdentityEqualTo(1);  //身份为老师
         userExample.setOrderByClause("fans DESC");   //按照粉丝降序
         return userMapper.selectByExample(userExample);
+    }
+
+    @Override
+    public PageResult findPage(Center center, int page, int rows) {
+
+        PageResult pageResult = new PageResult();
+
+        CenterExample example = new CenterExample();
+        CenterExample.Criteria criteria = example.createCriteria();
+        //-------
+
+
+        List<Center> list = centerMapper.selectByExample(example);
+        pageResult.setRows(list);
+        return pageResult;
     }
 
 }

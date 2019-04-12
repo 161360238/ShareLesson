@@ -1,6 +1,7 @@
 package com.pdsu.web.controller;
 
 import com.github.pagehelper.PageHelper;
+import com.pdsu.mypojo.PageResult;
 import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.User;
 import com.pdsu.service.RedisService;
@@ -162,5 +163,23 @@ public class UserController extends BaseController {
         }
         return result;
     }
+
+
+    /**
+     * 获取用户列表
+     *
+     * @param user
+     * @param page
+     * @return
+     */
+    @ApiImplicitParam(name = "page", required = true, dataType = "Integer", paramType = "query", value = "当前页")
+    @ApiOperation(value = "获取用户列表")
+    @ResponseBody
+    @RequestMapping(value = "search", method = RequestMethod.POST)
+    public PageResult search(@RequestBody User user, int page, int rows){
+        return userServiceImpl.findPage(user, page, rows);
+    }
+
+
 
 }

@@ -1,6 +1,6 @@
 package com.pdsu.service.impl;
 
-import com.pdsu.mapper.ApplyMapper;
+//import com.pdsu.mapper.ApplyMapper;
 import com.pdsu.mapper.Follow_perMapper;
 import com.pdsu.mapper.UserMapper;
 import com.pdsu.pojo.*;
@@ -27,8 +27,8 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private ApplyMapper applyMapper;
+    /*@Autowired
+    private ApplyMapper applyMapper;*/
 
 
     /**
@@ -137,7 +137,7 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public int submitExam(String sid, String text) {
-        Apply apply = new Apply();
+       /* Apply apply = new Apply();
 
         apply.setaId(CodecUtil.createUUID());
         apply.setContent(text);
@@ -146,7 +146,7 @@ public class StudentServiceImpl implements StudentService {
         int index = applyMapper.insertSelective(apply);
         if (index > 0) {
             return 1;
-        }
+        }*/
         return 0;
     }
 }

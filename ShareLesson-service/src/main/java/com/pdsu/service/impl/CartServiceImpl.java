@@ -72,6 +72,11 @@ public class CartServiceImpl implements CartService {
         String json = redisServiceImpl.get(key);
         List<Lesson> lessons = JsonUtils.jsonToList(json, Lesson.class);
         Map<String, List<Lesson>> map = new HashMap<>();  //分类和该分类下的课程
+
+        if(lessons == null){
+            return map;
+        }
+
         for (Lesson lesson : lessons) {
             List<Lesson> list;
             list = map.get(classifyMapper.selectByPrimaryKey(lesson.getClassifyId())
