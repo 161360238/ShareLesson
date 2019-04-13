@@ -104,8 +104,8 @@ public class OrderServiceImpl implements OrderService {
                     userLesson.setuId(user.getuId());
                     userLesson.setStatue(1);
                     user_lessonMapper.insertSelective(userLesson);
-                    Lesson lesson=lessonServiceImpl.selectByLid(userLesson.getlId());
-                    lesson.setCurrentNum(lesson.getCurrentNum()+1);  //报名人数加一
+                    Lesson lesson = lessonServiceImpl.selectByLid(userLesson.getlId());
+                    lesson.setCurrentNum(lesson.getCurrentNum() + 1);  //报名人数加一
                 }
                 //改变lesson中已经报名的人数
 
@@ -202,12 +202,12 @@ public class OrderServiceImpl implements OrderService {
             ordersExample.createCriteria().andStatusEqualTo(1)
                     .andSRateEqualTo(1);  //已经评价
             ordersList = ordersMapper.selectByExample(ordersExample);
-        }else if(condition == 4){  //查看已经超时未付款商品
+        } else if (condition == 4) {  //查看已经超时未付款商品
 
             OrdersExample ordersExample = new OrdersExample();
             ordersExample.createCriteria().andStatusEqualTo(3);
             ordersList = ordersMapper.selectByExample(ordersExample);
-        }else if(condition == 5){  //查看全部商品
+        } else if (condition == 5) {  //查看全部商品
             OrdersExample ordersExample = new OrdersExample();
             ordersList = ordersMapper.selectByExample(ordersExample);
         }
@@ -236,18 +236,36 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 根据订单id查询商品（课程）
+     *
      * @param oid
      * @return
      */
     @Override
     public List<Lesson> selectLessonByOid(String oid) {
-        List<Lesson> lessons=new ArrayList<>();
-        Order_itemExample order_itemExample=new Order_itemExample();
+        List<Lesson> lessons = new ArrayList<>();
+        Order_itemExample order_itemExample = new Order_itemExample();
         order_itemExample.createCriteria().andOrderIdEqualTo(oid);
-        List<Order_item> order_items=order_itemMapper.selectByExample(order_itemExample);
+        List<Order_item> order_items = order_itemMapper.selectByExample(order_itemExample);
         for (Order_item order_item : order_items) {   //获取订单和课程关系
             lessons.add(lessonServiceImpl.selectByLid(order_item.getlId()));   //把查询到的课程放到lessons里面
         }
-         return lessons;
+        return lessons;
+    }
+
+    /**
+     * 根据条件查询所有订单（0：未付款）
+     *
+     * @param count
+     * @return
+     */
+    @Override
+    public List<Orders> selectOrderCriteria(int count) {
+        if (count == 0) {
+            OrdersExample ordersExample = new OrdersExample();
+            ordersExample.createCriteria().andStatusEqualTo(0);
+            List<Orders> ordersList = ordersMapper.selectByExample(ordersExample);
+            return ordersList;
+        }
+        return null;
     }
 }

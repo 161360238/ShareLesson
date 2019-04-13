@@ -2,9 +2,12 @@ package com.pdsu.service.impl;
 
 import com.pdsu.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Auther: http://wangjie
@@ -15,88 +18,39 @@ import redis.clients.jedis.JedisPool;
 @Repository
 public class RedisServiceImpl implements RedisService {
     @Autowired
-    private JedisPool jedisPool;
+    private RedisTemplate<String, Object> redisTemplate;
 
     Jedis jedis = null;
 
     @Override
     public Boolean exits(String key) {
-        try {
-            jedis = jedisPool.getResource();
-            Boolean result = jedis.exists(key);
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
-        }
-        return false;
+
+        Object obj = redisTemplate.boundValueOps(key).get();
+        if (obj != null)
+            return true;
+        else
+            return false;
     }
 
     @Override
-    public Long del(String key) {
-        try {
-            jedis = jedisPool.getResource();
-            Long result = jedis.del(key);
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
-        }
-        return 0L;
+    public void del(String key) {
+        redisTemplate.delete(key);
     }
 
     @Override
     public String set(String key, String value) {
-        try {
-            jedis = jedisPool.getResource();
-            String result = jedis.set(key, value);
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
-        }
+        this.redisTemplate.opsForValue().set(key,value);
         return null;
     }
-
     @Override
     public String get(String key) {
-
-        try {
-            jedis = jedisPool.getResource();
-            String result = jedis.get(key);
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
-        }
-        return null;
+        String str = (String) redisTemplate.boundValueOps(key).get();
+        return str;
     }
-
     @Override
     public Long expire(String key, int seconds) {
-        try {
-            jedis = jedisPool.getResource();
-            Long result = jedis.expire(key, seconds);
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
-        }
-        return 0L;
+        String str = (String) redisTemplate.boundValueOps(key).get();
+        redisTemplate.opsForValue().set(key, str, seconds, TimeUnit.SECONDS);
+        return 1L;
     }
 }
