@@ -118,7 +118,7 @@ public class TestController extends BaseController {
     public Result logout(String token, HttpServletRequest request,
                          HttpServletResponse response) {
         Result result = new Result();
-        Long index = redisServiceImpl.del(token);
+        redisServiceImpl.del(token);
         CookieUtils.deleteCookie(request, response, "TT_TOKEN");
         result.setCode("200");
         result.setMessage("退出成功");

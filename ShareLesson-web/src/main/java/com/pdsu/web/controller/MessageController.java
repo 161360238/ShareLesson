@@ -6,6 +6,7 @@ import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.Message;
 import com.pdsu.service.MessageService;
 import com.pdsu.service.RedisService;
+import com.pdsu.utils.Constant;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -47,17 +48,24 @@ public class MessageController {
     @ResponseBody
     @RequestMapping(value = "/send", method = RequestMethod.GET)
     public Result messge(String phone) {
-        Map<String, Object> messge = messageServiceImpl.messge(phone);
         Result result = new Result();
-        if (messge != null) {
-            result.setCode("200");
-            result.setMessage("短信发送成功！");
-            result.setData(messge);
-        } else {
-            result.setCode("201");
-            result.setMessage("短信发送失败！");
+        try {
+            Map<String, Object> messge = messageServiceImpl.messge(phone);
+            if (messge != null) {
+                result.setCode("200");
+                result.setMessage("短信发送成功！");
+                result.setData(messge);
+            } else {
+                result.setCode("201");
+                result.setMessage("短信发送失败！");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
     /**
@@ -71,16 +79,23 @@ public class MessageController {
     @ResponseBody
     @RequestMapping(value = "/verification", method = RequestMethod.GET)
     public Result verification(String phone, String code) {
-        boolean pass = messageServiceImpl.verification(phone, code);
         Result result = new Result();
-        if (pass == true) {
-            result.setCode("200");
-            result.setMessage("验证通过");
-        } else {
-            result.setCode("201");
-            result.setMessage("短信验证码错误");
+        try {
+            boolean pass = messageServiceImpl.verification(phone, code);
+            if (pass == true) {
+                result.setCode("200");
+                result.setMessage("验证通过");
+            } else {
+                result.setCode("201");
+                result.setMessage("短信验证码错误");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
 
@@ -103,23 +118,32 @@ public class MessageController {
     public Result selectMessage(String uid, int condition
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         Result result = new Result();
-        PageHelper.startPage(pn, 10); //每页显示5条数据
-        List<Message> messageList = messageServiceImpl.selectMessage(uid, condition);
-        PageInfo page = new PageInfo(messageList, 5);
 
-        if (messageList != null && messageList.size() > 0) {
-            result.setCode("200");
-            result.setMessage("查询成功");
-            result.setData(page);
-        } else {
-            result.setCode("201");
-            result.setMessage("暂时没有消息");
+        try {
+            PageHelper.startPage(pn, 10); //每页显示5条数据
+            List<Message> messageList = messageServiceImpl.selectMessage(uid, condition);
+            PageInfo page = new PageInfo(messageList, 5);
+
+            if (messageList != null && messageList.size() > 0) {
+                result.setCode("200");
+                result.setMessage("查询成功");
+                result.setData(page);
+            } else {
+                result.setCode("201");
+                result.setMessage("暂时没有消息");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
     /**
      * 标记消息为已读
+     *
      * @param mid
      * @return
      */
@@ -129,14 +153,21 @@ public class MessageController {
     @RequestMapping(value = "/setMessageRead", method = RequestMethod.POST)
     public Result setMessageRead(String mid) {
         Result result = new Result();
-        int index = messageServiceImpl.setMessageRead(mid);
-        if (index > 0) {
-            result.setCode("200");
-            result.setMessage("标记成功");
-        } else {
-            result.setCode("201");
-            result.setMessage("标记失败");
+        try {
+            int index = messageServiceImpl.setMessageRead(mid);
+            if (index > 0) {
+                result.setCode("200");
+                result.setMessage("标记成功");
+            } else {
+                result.setCode("201");
+                result.setMessage("标记失败");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 }

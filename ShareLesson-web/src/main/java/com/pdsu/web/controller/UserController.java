@@ -7,6 +7,7 @@ import com.pdsu.pojo.User;
 import com.pdsu.service.RedisService;
 import com.pdsu.service.UserService;
 import com.pdsu.utils.CodecUtil;
+import com.pdsu.utils.Constant;
 import com.pdsu.utils.CookieUtils;
 import com.pdsu.utils.JsonUtils;
 import com.pdsu.web.base.BaseController;
@@ -53,24 +54,31 @@ public class UserController extends BaseController {
     public Result login(@RequestBody User user, HttpServletRequest request,
                         HttpServletResponse response) {
         Result result = new Result();
-        User user1 = userServiceImpl.login(user);
-        if (user1 != null) {
-            result.setCode("200");
-            String key = UUID.randomUUID().toString();
-            key = "token:" + key;
-            redisServiceImpl.set(key, JsonUtils.objectToJson(user1));
-            redisServiceImpl.expire(key, 60 * 60 * 24 * 7);
-            //产生 Cookie
-            CookieUtils.setCookie(request, response, "TT_TOKEN", key, 60 * 60 * 24 * 7);
-            //把token返回
-            result.setToken(key);
-            result.setMessage("登录成功");
-            result.setData(user1);
-        } else {
-            result.setCode("201");
-            result.setMessage("登录失败");
+        try {
+            User user1 = userServiceImpl.login(user);
+            if (user1 != null) {
+                result.setCode("200");
+                String key = UUID.randomUUID().toString();
+                key = "token:" + key;
+                redisServiceImpl.set(key, JsonUtils.objectToJson(user1));
+                redisServiceImpl.expire(key, 60 * 60 * 24 * 7);
+                //产生 Cookie
+                CookieUtils.setCookie(request, response, "TT_TOKEN", key, 60 * 60 * 24 * 7);
+                //把token返回
+                result.setToken(key);
+                result.setMessage("登录成功");
+                result.setData(user1);
+            } else {
+                result.setCode("201");
+                result.setMessage("登录失败");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
     /**
@@ -84,20 +92,27 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/regist.do", method = RequestMethod.POST)
     public Result register(User user) {
         Result result = new Result();
-        String uid = CodecUtil.createUUID();
-        user.setuId(uid);
-        int status = userServiceImpl.regist(user);
-        if (status == 1) {
-            result.setCode("200");
-            result.setMessage("注册成功");
-        } else if (status == 2) {
-            result.setCode("202");
-            result.setMessage("用户名已经存在");
-        } else {
-            result.setCode("201");
-            result.setMessage("用户注册失败");
+        try {
+            String uid = CodecUtil.createUUID();
+            user.setuId(uid);
+            int status = userServiceImpl.regist(user);
+            if (status == 1) {
+                result.setCode("200");
+                result.setMessage("注册成功");
+            } else if (status == 2) {
+                result.setCode("202");
+                result.setMessage("用户名已经存在");
+            } else {
+                result.setCode("201");
+                result.setMessage("用户注册失败");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
     /**
@@ -111,13 +126,22 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/getUser.do", method = RequestMethod.GET)
     @ResponseBody
     public Result getUserInfo(String token) {
-        return userServiceImpl.getUserByToken(token);
+        Result result = new Result();
+        try {
+            result = userServiceImpl.getUserByToken(token);
+            return result;
+        } catch (Exception e) {
+            result.setMessage(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            e.printStackTrace();
+            return result;
+        }
     }
 
 
     //根据用户，查询用户已经购买的课程，查询条件:已经开始、未开始
 
-    public Result selectBoughtLesson(String token, int isBegin
+   /* public Result selectBoughtLesson(String token, int isBegin
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         User user = getUser(token);
         PageHelper.startPage(pn, 5); //每页显示5条数据
@@ -130,7 +154,8 @@ public class UserController extends BaseController {
 
     public void test() {
 
-    }
+    } */
+
 
     /**
      * 更新用户信息
@@ -149,19 +174,28 @@ public class UserController extends BaseController {
         if (user1 == null) {
             result.setCode("202");
             result.setMessage("请先登录！");
+            return result;
         }
-        user.setuId(user1.getuId());
-        int index = userServiceImpl.updateuser(user, token);
-        user=getUser(token);
-        if (index > 0) {
-            result.setCode("200");
-            result.setMessage("更新成功");
-            result.setData(user);
-        } else {
-            result.setCode("201");
-            result.setMessage("更新失败");
+
+        try {
+            user.setuId(user1.getuId());
+            int index = userServiceImpl.updateuser(user, token);
+            user = getUser(token);
+            if (index > 0) {
+                result.setCode("200");
+                result.setMessage("更新成功");
+                result.setData(user);
+            } else {
+                result.setCode("201");
+                result.setMessage("更新失败");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
 
@@ -176,10 +210,8 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户列表")
     @ResponseBody
     @RequestMapping(value = "search", method = RequestMethod.POST)
-    public PageResult search(@RequestBody User user, int page, int rows){
+    public PageResult search(@RequestBody User user, int page, int rows) {
         return userServiceImpl.findPage(user, page, rows);
     }
-
-
 
 }

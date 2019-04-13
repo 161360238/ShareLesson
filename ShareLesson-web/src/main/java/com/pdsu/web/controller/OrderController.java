@@ -8,6 +8,7 @@ import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.Orders;
 import com.pdsu.pojo.User;
 import com.pdsu.service.OrderService;
+import com.pdsu.utils.Constant;
 import com.pdsu.web.base.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -41,25 +42,38 @@ public class OrderController extends BaseController {
      * @param token
      * @return
      */
+
     @ApiImplicitParam(name = "token", required = true, dataType = "String", paramType = "query", value = "用户的token")
     @ApiOperation(value = "创建订单接口")
     @ResponseBody
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     public Result createOrder(@RequestBody MyOrderParam param, String token) {
-        User user = getUser(token);
-        int num = orderServiceImpl.createOrder(param, user);
         Result result = new Result();
-        if (num == 1) {
-            result.setCode("200");
-            result.setMessage("创建订单成功！");
-        } else if (num == 2) {
-            result.setCode("201");
-            result.setMessage("订单商品已经付过款，请去历史订单中查看！");
-        } else {
-            result.setCode("201");
-            result.setMessage("创建订单失败！");
+        User user = getUser(token);
+        if (user == null) {
+            result.setCode(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
         }
-        return result;
+        try {
+            int num = orderServiceImpl.createOrder(param, user);
+            if (num == 1) {
+                result.setCode("200");
+                result.setMessage("创建订单成功！");
+            } else if (num == 2) {
+                result.setCode("201");
+                result.setMessage("订单商品已经付过款，请去历史订单中查看！");
+            } else {
+                result.setCode("201");
+                result.setMessage("创建订单失败！");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
+        }
     }
 
 
@@ -80,18 +94,29 @@ public class OrderController extends BaseController {
     public Result deleteOrder(String token, String oid) {
         Result result = new Result();
         User user = getUser(token);
+        if (user == null) {
+            result.setCode(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
+        }
+
         try {
             int num = orderServiceImpl.deleteOrder(user.getuId(), oid);
             if (num > 0) {
                 result.setCode("200");
                 result.setMessage("删除订单成功");
+                return result;
+            } else {
+                result.setCode("201");
+                result.setMessage("删除订单失败");
+                return result;
             }
         } catch (Exception e) {
-            result.setCode("201");
-            result.setMessage("删除订单失败");
             e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
 
@@ -116,18 +141,31 @@ public class OrderController extends BaseController {
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         Result result = new Result();
         User user = getUser(token);
-        PageHelper.startPage(pn, 5); //每页显示5条数据
-        List<Orders> orders = orderServiceImpl.selectOrder(user.getuId(), condition);
-        if (orders != null && orders.size() > 0) {
-            PageInfo page = new PageInfo(orders, 5);
-            result.setData(page);
-            result.setCode("200");
-            result.setMessage("查询成功");
-        } else {
-            result.setCode("201");
-            result.setMessage("没有查询到相关记录");
+        if (user == null) {
+            result.setCode(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
         }
-        return result;
+
+        try {
+            PageHelper.startPage(pn, 5); //每页显示5条数据
+            List<Orders> orders = orderServiceImpl.selectOrder(user.getuId(), condition);
+            if (orders != null && orders.size() > 0) {
+                PageInfo page = new PageInfo(orders, 5);
+                result.setData(page);
+                result.setCode("200");
+                result.setMessage("查询成功");
+            } else {
+                result.setCode("201");
+                result.setMessage("没有查询到相关记录");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
+        }
     }
 
     /**
@@ -148,25 +186,39 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "selectBoughtLesson", method = RequestMethod.GET)
     public Result selectBoughtLesson(String token, int condition
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        User user = getUser(token);
         Result result = new Result();
-        PageHelper.startPage(pn, 5); //每页显示5条数据
-        List<Lesson> lessons = orderServiceImpl.selectBoughtLesson(user.getuId(), condition);
-        if (lessons != null && lessons.size() > 0) {
-            PageInfo page = new PageInfo(lessons, 5);
-            result.setData(page);
-            result.setCode("200");
-            result.setMessage("查询成功");
-        } else {
-            result.setCode("201");
-            result.setMessage("没有查询到相关记录");
+        User user = getUser(token);
+        if (user == null) {
+            result.setCode(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
         }
-        return result;
+
+        try {
+            PageHelper.startPage(pn, 5); //每页显示5条数据
+            List<Lesson> lessons = orderServiceImpl.selectBoughtLesson(user.getuId(), condition);
+            if (lessons != null && lessons.size() > 0) {
+                PageInfo page = new PageInfo(lessons, 5);
+                result.setData(page);
+                result.setCode("200");
+                result.setMessage("查询成功");
+            } else {
+                result.setCode("201");
+                result.setMessage("没有查询到相关记录");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
+        }
     }
 
 
     /**
      * 根据订单id查询订单下的商品
+     *
      * @param token
      * @param oid
      * @return
@@ -181,27 +233,31 @@ public class OrderController extends BaseController {
     public Result selectLessonByOid(String token, String oid) {
         User user = getUser(token);
         Result result = new Result();
-        if (user != null) {
-
-            try {
-
-                List<Lesson> lessons = orderServiceImpl.selectLessonByOid(oid);
-                if (lessons != null && lessons.size() > 0) {
-
-                    result.setMessage("查询成功");
-                    result.setCode("200");
-                    result.setData(lessons);
-                } else {
-                    result.setMessage("没有查询到课程");
-                    result.setCode("201");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                result.setMessage("出现异常");
-                result.setCode("203");
-                return result;
-            }
+        if (user == null) {
+            result.setCode(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
         }
+
+        try {
+
+            List<Lesson> lessons = orderServiceImpl.selectLessonByOid(oid);
+            if (lessons != null && lessons.size() > 0) {
+
+                result.setMessage("查询成功");
+                result.setCode("200");
+                result.setData(lessons);
+            } else {
+                result.setMessage("没有查询到课程");
+                result.setCode("201");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage("出现异常");
+            result.setCode("203");
+            return result;
+        }
+
         return result;
     }
 }

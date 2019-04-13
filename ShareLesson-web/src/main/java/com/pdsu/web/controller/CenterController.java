@@ -9,6 +9,7 @@ import com.pdsu.pojo.Classify;
 import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.User;
 import com.pdsu.service.CenterService;
+import com.pdsu.utils.Constant;
 import com.pdsu.utils.JsonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -48,16 +49,23 @@ public class CenterController {
     @RequestMapping(value = "/selectCenter.do", method = RequestMethod.GET)
     public Result selectCebter() {
         Result result = new Result();
-        List<Center> list = centerServiceImpl.selectCtener();
-        if (list.size() > 0) {
-            result.setCode("200");
-            result.setData(list);
-            result.setMessage("获取成功");
-        } else {
-            result.setCode("201");
-            result.setMessage("获取首页信息失败");
+        try {
+            List<Center> list = centerServiceImpl.selectCtener();
+            if (list.size() > 0) {
+                result.setCode("200");
+                result.setData(list);
+                result.setMessage("获取成功");
+            } else {
+                result.setCode("201");
+                result.setMessage("获取首页信息失败");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
     /**
@@ -70,27 +78,34 @@ public class CenterController {
     @ApiOperation(value = "首页获取推送课程信息")
     public Result getLesson() {
         Result result = new Result();
-        Map<Classify, List<Lesson>> message = new HashMap<>();
-        Map<String, List<Lesson>> message2 = new HashMap<>();
-        //查询所有子分类
-        List<Classify> classifies = centerServiceImpl.selectClassify();
+        try {
+            Map<Classify, List<Lesson>> message = new HashMap<>();
+            Map<String, List<Lesson>> message2 = new HashMap<>();
+            //查询所有子分类
+            List<Classify> classifies = centerServiceImpl.selectClassify();
 
-        //根据子分类查询每个分类下的最新课程信息
-        message = centerServiceImpl.selectLessonByClassifys(classifies);
+            //根据子分类查询每个分类下的最新课程信息
+            message = centerServiceImpl.selectLessonByClassifys(classifies);
 
-        for (Classify key : message.keySet()) {
-            //  System.out.println(JsonUtils.objectToJson(key));
-            message2.put(JsonUtils.objectToJson(key), message.get(key));
+            for (Classify key : message.keySet()) {
+                //  System.out.println(JsonUtils.objectToJson(key));
+                message2.put(JsonUtils.objectToJson(key), message.get(key));
+            }
+            if (message2.size() > 0) {
+                result.setCode("200");
+                result.setMessage("查询成功");
+                result.setData(message2);
+            } else {
+                result.setCode("201");
+                result.setMessage("没有查询考课程信息");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        if (message2.size() > 0) {
-            result.setCode("200");
-            result.setMessage("查询成功");
-            result.setData(message2);
-        } else {
-            result.setCode("201");
-            result.setMessage("没有查询考课程信息");
-        }
-        return result;
     }
 
 
@@ -108,15 +123,22 @@ public class CenterController {
     @RequestMapping(value = "/setPushLesson.do", method = RequestMethod.POST)
     public Result setPushLesson(String id1, String id2) {
         Result result = new Result();
-        int num = centerServiceImpl.setPushLesson(id1, id2);
-        if (num == 1) {
-            result.setCode("200");
-            result.setMessage("设置成功！");
-        } else {
-            result.setCode("201");
-            result.setMessage("操作失败！");
+        try {
+            int num = centerServiceImpl.setPushLesson(id1, id2);
+            if (num == 1) {
+                result.setCode("200");
+                result.setMessage("设置成功！");
+            } else {
+                result.setCode("201");
+                result.setMessage("操作失败！");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
 
@@ -124,19 +146,27 @@ public class CenterController {
     @ResponseBody
     @RequestMapping(value = "/pushTeacher", method = RequestMethod.GET)
     public Result pushTeacher(@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        PageHelper.startPage(pn, 4); //每页显示4条数据
-        List<User> teachers = centerServiceImpl.pushTeacher();
-        PageInfo page = new PageInfo(teachers, 3);
         Result result = new Result();
-        if (teachers != null && teachers.size() > 0) {
-            result.setCode("200");
-            result.setMessage("查询成功");
-            result.setData(page);
-        } else {
-            result.setCode("201");
-            result.setMessage("没有查询到相关信息");
+        try {
+            PageHelper.startPage(pn, 4); //每页显示4条数据
+            List<User> teachers = centerServiceImpl.pushTeacher();
+            PageInfo page = new PageInfo(teachers, 3);
+
+            if (teachers != null && teachers.size() > 0) {
+                result.setCode("200");
+                result.setMessage("查询成功");
+                result.setData(page);
+            } else {
+                result.setCode("201");
+                result.setMessage("没有查询到相关信息");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
     /**
@@ -150,9 +180,8 @@ public class CenterController {
     @ApiOperation(value = "首页导航栏信息维护")
     @ResponseBody
     @RequestMapping(value = "search", method = RequestMethod.POST)
-    public PageResult search(@RequestBody Center center, int page, int rows){
+    public PageResult search(@RequestBody Center center, int page, int rows) {
         return centerServiceImpl.findPage(center, page, rows);
-
     }
 
 }
