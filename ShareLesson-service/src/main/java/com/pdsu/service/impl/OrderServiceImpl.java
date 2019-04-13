@@ -43,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private LessonService lessonServiceImpl;
 
+
     @Override
     public int createOrder(MyOrderParam param, User user) {
         boolean flag = false;
@@ -201,7 +202,16 @@ public class OrderServiceImpl implements OrderService {
             ordersExample.createCriteria().andStatusEqualTo(1)
                     .andSRateEqualTo(1);  //已经评价
             ordersList = ordersMapper.selectByExample(ordersExample);
+        }else if(condition == 4){  //查看已经超时未付款商品
+
+            OrdersExample ordersExample = new OrdersExample();
+            ordersExample.createCriteria().andStatusEqualTo(3);
+            ordersList = ordersMapper.selectByExample(ordersExample);
+        }else if(condition == 5){  //查看全部商品
+            OrdersExample ordersExample = new OrdersExample();
+            ordersList = ordersMapper.selectByExample(ordersExample);
         }
+
         return ordersList;
     }
 
@@ -222,5 +232,22 @@ public class OrderServiceImpl implements OrderService {
             return lessons;
         }
         return null;
+    }
+
+    /**
+     * 根据订单id查询商品（课程）
+     * @param oid
+     * @return
+     */
+    @Override
+    public List<Lesson> selectLessonByOid(String oid) {
+        List<Lesson> lessons=new ArrayList<>();
+        Order_itemExample order_itemExample=new Order_itemExample();
+        order_itemExample.createCriteria().andOrderIdEqualTo(oid);
+        List<Order_item> order_items=order_itemMapper.selectByExample(order_itemExample);
+        for (Order_item order_item : order_items) {   //获取订单和课程关系
+            lessons.add(lessonServiceImpl.selectByLid(order_item.getlId()));   //把查询到的课程放到lessons里面
+        }
+         return lessons;
     }
 }
