@@ -61,4 +61,18 @@ public interface OrderService {
      * @return
      */
     List<Lesson> selectBoughtLesson(String uid, int condition);
+
+    /**
+     * 根据订单id，查询订单下的商品
+     * @param oid
+     * @return
+     */
+    List<Lesson> selectLessonByOid(String oid);
+
+    /**
+     * 根据条件查询所有订单（0：未付款）
+     * @param count
+     * @return
+     */
+    List<Orders> selectOrderCriteria(int count);
 }

@@ -8,6 +8,7 @@ import com.pdsu.pojo.User;
 import com.pdsu.service.CenterService;
 import com.pdsu.service.ImageService;
 import com.pdsu.service.LessonService;
+import com.pdsu.utils.Constant;
 import com.pdsu.web.base.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -77,22 +78,29 @@ public class LessonController extends BaseController {
     @RequestMapping(value = "/selectLessonByClassify.do", method = RequestMethod.GET)
     public Result selectLessonByClassify(String id, int isCharge
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        //在查询之前需要调用，传入页码，以及每页大小
-        PageHelper.startPage(pn, 5);
-        //后面紧跟的这个查询就是分页查询
-        List<Lesson> lessonList = centerServiceImpl.selectLessonByClassifyId(id, isCharge);
-        // 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
-        PageInfo page = new PageInfo(lessonList, 5);
         Result result = new Result();
-        if (lessonList != null && lessonList.size() > 0) {
-            result.setData(page);
-            result.setCode("200");
-            result.setMessage("查询成功");
-        } else {
-            result.setCode("201");
-            result.setMessage("没要查询到课程");
+        try {
+            //在查询之前需要调用，传入页码，以及每页大小
+            PageHelper.startPage(pn, 5);
+            //后面紧跟的这个查询就是分页查询
+            List<Lesson> lessonList = centerServiceImpl.selectLessonByClassifyId(id, isCharge);
+            // 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
+            PageInfo page = new PageInfo(lessonList, 5);
+            if (lessonList != null && lessonList.size() > 0) {
+                result.setData(page);
+                result.setCode("200");
+                result.setMessage("查询成功");
+            } else {
+                result.setCode("201");
+                result.setMessage("没要查询到课程");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
     /**
@@ -109,19 +117,27 @@ public class LessonController extends BaseController {
     @RequestMapping(value = "selectLessonByParentClassify.do", method = RequestMethod.GET)
     public Result selectLessonByParentClassify(String pid, int isCharge
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
-        PageHelper.startPage(pn, 5); //每页显示5条数据
-        List<Lesson> lessonList = centerServiceImpl.selectLessonByParentClassifyId(pid, isCharge);
-        PageInfo page = new PageInfo(lessonList, 5);
         Result result = new Result();
-        if (lessonList != null && lessonList.size() > 0) {
-            result.setCode("200");
-            result.setData(page);
-            result.setMessage("查询成功");
-        } else {
-            result.setCode("201");
-            result.setMessage("没要查询到相关信息");
+        try {
+            PageHelper.startPage(pn, 5); //每页显示5条数据
+            List<Lesson> lessonList = centerServiceImpl.selectLessonByParentClassifyId(pid, isCharge);
+            PageInfo page = new PageInfo(lessonList, 5);
+
+            if (lessonList != null && lessonList.size() > 0) {
+                result.setCode("200");
+                result.setData(page);
+                result.setMessage("查询成功");
+            } else {
+                result.setCode("201");
+                result.setMessage("没要查询到相关信息");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
     /**
@@ -131,28 +147,41 @@ public class LessonController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tid", required = true, dataType = "String", paramType = "query", value = "老师的id"),
             @ApiImplicitParam(name = "pn", required = true, dataType = "int", paramType = "query", value = "页码"),
+            @ApiImplicitParam(name = "token", required = true, dataType = "String", paramType = "query", value = "老师的token"),
             @ApiImplicitParam(name = "condition", required = true, dataType = "int", paramType = "query", value = "查询条件")
     })
     @ApiOperation(value = "根据老师id获取老师已经发布的课程")
     @ResponseBody
     @RequestMapping(value = "/getLessonByTeacherId.do", method = RequestMethod.GET)
     public Result getLessonByTeacherId(String tid
-            , @RequestParam(value = "pn", defaultValue = "1") Integer pn, int condition) {
-
+            , @RequestParam(value = "pn", defaultValue = "1") Integer pn, int condition,String token) {
         Result result = new Result();
-        PageHelper.startPage(pn, 5); //每页显示5条数据
-        List<Lesson> lessons = lessonServiceImpl.getLessonByTeacherId(tid, condition);
-        PageInfo page = new PageInfo(lessons, 5);
-
-        if (lessons != null) {
-            result.setCode("200");
-            result.setMessage("查询成功");
-            result.setData(page);
-        } else {
-            result.setCode("201");
-            result.setMessage("该老师还没有发布课程");
+        User user=getUser(token);
+        if (user == null) {
+            result.setCode(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
         }
-        return result;
+        try {
+            PageHelper.startPage(pn, 5); //每页显示5条数据
+            List<Lesson> lessons = lessonServiceImpl.getLessonByTeacherId(tid, condition);
+            PageInfo page = new PageInfo(lessons, 5);
+
+            if (lessons != null) {
+                result.setCode("200");
+                result.setMessage("查询成功");
+                result.setData(page);
+            } else {
+                result.setCode("201");
+                result.setMessage("该老师还没有发布课程");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
+        }
     }
 
     /**
@@ -163,6 +192,7 @@ public class LessonController extends BaseController {
     @RequestMapping(value = "/publishLesson/{token}", method = RequestMethod.POST)
     public Result publishLesson(@RequestBody Lesson lesson, @PathVariable("token") String token) {
         Result result = new Result();
+
         User user = getUser(token); //判断用户是否登录
         if (user == null) {
             result.setCode("201");
@@ -194,15 +224,22 @@ public class LessonController extends BaseController {
     @RequestMapping(value = "/selectLessonByLid", method = RequestMethod.GET)
     public Result selectLessonByLid(String lid) {
         Result result = new Result();
-        Lesson lesson = lessonServiceImpl.selectByLid(lid);
-        if (lesson != null) {
-            result.setCode("200");
-            result.setMessage("查询成功");
-            result.setData(lesson);
-        } else {
-            result.setCode("201");
-            result.setMessage("查询失败");
+        try {
+            Lesson lesson = lessonServiceImpl.selectByLid(lid);
+            if (lesson != null) {
+                result.setCode("200");
+                result.setMessage("查询成功");
+                result.setData(lesson);
+            } else {
+                result.setCode("201");
+                result.setMessage("查询失败");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 }

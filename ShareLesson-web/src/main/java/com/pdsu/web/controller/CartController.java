@@ -4,6 +4,7 @@ import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.User;
 import com.pdsu.service.CartService;
+import com.pdsu.utils.Constant;
 import com.pdsu.web.base.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -33,7 +34,6 @@ public class CartController extends BaseController {
     @Autowired
     private CartService cartServiceImpl;
 
-    //@Value("${cart.key}")
     private String cartKey = "cart:";
 
     /**
@@ -53,19 +53,29 @@ public class CartController extends BaseController {
     public Result addCart(String lid, String token) {
         Result result = new Result();
         User user = getUser(token);  //从redis获取用户信息
-
-        String uid = user.getuId();
-        int num = cartServiceImpl.addCart(lid, uid, cartKey);
-        if (num == 1) {
-            result.setCode("200");
-            result.setMessage("加入成功！");
-        } else {
-            result.setCode("201");
-            result.setMessage("该课程已经在购物车了！");
+        if (user == null) {
+            result.setMessage(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
         }
-        return result;
+        try {
+            String uid = user.getuId();
+            int num = cartServiceImpl.addCart(lid, uid, cartKey);
+            if (num == 1) {
+                result.setCode("200");
+                result.setMessage("加入成功！");
+            } else {
+                result.setCode("201");
+                result.setMessage("该课程已经在购物车了！");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            return result;
+        }
     }
-
 
     /**
      * 用户查看购物车
@@ -80,19 +90,30 @@ public class CartController extends BaseController {
     public Result showCart(String token) {
         Result result = new Result();
         User user = getUser(token);  //从redis获取用户信息
-
-        String uid = user.getuId();
-        Map<String, List<Lesson>> lessons = cartServiceImpl.showCart(uid, cartKey);
-
-        if (lessons != null && lessons.size() > 0) {
-            result.setCode("200");
-            result.setData(lessons);
-            result.setMessage("获取成功！");
-        } else {
-            result.setCode("201");
-            result.setMessage("购物车内还没有课程！");
+        if (user == null) {
+            result.setMessage(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
         }
-        return result;
+        try {
+            String uid = user.getuId();
+            Map<String, List<Lesson>> lessons = cartServiceImpl.showCart(uid, cartKey);
+
+            if (lessons != null && lessons.size() > 0) {
+                result.setCode("200");
+                result.setData(lessons);
+                result.setMessage("获取成功！");
+            } else {
+                result.setCode("201");
+                result.setMessage("购物车内还没有课程！");
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            return result;
+        }
     }
 
 
@@ -113,15 +134,27 @@ public class CartController extends BaseController {
     public Result delectCart(String token, String lid) {
         Result result = new Result();
         User user = getUser(token);  //从redis获取用户信息
-        String uid = user.getuId();
-        int num = cartServiceImpl.delectCart(uid, cartKey, lid);
-        if (num == 1) {
-            result.setCode("200");
-            result.setMessage("删除成功");
-        } else {
-            result.setCode("201");
-            result.setMessage("删除失败");
+        if (user == null) {
+            result.setMessage(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
         }
-        return result;
+        try {
+            String uid = user.getuId();
+            int num = cartServiceImpl.delectCart(uid, cartKey, lid);
+            if (num == 1) {
+                result.setCode("200");
+                result.setMessage("删除成功");
+            } else {
+                result.setCode("201");
+                result.setMessage("删除失败");
+            }
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            result.setMessage(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
+        }
     }
 }

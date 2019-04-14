@@ -110,9 +110,6 @@ public class CartServiceImpl implements CartService {
         }
         lessons.remove(lesson);
         String ok = redisServiceImpl.set(key, JsonUtils.objectToJson(lessons));
-        if (ok.equals("OK")) {
-            return 1;
-        }
-        return 0;
+        return 1;
     }
 }

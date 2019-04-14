@@ -1,16 +1,20 @@
 package com.pdsu.task;
 
 import com.pdsu.mapper.LessonMapper;
+import com.pdsu.mapper.OrdersMapper;
 import com.pdsu.mapper.User_lessonMapper;
 import com.pdsu.pojo.Lesson;
+import com.pdsu.pojo.Orders;
 import com.pdsu.pojo.User_lesson;
 import com.pdsu.pojo.User_lessonExample;
 import com.pdsu.service.LessonService;
 import com.pdsu.service.MessageService;
+import com.pdsu.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +39,16 @@ public class MyTask {
     @Autowired
     private MessageService messageServiceImpl;
 
+    @Autowired
+    private OrderService orderServiceImpl;
+
+    @Autowired
+    private OrdersMapper ordersMapper;
+
+
+    /**
+     * 通知开课情况消息
+     */
     @Scheduled(cron = "*/10 * * * * ?")  //每10s执行一次
     public void myjob() {
         // System.out.println("task execing ...");
@@ -63,4 +77,25 @@ public class MyTask {
             }
         }
     }
+
+    /**
+     * 判断订单是否超时
+     */
+    @Scheduled(cron = "*/3600 * * * * ?")  //每一个小时执行一次
+    public void myjob2() {
+        int count=0;
+        //先查看所有未付款订单
+        List<Orders> ordersList=orderServiceImpl.selectOrderCriteria(count);
+        if(ordersList!=null&&ordersList.size()>0){
+            Date time=new Date();
+            for (Orders orders:ordersList) {
+                Date date2=orders.getCreateTime();
+                if(time.getTime()-date2.getTime() > 60*60*1000){   //超过半小时未付款，设置为超时订单
+                    orders.setStatus(3);
+                    ordersMapper.updateByPrimaryKey(orders);
+                }
+            }
+        }
+    }
+
 }

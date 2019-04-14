@@ -21,7 +21,7 @@ public interface RedisService {
      * @param key
      * @return
      */
-    Long del(String key);
+    void del(String key);
 
     /**
      * 设置值

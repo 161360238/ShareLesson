@@ -4,6 +4,7 @@ import com.pdsu.mypojo.Result;
 import com.pdsu.mypojo.ThreeResult;
 import com.pdsu.pojo.Classify;
 import com.pdsu.service.ClassifyService;
+import com.pdsu.utils.Constant;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -39,18 +40,24 @@ public class ClassifyController {
     @ResponseBody
     @RequestMapping(value = "/selectClassifyByPid.do",method = RequestMethod.GET)
     public Result selectClassifyByPid(String pid) {
-
         Result result = new Result();
-        List<Classify> classifies = classifyServiceImpl.selectClassifyByPid(pid);
-        if (classifies != null && classifies.size() > 0) {
-            result.setCode("200");
-            result.setData(classifies);
-            result.setMessage("获取成功");
-        } else {
-            result.setCode("201");
-            result.setMessage("没有查询到相关分类");
+        try {
+            List<Classify> classifies = classifyServiceImpl.selectClassifyByPid(pid);
+            if (classifies != null && classifies.size() > 0) {
+                result.setCode("200");
+                result.setData(classifies);
+                result.setMessage("获取成功");
+            } else {
+                result.setCode("201");
+                result.setMessage("没有查询到相关分类");
+            }
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
         }
-        return result;
     }
 
     /**
