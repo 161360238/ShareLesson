@@ -24,6 +24,24 @@ public class Result {
 
     private String message;
 
+    private boolean success;
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public Result() {
+
+    }
+    public Result( boolean success,String message) {
+        this.message = message;
+        this.success = success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
     public void setToken(String token) {
         this.token = token;
     }

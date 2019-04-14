@@ -180,6 +180,26 @@ public class UserController extends BaseController {
         return userServiceImpl.findPage(user, page, rows);
     }
 
-
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/delete")
+    public Result delete(Integer [] ids){
+        Result result = new Result();
+        try {
+            userServiceImpl.delete(ids);
+            result.setSuccess(true);
+            result.setMessage("更新成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setSuccess(false);
+            result.setMessage("更新成功");
+            return result;
+        }
+        return result;
+    }
 
 }

@@ -152,7 +152,69 @@ public class CenterController {
     @RequestMapping(value = "search", method = RequestMethod.POST)
     public PageResult search(@RequestBody Center center, int page, int rows){
         return centerServiceImpl.findPage(center, page, rows);
-
     }
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/delete")
+    public Result delete(Integer [] ids){
+        try {
+            centerServiceImpl.delete(ids);
+            return new Result(true, "删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "删除失败");
+        }
+    }
+
+    /**
+     * 添加
+     * @param center
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/add")
+    public Result add(@RequestBody Center center){
+        try {
+            centerServiceImpl.add(center);
+            return new Result(true, "增加成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "增加失败");
+        }
+    }
+
+    /**
+     * 修改
+     * @param center
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/update")
+    public Result update(@RequestBody Center center){
+        try {
+            centerServiceImpl.update(center);
+            return new Result(true, "修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, "修改失败");
+        }
+    }
+
+    /**
+     * 获取实体
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/findOne")
+    public Center findOne(String id){
+        return centerServiceImpl.findOne(id);
+    }
+
 
 }

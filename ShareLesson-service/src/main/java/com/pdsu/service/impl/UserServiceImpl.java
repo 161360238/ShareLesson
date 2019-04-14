@@ -1,5 +1,7 @@
 package com.pdsu.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.pdsu.mapper.UserMapper;
 import com.pdsu.mypojo.PageResult;
 import com.pdsu.mypojo.Result;
@@ -11,6 +13,8 @@ import com.pdsu.service.UserService;
 import com.pdsu.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -111,11 +115,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PageResult findPage(User user, int page, int rows) {
-        PageResult pageResult = new PageResult();
+
+        PageHelper.startPage(page, rows);
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
-        List<User> list = userMapper.selectByExample(example);
-        pageResult.setRows(list);
-        return pageResult;
+        if(user != null){
+           if(user.getUsername() != null && user.getUsername().length() > 0){
+               criteria.andUsernameLike("%"+user.getUsername()+"%");
+           }else if(user.getName() != null && user.getName().length() > 0){
+               criteria.andNameLike("%"+user.getName()+"%");
+           }
+        }
+       Page<User> mypage = (Page<User>)userMapper.selectByExample(example);
+        return new PageResult(mypage.getTotal(), mypage.getResult());
     }
+
+    @Override
+    public void delete(Integer[] ids) {
+        for (Integer id:ids){
+            userMapper.deleteByPrimaryKey(id.toString());
+        }
+    }
+
+
 }

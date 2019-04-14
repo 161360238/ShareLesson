@@ -60,6 +60,19 @@
             <artifactId>commons-net</artifactId>
             <version>3.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.miemiedev</groupId>
+            <artifactId>mybatis-paginator</artifactId>
+            <version>1.2.10</version>
+        </dependency>
+
     </dependencies>
 
 </project>

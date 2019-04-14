@@ -1,5 +1,7 @@
 package com.pdsu.service;
 
+import com.pdsu.mypojo.Result;
+import com.pdsu.mypojo.ThreeResult;
 import com.pdsu.pojo.Classify;
 
 import java.util.List;
@@ -18,4 +20,16 @@ public interface ClassifyService {
      * @return
      */
     List<Classify> selectClassifyByPid(String pid);
+
+    /**
+     * 查询所有课程分类
+     * @return
+     */
+    List<ThreeResult>  loadData();
+
+    void update(Classify classify);
+
+    void add(Classify classify);
+
+    Result delete(String id);
 }

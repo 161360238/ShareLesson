@@ -43,4 +43,7 @@ public interface UserService {
 
     //获取用户列表
     PageResult findPage(User user, int page, int rows);
+
+    //批量删除
+    void delete(Integer[] ids);
 }

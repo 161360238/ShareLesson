@@ -1,5 +1,7 @@
 package com.pdsu.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.pdsu.mapper.CenterMapper;
 import com.pdsu.mapper.ClassifyMapper;
 import com.pdsu.mapper.LessonMapper;
@@ -218,16 +220,34 @@ public class CenterServiceImpl implements CenterService {
     @Override
     public PageResult findPage(Center center, int page, int rows) {
 
-        PageResult pageResult = new PageResult();
-
+        PageHelper.startPage(page, rows);
         CenterExample example = new CenterExample();
         CenterExample.Criteria criteria = example.createCriteria();
         //-------
-
-
-        List<Center> list = centerMapper.selectByExample(example);
-        pageResult.setRows(list);
-        return pageResult;
+        Page<Center> mypage = (Page<Center>) centerMapper.selectByExample(example);
+        return new PageResult(mypage.getTotal(), mypage.getResult());
     }
 
+    @Override
+    public void delete(Integer[] ids) {
+        for (Integer id : ids) {
+            centerMapper.deleteByPrimaryKey(id.toString());
+        }
+    }
+
+    @Override
+    public void add(Center center) {
+        center.setCenterId(UUID.randomUUID().toString());
+        centerMapper.insertSelective(center);
+    }
+
+    @Override
+    public void update(Center center) {
+        centerMapper.updateByPrimaryKey(center);
+    }
+
+    @Override
+    public Center findOne(String id) {
+        return centerMapper.selectByPrimaryKey(id);
+    }
 }

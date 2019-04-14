@@ -76,4 +76,15 @@ public interface CenterService {
 
     //导航分页
     PageResult findPage(Center center, int page, int rows);
+
+    //批量删除
+    void delete(Integer[] ids);
+
+    //添加
+    void add(Center center);
+
+    //修改
+    void update(Center center);
+
+    Center findOne(String id);
 }
