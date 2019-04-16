@@ -119,6 +119,7 @@ public class LessonServiceImpl implements LessonService {
         lesson.setlId(UUID.randomUUID().toString());//设置课程id
         lesson.settId(user.getuId());//老师Id
         lesson.setExam(0);//未审核
+        lesson.setKind(1);//課程
         int insert = lessonMapper.insert(lesson);
         return insert;
     }
