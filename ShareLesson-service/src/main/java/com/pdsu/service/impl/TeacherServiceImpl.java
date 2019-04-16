@@ -1,10 +1,10 @@
 package com.pdsu.service.impl;
 
 import com.pdsu.mapper.Follow_perMapper;
+import com.pdsu.mapper.LessonMapper;
 import com.pdsu.mapper.UserMapper;
-import com.pdsu.pojo.Follow_per;
-import com.pdsu.pojo.Follow_perExample;
-import com.pdsu.pojo.User;
+import com.pdsu.mapper.User_lessonMapper;
+import com.pdsu.pojo.*;
 import com.pdsu.service.StudentService;
 import com.pdsu.service.TeacherService;
 import com.pdsu.service.UserService;
@@ -31,6 +31,13 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
     private StudentService studentServiceImpl;
+
+    @Autowired
+    private User_lessonMapper user_lessonMapper;
+
+    @Autowired
+    private LessonMapper lessonMapper;
+
 
     /**
      * 通过老师id查询 老师粉丝
@@ -62,11 +69,41 @@ public class TeacherServiceImpl implements TeacherService {
 
     /**
      * 根据用户ID，查询用户
+     *
      * @param tid
      * @return
      */
     @Override
     public User selectTeacherByTid(String tid) {
         return userMapper.selectByPrimaryKey(tid);
+    }
+
+    /**
+     * 查询已经发布的活动数
+     *
+     * @param tid
+     * @return
+     */
+    @Override
+    public int selectActive(String tid) {
+        int count = 0;
+        LessonExample lessonExample=new LessonExample();
+        lessonExample.createCriteria().andTIdEqualTo(tid).andKindEqualTo(2);  //查询活动
+        count = lessonMapper.countByExample(lessonExample);
+        return count;
+    }
+
+    /**
+     * 统计发布的课程个数
+     * @param tid
+     * @return
+     */
+    @Override
+    public int selectLesson(String tid) {
+        int count = 0;
+        LessonExample lessonExample=new LessonExample();
+        lessonExample.createCriteria().andTIdEqualTo(tid).andKindEqualTo(1);   //查询课程
+        count = lessonMapper.countByExample(lessonExample);
+        return count;
     }
 }

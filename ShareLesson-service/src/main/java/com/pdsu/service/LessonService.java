@@ -56,4 +56,26 @@ public interface LessonService {
     public int publishLesson(Lesson lesson, User user);
 
 
+    /**
+     * 学生为课程点赞
+     * @param lId
+     * @return
+     */
+    int addPraise(String lId,String uid);
+
+    /**
+     * 判断是否已经点赞
+     * @param lId
+     * @param uid
+     * @return
+     */
+    int isPrasie(String lId, String uid);
+
+    /**
+     * 取消点赞
+     * @param lId
+     * @param getuId
+     * @return
+     */
+    int deletePraise(String lId, String getuId);
 }

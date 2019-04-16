@@ -69,7 +69,7 @@ public class LessonExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-24
+     * @date 2019-04-14
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -1261,6 +1261,66 @@ public class LessonExample {
             addCriterion("remind not between", value1, value2, "remind");
             return (Criteria) this;
         }
+
+        public Criteria andKindIsNull() {
+            addCriterion("kind is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindIsNotNull() {
+            addCriterion("kind is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindEqualTo(Integer value) {
+            addCriterion("kind =", value, "kind");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindNotEqualTo(Integer value) {
+            addCriterion("kind <>", value, "kind");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindGreaterThan(Integer value) {
+            addCriterion("kind >", value, "kind");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindGreaterThanOrEqualTo(Integer value) {
+            addCriterion("kind >=", value, "kind");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindLessThan(Integer value) {
+            addCriterion("kind <", value, "kind");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindLessThanOrEqualTo(Integer value) {
+            addCriterion("kind <=", value, "kind");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindIn(List<Integer> values) {
+            addCriterion("kind in", values, "kind");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindNotIn(List<Integer> values) {
+            addCriterion("kind not in", values, "kind");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindBetween(Integer value1, Integer value2) {
+            addCriterion("kind between", value1, value2, "kind");
+            return (Criteria) this;
+        }
+
+        public Criteria andKindNotBetween(Integer value1, Integer value2) {
+            addCriterion("kind not between", value1, value2, "kind");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -1275,7 +1335,7 @@ public class LessonExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-03-24
+     * @date 2019-04-14
      */
     public static class Criterion {
         private String condition;

@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * @author wcyong
  * 
- * @date 2019-03-24
+ * @date 2019-04-14
  */
 public class Comment {
     /**
@@ -35,6 +35,9 @@ public class Comment {
      */
     private String pid;
 
+    /**
+     * 1，为正常，0为已删除
+     */
     private Integer status;
 
     /**

@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * @author wcyong
  * 
- * @date 2019-03-24
+ * @date 2019-04-14
  */
 public class Lesson {
     /**
@@ -99,6 +99,11 @@ public class Lesson {
      * 是否已经通知开课结果（0为未通知，1为已经通知）
      */
     private Integer remind;
+
+    /**
+     * 分类（1：课程，0：活动）
+     */
+    private Integer kind;
 
     public String getlId() {
         return lId;
@@ -242,5 +247,13 @@ public class Lesson {
 
     public void setRemind(Integer remind) {
         this.remind = remind;
+    }
+
+    public Integer getKind() {
+        return kind;
+    }
+
+    public void setKind(Integer kind) {
+        this.kind = kind;
     }
 }

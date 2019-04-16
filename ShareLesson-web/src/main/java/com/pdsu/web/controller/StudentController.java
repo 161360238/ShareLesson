@@ -1,6 +1,7 @@
 package com.pdsu.web.controller;
 
 import com.pdsu.mypojo.Result;
+import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.User;
 import com.pdsu.service.StudentService;
 import com.pdsu.utils.Constant;
@@ -81,7 +82,10 @@ public class StudentController extends BaseController {
      * @param sid
      * @return
      */
-    @ApiImplicitParam(name = "sid", required = true, dataType = "String", paramType = "query", value = "学生的id")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "sid", required = true, dataType = "String", paramType = "query", value = "学生的id"),
+            @ApiImplicitParam(name = "token", required = true, dataType = "String", paramType = "query", value = "token")
+    })
     @ApiOperation(value = "统计学生关注的老师有多少个")
     @ResponseBody
     @RequestMapping(value = "countWatchTeacher", method = RequestMethod.GET)
@@ -89,7 +93,7 @@ public class StudentController extends BaseController {
         Result result = new Result();
         User user = getUser(token);
         if (user == null) {
-            result.setCode(Constant.BAD_TOKEN_MSG);
+            result.setMessage(Constant.BAD_TOKEN_MSG);
             result.setCode(Constant.BAD_TOKEN_CODE);
             return result;
         }
@@ -113,7 +117,11 @@ public class StudentController extends BaseController {
      * @param sid
      * @return
      */
-    @ApiImplicitParam(name = "sid", required = true, dataType = "String", paramType = "query", value = "学生的id")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "sid", required = true, dataType = "String", paramType = "query", value = "学生的id"),
+            @ApiImplicitParam(name = "token", required = true, dataType = "String", paramType = "query", value = "token")
+    })
+
     @ApiOperation(value = "查询关注的老师信息")
     @ResponseBody
     @RequestMapping(value = "/selectWatchTeacher", method = RequestMethod.GET)
@@ -230,4 +238,48 @@ public class StudentController extends BaseController {
             return result;
         }
     }
+
+    /**
+     * 根据学生id，查询已经参加的课程
+     *
+     * @param sid
+     * @param token
+     * @return
+     */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "sid", required = true, dataType = "String", paramType = "query", value = "学生id"),
+            @ApiImplicitParam(name = "condition", required = true, dataType = "int", paramType = "query", value = "查询条件(1开课成功 未开始上课，2已经结束 3查询所有)"),
+            @ApiImplicitParam(name = "token", required = true, dataType = "String", paramType = "query", value = "token")
+    })
+    @ApiOperation(value = "根据学生id，查询已经参加的课程")
+    @RequestMapping(value = "/selectLessonBySid", method = RequestMethod.GET)
+    @ResponseBody
+    public Result selectLessonBySid(String sid, String token, int condition) {
+        Result result = new Result();
+        User user = getUser(token);
+        if (user == null) {
+            result.setMessage(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
+        }
+        try {
+            List<Lesson> lessons = studentServiceImpl.selectLessonBySid(user.getuId(), condition);
+            if (lessons != null && lessons.size() > 0) {
+                result.setCode("200");
+                result.setMessage("查询成功");
+                result.setData(lessons);
+                return result;
+            } else {
+                result.setCode("201");
+                result.setMessage("没有查询到课程");
+                return result;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
+        }
+    }
+
 }

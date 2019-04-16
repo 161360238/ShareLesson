@@ -25,4 +25,18 @@ public interface TeacherService {
      * @return
      */
     User selectTeacherByTid(String tid);
+
+    /**
+     * 根据老师id查询发布的活动个数
+     * @param tid
+     * @return
+     */
+    int selectActive(String tid);
+
+    /**
+     * 统计发布的课程个数
+     * @param tid
+     * @return
+     */
+    int selectLesson(String tid);
 }

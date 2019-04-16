@@ -1,5 +1,6 @@
 package com.pdsu.service;
 
+import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.User;
 
 import java.util.List;
@@ -59,4 +60,12 @@ public interface StudentService {
      * @return
      */
     int submitExam(String sid, String text);
+
+    /**
+     * 学生查看自己的课程
+     * @param getuId
+     * @param condition
+     * @return
+     */
+    List<Lesson> selectLessonBySid(String getuId, int condition);
 }

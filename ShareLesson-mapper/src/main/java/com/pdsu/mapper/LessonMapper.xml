@@ -21,6 +21,7 @@
         <result column="l_name" property="lName" jdbcType="VARCHAR" />
         <result column="current_num" property="currentNum" jdbcType="INTEGER" />
         <result column="remind" property="remind" jdbcType="INTEGER" />
+        <result column="kind" property="kind" jdbcType="INTEGER" />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -85,7 +86,8 @@
 
     <sql id="Base_Column_List" >
         l_id, t_id, price, introduction, l_time, begin_time, end_time, mini_num, max_num, 
-        pic, location, classify_id, exam, praise, ischarge, l_name, current_num, remind
+        pic, location, classify_id, exam, praise, ischarge, l_name, current_num, remind, 
+        kind
     </sql>
 
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.LessonExample" >
@@ -128,15 +130,15 @@
             end_time, mini_num, max_num, 
             pic, location, classify_id, 
             exam, praise, ischarge, 
-            l_name, current_num, remind
-            )
+            l_name, current_num, remind, 
+            kind)
         values (#{lId,jdbcType=VARCHAR}, #{tId,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
             #{introduction,jdbcType=LONGVARCHAR}, #{lTime,jdbcType=INTEGER}, #{beginTime,jdbcType=TIMESTAMP}, 
             #{endTime,jdbcType=TIMESTAMP}, #{miniNum,jdbcType=INTEGER}, #{maxNum,jdbcType=INTEGER}, 
             #{pic,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{classifyId,jdbcType=VARCHAR}, 
             #{exam,jdbcType=INTEGER}, #{praise,jdbcType=INTEGER}, #{ischarge,jdbcType=INTEGER}, 
-            #{lName,jdbcType=VARCHAR}, #{currentNum,jdbcType=INTEGER}, #{remind,jdbcType=INTEGER}
-            )
+            #{lName,jdbcType=VARCHAR}, #{currentNum,jdbcType=INTEGER}, #{remind,jdbcType=INTEGER}, 
+            #{kind,jdbcType=INTEGER})
     </insert>
 
     <insert id="insertSelective" parameterType="com.pdsu.pojo.Lesson" >
@@ -196,6 +198,9 @@
             <if test="remind != null" >
                 remind,
             </if>
+            <if test="kind != null" >
+                kind,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="lId != null" >
@@ -251,6 +256,9 @@
             </if>
             <if test="remind != null" >
                 #{remind,jdbcType=INTEGER},
+            </if>
+            <if test="kind != null" >
+                #{kind,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -319,6 +327,9 @@
             <if test="record.remind != null" >
                 remind = #{record.remind,jdbcType=INTEGER},
             </if>
+            <if test="record.kind != null" >
+                kind = #{record.kind,jdbcType=INTEGER},
+            </if>
         </set>
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
@@ -344,7 +355,8 @@
             ischarge = #{record.ischarge,jdbcType=INTEGER},
             l_name = #{record.lName,jdbcType=VARCHAR},
             current_num = #{record.currentNum,jdbcType=INTEGER},
-            remind = #{record.remind,jdbcType=INTEGER}
+            remind = #{record.remind,jdbcType=INTEGER},
+            kind = #{record.kind,jdbcType=INTEGER}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -404,6 +416,9 @@
             <if test="remind != null" >
                 remind = #{remind,jdbcType=INTEGER},
             </if>
+            <if test="kind != null" >
+                kind = #{kind,jdbcType=INTEGER},
+            </if>
         </set>
         where l_id = #{lId,jdbcType=VARCHAR}
     </update>
@@ -426,7 +441,8 @@
             ischarge = #{ischarge,jdbcType=INTEGER},
             l_name = #{lName,jdbcType=VARCHAR},
             current_num = #{currentNum,jdbcType=INTEGER},
-            remind = #{remind,jdbcType=INTEGER}
+            remind = #{remind,jdbcType=INTEGER},
+            kind = #{kind,jdbcType=INTEGER}
         where l_id = #{lId,jdbcType=VARCHAR}
     </update>
 </mapper>

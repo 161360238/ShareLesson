@@ -5,7 +5,7 @@ package com.pdsu.pojo;
  * 
  * @author wcyong
  * 
- * @date 2019-03-24
+ * @date 2019-04-14
  */
 public class Center {
     /**

@@ -1,15 +1,20 @@
 package com.pdsu.service.impl;
 
 //import com.pdsu.mapper.ApplyMapper;
+
 import com.pdsu.mapper.Follow_perMapper;
+import com.pdsu.mapper.LessonMapper;
 import com.pdsu.mapper.UserMapper;
+import com.pdsu.mapper.User_lessonMapper;
 import com.pdsu.pojo.*;
+import com.pdsu.service.LessonService;
 import com.pdsu.service.StudentService;
 import com.pdsu.utils.CodecUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +31,15 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private LessonMapper lessonMapper;
+
+    @Autowired
+    private User_lessonMapper user_lessonMapper;
+
+    @Autowired
+    private LessonService lessonServiceImpl;
 
     /*@Autowired
     private ApplyMapper applyMapper;*/
@@ -148,5 +162,46 @@ public class StudentServiceImpl implements StudentService {
             return 1;
         }*/
         return 0;
+    }
+
+    /**
+     * 学生查看自己课程
+     *
+     * @param uId
+     * @param condition
+     * @return
+     */
+    @Override
+    public List<Lesson> selectLessonBySid(String uId, int condition) {
+
+        List<Lesson> lessons = new ArrayList<>();        //存储查询到的课程
+        User_lessonExample user_lessonExample = new User_lessonExample();
+        user_lessonExample.createCriteria().andUIdEqualTo(uId);
+        List<User_lesson> user_lessons = user_lessonMapper.selectByExample(user_lessonExample);
+        Date now = new Date();
+        if (condition == 1) {  //未开始
+            for (User_lesson user_lesson :
+                    user_lessons) {
+                Lesson lesson = lessonServiceImpl.selectByLid(user_lesson.getlId());
+                if (lesson.getBeginTime().getTime() > now.getTime()) {
+                    lessons.add(lesson);
+                }
+            }
+        } else if (condition == 2) {   //已经结束
+            for (User_lesson user_lesson :
+                    user_lessons) {
+                Lesson lesson = lessonServiceImpl.selectByLid(user_lesson.getlId());
+                if (lesson.getBeginTime().getTime() < now.getTime()) {
+                    lessons.add(lesson);
+                }
+            }
+        } else {
+            for (User_lesson user_lesson :
+                    user_lessons) {
+                Lesson lesson = lessonServiceImpl.selectByLid(user_lesson.getlId());
+                lessons.add(lesson);
+            }
+        }
+        return lessons;
     }
 }

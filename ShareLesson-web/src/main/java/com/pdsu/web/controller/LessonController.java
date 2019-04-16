@@ -147,21 +147,14 @@ public class LessonController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tid", required = true, dataType = "String", paramType = "query", value = "老师的id"),
             @ApiImplicitParam(name = "pn", required = true, dataType = "int", paramType = "query", value = "页码"),
-            @ApiImplicitParam(name = "token", required = true, dataType = "String", paramType = "query", value = "老师的token"),
-            @ApiImplicitParam(name = "condition", required = true, dataType = "int", paramType = "query", value = "查询条件")
+            @ApiImplicitParam(name = "condition", required = true, dataType = "int", paramType = "query", value = "条件：0：正在审核，1：（通过，成功开课）未开始，2：未审核通过，3：正在进行，4：已经结束，5：未开课成功,6:查询全部")
     })
     @ApiOperation(value = "根据老师id获取老师已经发布的课程")
     @ResponseBody
     @RequestMapping(value = "/getLessonByTeacherId.do", method = RequestMethod.GET)
     public Result getLessonByTeacherId(String tid
-            , @RequestParam(value = "pn", defaultValue = "1") Integer pn, int condition,String token) {
+            , @RequestParam(value = "pn", defaultValue = "1") Integer pn, int condition) {
         Result result = new Result();
-        User user=getUser(token);
-        if (user == null) {
-            result.setCode(Constant.BAD_TOKEN_MSG);
-            result.setCode(Constant.BAD_TOKEN_CODE);
-            return result;
-        }
         try {
             PageHelper.startPage(pn, 5); //每页显示5条数据
             List<Lesson> lessons = lessonServiceImpl.getLessonByTeacherId(tid, condition);
@@ -242,4 +235,131 @@ public class LessonController extends BaseController {
             return result;
         }
     }
+
+
+    /**
+     * 学生为课程/老师点赞
+     *
+     * @param lId
+     * @param token
+     * @return
+     */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "lId", required = true, dataType = "String", paramType = "query", value = "课程的id"),
+            @ApiImplicitParam(name = "token", required = true, dataType = "String", paramType = "query", value = "用户token")
+    })
+    @ApiOperation(value = "点赞接口")
+    @RequestMapping(value = "/addPraise", method = RequestMethod.POST)
+    @ResponseBody
+    public Result addPraise(String lId, String token) {
+        Result result = new Result();
+        User user = getUser(token);
+        if (user == null) {
+            result.setMessage(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
+        }
+        try {
+            int num = lessonServiceImpl.addPraise(lId, user.getuId());
+            if (num == 2) {
+                result.setMessage("点赞成功");
+                result.setCode("200");
+                return result;
+            } else if (num == 1) {
+                result.setMessage("不能重复点赞");
+                result.setCode("201");
+                return result;
+            } else {
+                result.setMessage("服务器错误");
+                result.setCode("202");
+                return result;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
+        }
+    }
+
+    /**
+     * 判断用户是否已经点赞
+     *
+     * @return
+     */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "lid", required = true, dataType = "String", paramType = "query", value = "课程的id"),
+            @ApiImplicitParam(name = "token", required = true, dataType = "String", paramType = "query", value = "用户token")
+    })
+    @ApiOperation(value = "查询用户是否已经点赞")
+    @RequestMapping(value = "/isPrasie", method = RequestMethod.GET)
+    @ResponseBody
+    public Result isPrasie(String token, String lid) {
+        Result result = new Result();
+        User user = getUser(token);
+        if (user == null) {
+            result.setMessage(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
+        }
+        try {
+            int num = lessonServiceImpl.isPrasie(user.getuId(), lid);
+            if (num > 0) {
+                result.setCode("200");
+                result.setMessage("已经点赞");
+                return result;
+            } else {
+                result.setCode("201");
+                result.setMessage("未点赞");
+                return result;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
+        }
+    }
+
+    /**
+     * 学生取消为课程/老师点赞
+     *
+     * @param lId
+     * @param token
+     * @return
+     */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "lId", required = true, dataType = "String", paramType = "query", value = "课程的id"),
+            @ApiImplicitParam(name = "token", required = true, dataType = "String", paramType = "query", value = "用户token")
+    })
+    @ApiOperation(value = "取消点赞接口")
+    @RequestMapping(value = "/deletePraise", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deletePraise(String lId, String token) {
+        Result result = new Result();
+        User user = getUser(token);
+        if (user == null) {
+            result.setMessage(Constant.BAD_TOKEN_MSG);
+            result.setCode(Constant.BAD_TOKEN_CODE);
+            return result;
+        }
+        try {
+            int num = lessonServiceImpl.deletePraise(lId, user.getuId());
+            if (num == 1) {
+                result.setMessage("取消点赞成功");
+                result.setCode("200");
+                return result;
+            } else {
+                result.setMessage("点过赞才能取消");
+                result.setCode("201");
+                return result;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            return result;
+        }
+    }
+
 }
