@@ -7,7 +7,7 @@ import java.util.Date;
  * 
  * @author wcyong
  * 
- * @date 2019-04-14
+ * @date 2019-04-18
  */
 public class Comment {
     /**
@@ -44,6 +44,21 @@ public class Comment {
      * 课程id
      */
     private String lId;
+
+    /**
+     * 评价星级
+     */
+    private Integer star;
+
+    /**
+     * 用户名字
+     */
+    private String uName;
+
+    /**
+     * 用户图片位置
+     */
+    private String uImg;
 
     public String getCommentId() {
         return commentId;
@@ -99,5 +114,29 @@ public class Comment {
 
     public void setlId(String lId) {
         this.lId = lId == null ? null : lId.trim();
+    }
+
+    public Integer getStar() {
+        return star;
+    }
+
+    public void setStar(Integer star) {
+        this.star = star;
+    }
+
+    public String getuName() {
+        return uName;
+    }
+
+    public void setuName(String uName) {
+        this.uName = uName == null ? null : uName.trim();
+    }
+
+    public String getuImg() {
+        return uImg;
+    }
+
+    public void setuImg(String uImg) {
+        this.uImg = uImg == null ? null : uImg.trim();
     }
 }

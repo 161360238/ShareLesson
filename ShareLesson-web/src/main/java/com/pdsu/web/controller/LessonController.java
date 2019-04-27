@@ -71,7 +71,7 @@ public class LessonController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", required = true, dataType = "String", paramType = "query", value = "分类id"),
             @ApiImplicitParam(name = "pn", required = true, dataType = "int", paramType = "query", value = "页码"),
-            @ApiImplicitParam(name = "isCharge", required = true, dataType = "int", paramType = "query", value = "是否收费")
+            @ApiImplicitParam(name = "isCharge", required = true, dataType = "int", paramType = "query", value = "是否收费(1:收费 0:免费 2:全部)")
     })
     @ApiOperation(value = "根据分类id查询课程")
     @ResponseBody
@@ -81,9 +81,9 @@ public class LessonController extends BaseController {
         Result result = new Result();
         try {
             //在查询之前需要调用，传入页码，以及每页大小
-            PageHelper.startPage(pn, 5);
+            PageHelper.startPage(pn, 6);
             //后面紧跟的这个查询就是分页查询
-            List<Lesson> lessonList = centerServiceImpl.selectLessonByClassifyId(id, isCharge);
+            List<Lesson> lessonList = centerServiceImpl.selectLessonByClassifyIdPage(id, isCharge);
             // 封装了详细的分页信息,包括有我们查询出来的数据，传入连续显示的页数
             PageInfo page = new PageInfo(lessonList, 5);
             if (lessonList != null && lessonList.size() > 0) {
@@ -119,17 +119,16 @@ public class LessonController extends BaseController {
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         Result result = new Result();
         try {
-            PageHelper.startPage(pn, 5); //每页显示5条数据
-            List<Lesson> lessonList = centerServiceImpl.selectLessonByParentClassifyId(pid, isCharge);
-            PageInfo page = new PageInfo(lessonList, 5);
+            PageInfo page= centerServiceImpl.selectLessonByParentClassifyId(pid, isCharge,pn);
 
-            if (lessonList != null && lessonList.size() > 0) {
-                result.setCode("200");
+            //if (lessonList != null && lessonList.size() > 0) {
+            if (page != null ) {
                 result.setData(page);
+                result.setCode("200");
                 result.setMessage("查询成功");
             } else {
                 result.setCode("201");
-                result.setMessage("没要查询到相关信息");
+                result.setMessage("没要查询到课程");
             }
             return result;
         } catch (Exception e) {
@@ -156,7 +155,7 @@ public class LessonController extends BaseController {
             , @RequestParam(value = "pn", defaultValue = "1") Integer pn, int condition) {
         Result result = new Result();
         try {
-            PageHelper.startPage(pn, 5); //每页显示5条数据
+            PageHelper.startPage(pn, 6); //每页显示5条数据
             List<Lesson> lessons = lessonServiceImpl.getLessonByTeacherId(tid, condition);
             PageInfo page = new PageInfo(lessons, 5);
 

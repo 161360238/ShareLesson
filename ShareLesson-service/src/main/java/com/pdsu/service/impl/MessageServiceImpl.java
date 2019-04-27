@@ -163,10 +163,10 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> selectMessage(String uid, int condition) {
         MessageExample messageExample = new MessageExample();
         List<Message> messages = new ArrayList<>();
-        if (condition == 0) {   //表示已读
+        if (condition == 0) {   //表示未读
             messageExample.createCriteria().andStatusEqualTo(0)
                     .andOwnIdEqualTo(uid);
-        } else if (condition == 2) {    //表示未读
+        } else if (condition == 1) {    //表示已读
             messageExample.createCriteria().andStatusEqualTo(1)
                     .andOwnIdEqualTo(uid);
         } else {   //已读和未读全查

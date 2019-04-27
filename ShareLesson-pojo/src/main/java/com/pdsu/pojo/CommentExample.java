@@ -69,7 +69,7 @@ public class CommentExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-04-14
+     * @date 2019-04-18
      */
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
@@ -581,6 +581,206 @@ public class CommentExample {
             addCriterion("l_id not between", value1, value2, "lId");
             return (Criteria) this;
         }
+
+        public Criteria andStarIsNull() {
+            addCriterion("star is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarIsNotNull() {
+            addCriterion("star is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarEqualTo(Integer value) {
+            addCriterion("star =", value, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarNotEqualTo(Integer value) {
+            addCriterion("star <>", value, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarGreaterThan(Integer value) {
+            addCriterion("star >", value, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarGreaterThanOrEqualTo(Integer value) {
+            addCriterion("star >=", value, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarLessThan(Integer value) {
+            addCriterion("star <", value, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarLessThanOrEqualTo(Integer value) {
+            addCriterion("star <=", value, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarIn(List<Integer> values) {
+            addCriterion("star in", values, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarNotIn(List<Integer> values) {
+            addCriterion("star not in", values, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarBetween(Integer value1, Integer value2) {
+            addCriterion("star between", value1, value2, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarNotBetween(Integer value1, Integer value2) {
+            addCriterion("star not between", value1, value2, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameIsNull() {
+            addCriterion("u_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameIsNotNull() {
+            addCriterion("u_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameEqualTo(String value) {
+            addCriterion("u_name =", value, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameNotEqualTo(String value) {
+            addCriterion("u_name <>", value, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameGreaterThan(String value) {
+            addCriterion("u_name >", value, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameGreaterThanOrEqualTo(String value) {
+            addCriterion("u_name >=", value, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameLessThan(String value) {
+            addCriterion("u_name <", value, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameLessThanOrEqualTo(String value) {
+            addCriterion("u_name <=", value, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameLike(String value) {
+            addCriterion("u_name like", value, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameNotLike(String value) {
+            addCriterion("u_name not like", value, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameIn(List<String> values) {
+            addCriterion("u_name in", values, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameNotIn(List<String> values) {
+            addCriterion("u_name not in", values, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameBetween(String value1, String value2) {
+            addCriterion("u_name between", value1, value2, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUNameNotBetween(String value1, String value2) {
+            addCriterion("u_name not between", value1, value2, "uName");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgIsNull() {
+            addCriterion("u_img is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgIsNotNull() {
+            addCriterion("u_img is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgEqualTo(String value) {
+            addCriterion("u_img =", value, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgNotEqualTo(String value) {
+            addCriterion("u_img <>", value, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgGreaterThan(String value) {
+            addCriterion("u_img >", value, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgGreaterThanOrEqualTo(String value) {
+            addCriterion("u_img >=", value, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgLessThan(String value) {
+            addCriterion("u_img <", value, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgLessThanOrEqualTo(String value) {
+            addCriterion("u_img <=", value, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgLike(String value) {
+            addCriterion("u_img like", value, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgNotLike(String value) {
+            addCriterion("u_img not like", value, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgIn(List<String> values) {
+            addCriterion("u_img in", values, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgNotIn(List<String> values) {
+            addCriterion("u_img not in", values, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgBetween(String value1, String value2) {
+            addCriterion("u_img between", value1, value2, "uImg");
+            return (Criteria) this;
+        }
+
+        public Criteria andUImgNotBetween(String value1, String value2) {
+            addCriterion("u_img not between", value1, value2, "uImg");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -595,7 +795,7 @@ public class CommentExample {
      * 
      * @author wcyong
      * 
-     * @date 2019-04-14
+     * @date 2019-04-18
      */
     public static class Criterion {
         private String condition;

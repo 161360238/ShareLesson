@@ -5,7 +5,7 @@ package com.pdsu.pojo;
  * 
  * @author wcyong
  * 
- * @date 2019-04-14
+ * @date 2019-04-18
  */
 public class User_lesson {
     /**
@@ -29,7 +29,7 @@ public class User_lesson {
     private Integer statue;
 
     /**
-     * 备用字段
+     * 课程种类（1：课程2：活动）
      */
     private Integer remind;
 

@@ -4,7 +4,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.Comment;
-import com.pdsu.pojo.Lesson;
 import com.pdsu.pojo.User;
 import com.pdsu.service.CommentService;
 import com.pdsu.utils.CodecUtil;
@@ -57,7 +56,7 @@ public class CommentController extends BaseController {
     @ApiOperation(value = "新增评论")
     @RequestMapping(value = "/addComment", method = RequestMethod.POST)
     @ResponseBody
-    public Result addComment(String token, String pid, String content, String from, String lId) {
+    public Result addComment(String token, String pid, String content, String from, String lId,Integer star) {
         Result result = new Result();
         User user = getUser(token);
         Comment comment = new Comment();
@@ -67,7 +66,7 @@ public class CommentController extends BaseController {
             return result;
         }
         try {
-            content = new String(content.getBytes("iso-8859-1"), "utf-8");
+           // content = new String(content.getBytes("iso-8859-1"), "utf-8");
             if (pid == null || pid.trim().equals("")) {
                 pid = "0";
             }
@@ -77,6 +76,7 @@ public class CommentController extends BaseController {
             comment.setlId(lId);
             comment.setPid(pid);
             comment.setuId(from);
+            comment.setStar(star);
             int num = commentServiceImpl.addComment(comment);
             if (num > 0) {
                 result.setMessage("评论成功");
@@ -106,7 +106,7 @@ public class CommentController extends BaseController {
                                      @RequestParam(value = "pn", defaultValue = "1") Integer pn) {
         Result result = new Result();
         try {
-            PageHelper.startPage(pn, 10); //每页显示10条数据
+            PageHelper.startPage(pn, 7); //每页显示10条数据
             List<Comment> comments = commentServiceImpl.selectCommentByLid(lid);
             PageInfo page = new PageInfo(comments, 5);
             if (comments != null) {

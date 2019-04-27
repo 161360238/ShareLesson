@@ -61,9 +61,9 @@ public class UserController extends BaseController {
                 String key = UUID.randomUUID().toString();
                 key = "token:" + key;
                 redisServiceImpl.set(key, JsonUtils.objectToJson(user1));
-                redisServiceImpl.expire(key, 60 * 60 * 24 * 7);
+                redisServiceImpl.expire(key, 60 * 60 * 24);
                 //产生 Cookie
-                CookieUtils.setCookie(request, response, "TT_TOKEN", key, 60 * 60 * 24 * 7);
+                CookieUtils.setCookie(request, response, "TT_TOKEN", key, 60 * 60 * 24);
                 //把token返回
                 result.setToken(key);
                 result.setMessage("登录成功");
@@ -90,7 +90,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "用户注册接口")
     @ResponseBody
     @RequestMapping(value = "/regist.do", method = RequestMethod.POST)
-    public Result register(User user) {
+    public Result register(@RequestBody User user,String vCode) {
         Result result = new Result();
         try {
             String uid = CodecUtil.createUUID();

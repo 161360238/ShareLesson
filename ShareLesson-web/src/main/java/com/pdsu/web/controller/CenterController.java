@@ -2,6 +2,7 @@ package com.pdsu.web.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pdsu.mypojo.ExtendCenter;
 import com.pdsu.mypojo.PageResult;
 import com.pdsu.mypojo.Result;
 import com.pdsu.pojo.Center;
@@ -11,6 +12,7 @@ import com.pdsu.pojo.User;
 import com.pdsu.service.CenterService;
 import com.pdsu.utils.Constant;
 import com.pdsu.utils.JsonUtils;
+import com.pdsu.web.base.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +37,7 @@ import java.util.Map;
 @Controller
 @Api(tags = {"1,主页信息 相关接口"})
 @RequestMapping("/center")
-public class CenterController {
+public class CenterController extends BaseController {
 
     @Autowired
     private CenterService centerServiceImpl;
@@ -186,12 +189,13 @@ public class CenterController {
 
     /**
      * 批量删除
+     *
      * @param ids
      * @return
      */
     @ResponseBody
     @RequestMapping("/delete")
-    public Result delete(Integer [] ids){
+    public Result delete(Integer[] ids) {
         try {
             centerServiceImpl.delete(ids);
             return new Result(true, "删除成功");
@@ -203,12 +207,13 @@ public class CenterController {
 
     /**
      * 添加
+     *
      * @param center
      * @return
      */
     @ResponseBody
     @RequestMapping("/add")
-    public Result add(@RequestBody Center center){
+    public Result add(@RequestBody Center center) {
         try {
             centerServiceImpl.add(center);
             return new Result(true, "增加成功");
@@ -220,12 +225,13 @@ public class CenterController {
 
     /**
      * 修改
+     *
      * @param center
      * @return
      */
     @ResponseBody
     @RequestMapping("/update")
-    public Result update(@RequestBody Center center){
+    public Result update(@RequestBody Center center) {
         try {
             centerServiceImpl.update(center);
             return new Result(true, "修改成功");
@@ -237,13 +243,59 @@ public class CenterController {
 
     /**
      * 获取实体
+     *
      * @param id
      * @return
      */
     @ResponseBody
     @RequestMapping("/findOne")
-    public Center findOne(String id){
+    public Center findOne(String id) {
         return centerServiceImpl.findOne(id);
+    }
+
+    @ApiImplicitParam(name = "token", required = true, dataType = "String", paramType = "query", value = "用户的token")
+    @ApiOperation(value = "根据身份不同返回不同的个人中心菜单")
+    @RequestMapping(value = "/selectMenu", method = RequestMethod.GET)
+    @ResponseBody
+    public Result selectMenu(String token) {
+        Result result = new Result();
+        User user = getUser(token); //判断用户是否登录
+        if (user == null) {
+            result.setCode("201");
+            result.setMessage("token已过期");
+            return result;
+        }
+        try {
+            List<ExtendCenter> excenters =new ArrayList<>();
+            List<Center> centers = centerServiceImpl.selectMenu(user);
+            for (Center center: centers) {
+                ExtendCenter extendCenter=new ExtendCenter();
+                extendCenter.setImg(center.getModelName().split(",")[1]);
+                extendCenter.setModelName(center.getModelName().split(",")[0]);
+                extendCenter.setCenterId(center.getCenterId());
+                extendCenter.setModelSort(center.getModelSort());
+                extendCenter.setModelType(center.getModelType());
+                extendCenter.setModelUrl(center.getModelUrl());
+                excenters.add(extendCenter);
+            }
+
+            if (excenters != null && excenters.size() > 0) {
+                result.setCode("200");
+                result.setMessage("获取成功");
+                result.setData(excenters);
+                return result;
+            } else {
+                result.setCode("201");
+                result.setMessage("获取失败");
+                return result;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setCode(Constant.INTERNAL_ERROR_CODE);
+            result.setMessage(Constant.INTERNAL_ERROR_MSG);
+            return result;
+        }
     }
 
 

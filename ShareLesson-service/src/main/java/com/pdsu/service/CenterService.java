@@ -1,5 +1,6 @@
 package com.pdsu.service;
 
+import com.github.pagehelper.PageInfo;
 import com.pdsu.mypojo.PageResult;
 import com.pdsu.pojo.Center;
 import com.pdsu.pojo.Classify;
@@ -87,4 +88,21 @@ public interface CenterService {
     void update(Center center);
 
     Center findOne(String id);
+
+    /**
+     * 根据用户身份返回个人中心菜单
+     * @param user
+     * @return
+     */
+    List<Center> selectMenu(User user);
+
+    public PageInfo selectLessonByParentClassifyId(String pid, int isCharge, int pn);
+
+    /**
+     * 根据分类查询，分页
+     * @param id
+     * @param isCharge
+     * @return
+     */
+    List<Lesson> selectLessonByClassifyIdPage(String id, int isCharge);
 }

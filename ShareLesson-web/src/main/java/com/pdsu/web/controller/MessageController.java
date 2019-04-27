@@ -120,7 +120,7 @@ public class MessageController {
         Result result = new Result();
 
         try {
-            PageHelper.startPage(pn, 10); //每页显示5条数据
+            PageHelper.startPage(pn, 5); //每页显示5条数据
             List<Message> messageList = messageServiceImpl.selectMessage(uid, condition);
             PageInfo page = new PageInfo(messageList, 5);
 

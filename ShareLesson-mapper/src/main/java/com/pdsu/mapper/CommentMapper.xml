@@ -10,6 +10,9 @@
         <result column="pid" property="pid" jdbcType="VARCHAR" />
         <result column="status" property="status" jdbcType="INTEGER" />
         <result column="l_id" property="lId" jdbcType="VARCHAR" />
+        <result column="star" property="star" jdbcType="INTEGER" />
+        <result column="u_name" property="uName" jdbcType="VARCHAR" />
+        <result column="u_img" property="uImg" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Example_Where_Clause" >
@@ -73,7 +76,7 @@
     </sql>
 
     <sql id="Base_Column_List" >
-        comment_id, u_id, content, created, pid, status, l_id
+        comment_id, u_id, content, created, pid, status, l_id, star, u_name, u_img
     </sql>
 
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pdsu.pojo.CommentExample" >
@@ -113,10 +116,12 @@
     <insert id="insert" parameterType="com.pdsu.pojo.Comment" >
         insert into comment (comment_id, u_id, content, 
             created, pid, status, 
-            l_id)
+            l_id, star, u_name, 
+            u_img)
         values (#{commentId,jdbcType=VARCHAR}, #{uId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
             #{created,jdbcType=TIMESTAMP}, #{pid,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-            #{lId,jdbcType=VARCHAR})
+            #{lId,jdbcType=VARCHAR}, #{star,jdbcType=INTEGER}, #{uName,jdbcType=VARCHAR}, 
+            #{uImg,jdbcType=VARCHAR})
     </insert>
 
     <insert id="insertSelective" parameterType="com.pdsu.pojo.Comment" >
@@ -143,6 +148,15 @@
             <if test="lId != null" >
                 l_id,
             </if>
+            <if test="star != null" >
+                star,
+            </if>
+            <if test="uName != null" >
+                u_name,
+            </if>
+            <if test="uImg != null" >
+                u_img,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="commentId != null" >
@@ -165,6 +179,15 @@
             </if>
             <if test="lId != null" >
                 #{lId,jdbcType=VARCHAR},
+            </if>
+            <if test="star != null" >
+                #{star,jdbcType=INTEGER},
+            </if>
+            <if test="uName != null" >
+                #{uName,jdbcType=VARCHAR},
+            </if>
+            <if test="uImg != null" >
+                #{uImg,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -200,6 +223,15 @@
             <if test="record.lId != null" >
                 l_id = #{record.lId,jdbcType=VARCHAR},
             </if>
+            <if test="record.star != null" >
+                star = #{record.star,jdbcType=INTEGER},
+            </if>
+            <if test="record.uName != null" >
+                u_name = #{record.uName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.uImg != null" >
+                u_img = #{record.uImg,jdbcType=VARCHAR},
+            </if>
         </set>
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
@@ -214,7 +246,10 @@
             created = #{record.created,jdbcType=TIMESTAMP},
             pid = #{record.pid,jdbcType=VARCHAR},
             status = #{record.status,jdbcType=INTEGER},
-            l_id = #{record.lId,jdbcType=VARCHAR}
+            l_id = #{record.lId,jdbcType=VARCHAR},
+            star = #{record.star,jdbcType=INTEGER},
+            u_name = #{record.uName,jdbcType=VARCHAR},
+            u_img = #{record.uImg,jdbcType=VARCHAR}
         <if test="_parameter != null" >
             <include refid="Update_By_Example_Where_Clause" />
         </if>
@@ -241,6 +276,15 @@
             <if test="lId != null" >
                 l_id = #{lId,jdbcType=VARCHAR},
             </if>
+            <if test="star != null" >
+                star = #{star,jdbcType=INTEGER},
+            </if>
+            <if test="uName != null" >
+                u_name = #{uName,jdbcType=VARCHAR},
+            </if>
+            <if test="uImg != null" >
+                u_img = #{uImg,jdbcType=VARCHAR},
+            </if>
         </set>
         where comment_id = #{commentId,jdbcType=VARCHAR}
     </update>
@@ -252,7 +296,10 @@
             created = #{created,jdbcType=TIMESTAMP},
             pid = #{pid,jdbcType=VARCHAR},
             status = #{status,jdbcType=INTEGER},
-            l_id = #{lId,jdbcType=VARCHAR}
+            l_id = #{lId,jdbcType=VARCHAR},
+            star = #{star,jdbcType=INTEGER},
+            u_name = #{uName,jdbcType=VARCHAR},
+            u_img = #{uImg,jdbcType=VARCHAR}
         where comment_id = #{commentId,jdbcType=VARCHAR}
     </update>
 </mapper>
